@@ -1,11 +1,1 @@
-﻿  Entidade.cpp
-C:\Users\AnaPaula\Documents\Faculdade\2021.1\Técnicas de Programação\Jogo\Jogo_Repositorio_Chico\Jogo\Jogo-main\Jogo TecProg\stdafx.h(3,10): fatal error C1083: Não é possível abrir arquivo incluir: 'SFML/Graphics.hpp': No such file or directory
-  GerenciadorGrafico.cpp
-C:\Users\AnaPaula\Documents\Faculdade\2021.1\Técnicas de Programação\Jogo\Jogo_Repositorio_Chico\Jogo\Jogo-main\Jogo TecProg\stdafx.h(3,10): fatal error C1083: Não é possível abrir arquivo incluir: 'SFML/Graphics.hpp': No such file or directory
-  Jogo.cpp
-C:\Users\AnaPaula\Documents\Faculdade\2021.1\Técnicas de Programação\Jogo\Jogo_Repositorio_Chico\Jogo\Jogo-main\Jogo TecProg\stdafx.h(3,10): fatal error C1083: Não é possível abrir arquivo incluir: 'SFML/Graphics.hpp': No such file or directory
-  main.cpp
-C:\Users\AnaPaula\Documents\Faculdade\2021.1\Técnicas de Programação\Jogo\Jogo_Repositorio_Chico\Jogo\Jogo-main\Jogo TecProg\stdafx.h(3,10): fatal error C1083: Não é possível abrir arquivo incluir: 'SFML/Graphics.hpp': No such file or directory
-  Jogador.cpp
-C:\Users\AnaPaula\Documents\Faculdade\2021.1\Técnicas de Programação\Jogo\Jogo_Repositorio_Chico\Jogo\Jogo-main\Jogo TecProg\stdafx.h(3,10): fatal error C1083: Não é possível abrir arquivo incluir: 'SFML/Graphics.hpp': No such file or directory
-  Gerando Código...
+﻿  Jogo TecProg.vcxproj -> D:\User\Desktop\Jogo TecProg\Jogo\Jogo-main\Debug\Jogo TecProg.exe
