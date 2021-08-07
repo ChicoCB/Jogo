@@ -10,8 +10,8 @@ protected:
 	float Velocidade, alturaPulo;
 	bool podePular,olharDireita;
 	bool Amigavel, colidePlataforma;
-	int CooldownAtaque, CooldownAtaqueMax;
-	int CooldownInvencibilidade, CooldownInvencibilidadeMax;
+	float CooldownAtaque, CooldownAtaqueMax;
+	float CooldownInvencibilidade, CooldownInvencibilidadeMax;
 	int Neutralizavel;
 
 public:

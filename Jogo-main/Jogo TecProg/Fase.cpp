@@ -1,7 +1,8 @@
 #include "Fase.h"
 #include "Jogo.h"
 
-Fase::Fase()
+Fase::Fase():
+	PiscinaProjeteis()
 {
 	Janela = NULL;
     View = NULL;
@@ -49,7 +50,7 @@ void Fase::criaChao(){
 	gerenciadorFisica.incluaEntidade(static_cast<Entidade*>(nova));
 }
 
-void Fase::criaEspinho(sf::Vector2f posicao)
+void Fase::criaEspinho(sf::Vector2f posicao, const string textura)
 {
 	Espinho* novo = NULL; 
 	novo = new Espinho();
@@ -59,7 +60,7 @@ void Fase::criaEspinho(sf::Vector2f posicao)
 	novo->setDimensoes(sf::Vector2f(COMPRIMENTO_ESPINHO, ALTURA_ESPINHO));
 	novo->setOrigem();
 	novo->setJanela(Janela);
-	novo->setTextura("");
+	novo->setTextura(textura);
 
 	//listaEspinhos.push_back(novo);
 	listaEntidades.inclua(static_cast <Entidade*>(novo));
@@ -67,7 +68,26 @@ void Fase::criaEspinho(sf::Vector2f posicao)
 	gerenciadorFisica.incluaEntidade(static_cast <Entidade*>(novo));
 }
 
-void Fase::criaEstatico(sf::Vector2f posicao)
+void Fase::criaTeia(sf::Vector2f posicao, const string textura)
+{
+	Teia* novo = NULL;
+	novo = new Teia();
+
+	//Setar posição aleatoriamente
+	novo->setPosicao(posicao);
+	novo->setDimensoes(sf::Vector2f(COMPRIMENTO_TEIA, ALTURA_TEIA));
+	novo->setOrigem();
+	novo->setJanela(Janela);
+	novo->setTextura("");
+	//novo->setLentidao(0.9f);
+
+	//ListaTeias.push_back(novo);
+	listaEntidades.inclua(static_cast <Entidade*>(novo));
+	//listaObstaculos.push_back(static_cast<Obstaculo*>(novo));
+	gerenciadorFisica.incluaEntidade(static_cast <Entidade*>(novo));
+}
+
+void Fase::criaEstatico(sf::Vector2f posicao, const string textura)
 {
 	Estatico* novo = NULL;
 	novo = new Estatico();
@@ -79,13 +99,18 @@ void Fase::criaEstatico(sf::Vector2f posicao)
 	novo->setVida(5);
 	novo->setVelocidade(100.f);
 	novo->setJanela(Janela);
-	novo->setTextura("textures/Estatico_vulneravel.png");
+	novo->setTextura(textura);
 	novo->setColidePlataforma(true);
 
 	//listaEstaticos.push_back(novo);
 	listaEntidades.inclua(static_cast <Entidade*> (novo));
 	gerenciadorFisica.incluaPersonagem(novo);
 	gerenciadorFisica.incluaEntidade(static_cast <Entidade*>(novo));
+}
+
+vector<Projetil*>& Fase::getPiscinaProjeteis()
+{
+	return PiscinaProjeteis;
 }
 
 Jogador& Fase::getFazendeira()

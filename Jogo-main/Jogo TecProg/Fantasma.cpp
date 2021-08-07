@@ -28,7 +28,7 @@ void Fantasma::inicializa()
 	CooldownInvencibilidade = 0;
 	CooldownInvencibilidadeMax = -1;
 	CooldownAtaque = 0;
-	CooldownAtaqueMax = 1000;
+	CooldownAtaqueMax = 1;
 }
 
 void Fantasma::atualiza(float deltaTempo)
@@ -44,7 +44,7 @@ void Fantasma::atualiza(float deltaTempo)
 		*/
 	}
 
-	CooldownAtaque++;
+	CooldownAtaque += deltaTempo;
 
 	Movimento = sf::Vector2f(0.f, 0.f);
 	sf::Vector2f posicao = getPosicao();

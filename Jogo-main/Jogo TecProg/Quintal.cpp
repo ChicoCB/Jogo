@@ -48,14 +48,6 @@ void Quintal::inicializa()
 			ALTURA_RESOLUCAO - (ALTURA_PLATAFORMA + ALTURA_TEIA / 2)));
 	}
 
-	/*
-	/for (int i = 0; i < rand() % 4 + 3; i++)
-	{
-		criaFantasma(sf::Vector2f(rand() % (static_cast<int>(COMPRIMENTO_CENARIO - 400)) + 200, 
-						rand() % static_cast<int>(ALTURA_RESOLUCAO / 2) + ALTURA_FANTASMA / 2));
-	}
-	*/
-
 	for (int i = 0; i < rand() % 4 + 3; i++)
 	{
 		criaPassaro(sf::Vector2f(rand() % (static_cast<int>(COMPRIMENTO_CENARIO - 400)) + 200,
@@ -65,7 +57,8 @@ void Quintal::inicializa()
 	for (int i = 0; i < rand() % 4 + 3; i++)
 	{
 		criaEstatico(sf::Vector2f(rand() % (static_cast<int>(COMPRIMENTO_CENARIO - 400)) + 200,
-			rand() % static_cast<int>(ALTURA_RESOLUCAO) - (ALTURA_PLATAFORMA + ALTURA_ESTATICO/2)));
+			rand() % static_cast<int>(ALTURA_RESOLUCAO) - (ALTURA_PLATAFORMA + ALTURA_ESTATICO/2)),
+			"textures/Estatico_vulneravel.png");
 	}
 
 	porta.setJanela(Janela);
@@ -114,48 +107,6 @@ void Quintal::criaPassaro(sf::Vector2f posicao)
 	gerenciadorFisica.incluaEntidade(static_cast <Entidade*>(novo));
 }
 
-/*
-void Quintal::criaFantasma(sf::Vector2f posicao)
-{
-	Fantasma* novo = NULL;
-	novo = new Fantasma();
-
-	novo->setPosicao(posicao);
-	novo->setDimensoes(sf::Vector2f(COMPRIMENTO_FANTASMA,ALTURA_FANTASMA));
-	novo->setOrigem();
-	novo->setJanela(Janela);
-	novo->setTextura("textures/Fantasma_direita.png");
-
-	//ListaFantasmas.push_back(novo);
-	listaEntidades.inclua(static_cast <Entidade*>(novo));
-	gerenciadorFisica.incluaEntidade(static_cast <Entidade*>(novo));
-	gerenciadorFisica.incluaPersonagem(novo);
-
-	novo->setColidePlataforma(false);
-	novo->inicializa();
-	novo->setVelocidade(200.f);
-	novo->setVida(4);
-}
-*/
-
-void Quintal::criaTeia(sf::Vector2f posicao)
-{
-	Teia* novo = NULL;
-	novo = new Teia();
-
-	//Setar posição aleatoriamente
-	novo->setPosicao(posicao);
-	novo->setDimensoes(sf::Vector2f(COMPRIMENTO_TEIA, ALTURA_TEIA));
-	novo->setOrigem();
-	novo->setJanela(Janela);
-	novo->setTextura("");
-	//novo->setLentidao(0.9f);
-
-	//ListaTeias.push_back(novo);
-	listaEntidades.inclua(static_cast <Entidade*>(novo));
-	//listaObstaculos.push_back(static_cast<Obstaculo*>(novo));
-	gerenciadorFisica.incluaEntidade(static_cast <Entidade*>(novo));
-}
 
 void Quintal::criaPlataformas(){
 

@@ -43,11 +43,11 @@ bool Personagem::podeMorrer()
 {
 
 	if (CooldownInvencibilidade >= CooldownInvencibilidadeMax)
-		CooldownInvencibilidade = 1;
-         	if (CooldownInvencibilidade % CooldownInvencibilidadeMax + 1 <= CooldownInvencibilidadeMax/2)
-		return false;
-	else
+		CooldownInvencibilidade = 0;
+    if ((CooldownInvencibilidade)/(CooldownInvencibilidadeMax) <= 0.5)
 		return true;
+	else
+		return false;
 }
 
 void Personagem::setOlhaDireita(bool olhardireita)

@@ -24,7 +24,7 @@ int Jogador::getPontuacao()
 void Jogador::inicializa()
 {
 	CooldownAtaque = 0.f;
-	CooldownAtaqueMax = 500.f;
+	CooldownAtaqueMax = 0.5f;
 	Amigavel = true;
 	colidePlataforma = true;
 	Neutralizavel = true;
@@ -61,7 +61,7 @@ void Jogador::atualiza(float deltaTempo)
 	}
 
 	Movimento.y += 981.f * deltaTempo;
-	CooldownAtaque++;
+	CooldownAtaque += deltaTempo;
 
 	this->movimenta(Movimento * deltaTempo);
 }
@@ -81,9 +81,15 @@ void Jogador::setFaseAtual(Fase* faseatual)
 
 void Jogador::atiraProjetil()
 {
+	
 	Projetil* novo = NULL;
-	novo = new Projetil();
-	novo->setDesalocavel(false);
+	
+	if (faseAtual->getPiscinaProjeteis().empty()) 
+		novo = new Projetil();
+	else {
+		novo = faseAtual->getPiscinaProjeteis().back();
+		faseAtual->getPiscinaProjeteis().pop_back();
+	}
 
 	if (olharDireita)
 	{
@@ -99,8 +105,13 @@ void Jogador::atiraProjetil()
 	novo->setOrigem();
 	novo->setJanela(Janela);
 	novo->setAmigavel(true);
+	novo->setDesalocavel(false);
+	novo->setFaseAtual(faseAtual);
+	novo->setNaPiscina(false);
 
-	faseAtual->incluaProjetil(novo); //Incluído na fase
+	if (faseAtual->getPiscinaProjeteis().empty())
+		faseAtual->incluaProjetil(novo); //Incluído na fase
+	
 }
 
 

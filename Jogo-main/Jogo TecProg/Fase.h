@@ -8,6 +8,7 @@
 #include "Espinho.h"
 #include "Estatico.h"
 #include "ListaEntidades.h"
+#include "Projetil.h"
 
 class Jogo;
 
@@ -18,6 +19,7 @@ protected:
 	Jogador Fazendeira;
 	GerenciadorFisica gerenciadorFisica;
 	ListaEntidades listaEntidades;
+	vector<Projetil*> PiscinaProjeteis;
 	Jogo* jogo;
 
 	sf::View* View;
@@ -35,9 +37,12 @@ public:
 	//Cria objetos que estão em ambas as fases
 	void criaPlataforma(sf::Vector2f posicao, const string textura = "textures/Plataforma_meio.png" ,sf::Vector2f tamanho = sf::Vector2f(COMPRIMENTO_PLATAFORMA, ALTURA_PLATAFORMA));
 	void criaChao();
-	void criaEstatico(sf::Vector2f posicao);
-	void criaEspinho(sf::Vector2f posicao);
+	void criaEstatico(sf::Vector2f posicao, const string textura = "");
+	void criaEspinho(sf::Vector2f posicao, const string textura = "");
+	void criaTeia(sf::Vector2f posicao, const string textura = "");
 
+
+	vector<Projetil*>& getPiscinaProjeteis();
 	Jogador& getFazendeira();
 	GerenciadorFisica getGerenciadorFisica();
 

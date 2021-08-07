@@ -14,3 +14,5 @@ void Espinho::colidir(Personagem* personagem)
 		cout << "Colidiu Espinho!" << endl;
 		//personagem->setVida(personagem->getVida() - 1);
 }
+
+//FALTA COWDONW DE ATAQUE
