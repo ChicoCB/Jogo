@@ -1,2 +1,5 @@
-﻿  MenuPause.cpp
+﻿  Passaro.cpp
+D:\User\Desktop\Jogo TecProg\Jogo\Jogo-main\Jogo TecProg\Passaro.cpp(22,19): warning C4244: '=': conversão de 'float' para 'int', possível perda de dados
+D:\User\Desktop\Jogo TecProg\Jogo\Jogo-main\Jogo TecProg\Passaro.cpp(23,22): warning C4244: '=': conversão de 'float' para 'int', possível perda de dados
+D:\User\Desktop\Jogo TecProg\Jogo\Jogo-main\Jogo TecProg\Passaro.cpp(61,12): warning C4244: 'argumento': conversão de 'time_t' para 'unsigned int', possível perda de dados
   Jogo TecProg.vcxproj -> D:\User\Desktop\Jogo TecProg\Jogo\Jogo-main\Debug\Jogo TecProg.exe

@@ -45,8 +45,9 @@ void Chefao::atualiza(float deltaTempo)
 	float deltax = faseAtual->getFazendeira().getPosicao().x - this->getPosicao().x;
 	float modulo = sqrt(deltax*deltax);
 
-	Movimento.x += Velocidade * deltax / modulo;
-	Movimento.y += 981.f;
+	if (modulo != 0)
+		Movimento.x += Velocidade * deltax / modulo;
+	Movimento.y += 981.f*deltaTempo;
 
 	if (Movimento.x > 0)
 		olharDireita = true;

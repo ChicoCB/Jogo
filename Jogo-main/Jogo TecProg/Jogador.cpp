@@ -24,7 +24,7 @@ int Jogador::getPontuacao()
 void Jogador::inicializa()
 {
 	CooldownAtaque = 0.f;
-	CooldownAtaqueMax = 500.f;
+	CooldownAtaqueMax = 300.f;
 	Amigavel = true;
 	colidePlataforma = true;
 	Neutralizavel = true;

@@ -20,7 +20,7 @@ void Passaro::inicializa()
 	Neutralizavel = true;
 	Amigavel = false;
 	CooldownAtaque = 0.f;
-	CooldownAtaqueMax = 3000.f;
+	CooldownAtaqueMax = 2000.f;
 	CooldownInvencibilidade = 0;
 	CooldownInvencibilidadeMax = -1;
 	limiteXEsq = getPosicao().x;
