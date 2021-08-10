@@ -42,7 +42,7 @@ void Chefao::atualiza(float deltaTempo)
 
 	Movimento = sf::Vector2f(0.f, 0.f);
 
-	float deltax = faseAtual->getFazendeira().getPosicao().x - this->getPosicao().x;
+	float deltax = faseAtual->getFazendeira()->getPosicao().x - this->getPosicao().x;
 	float modulo = sqrt(deltax*deltax);
 
 	if (modulo != 0.f)
@@ -107,8 +107,8 @@ void Chefao::atiraProjetil2()
 		faseAtual->getPiscinaProjeteis().pop_back();
 	}
 
-	float deltax = faseAtual->getFazendeira().getPosicao().x - this->getPosicao().x;
-	float deltay = faseAtual->getFazendeira().getPosicao().y - this->getPosicao().y;
+	float deltax = faseAtual->getFazendeira()->getPosicao().x - this->getPosicao().x;
+	float deltay = faseAtual->getFazendeira()->getPosicao().y - this->getPosicao().y;
 	float modulo = sqrt(deltax * deltax + deltay * deltay);
 
 	novo->setPosicao(sf::Vector2f(this->getPosicao().x, this->getPosicao().y));
@@ -132,4 +132,24 @@ void Chefao::atiraProjeteis()
 	atiraProjetil(this->getPosicao().y + this->getDimensoes().y / 2);
 	atiraProjetil(this->getPosicao().y);
 	atiraProjetil(this->getPosicao().y - this->getDimensoes().y / 2);
+}
+
+void Chefao::salvar()
+{
+	if (!this->getDesalocavel())
+	{
+		ofstream gravadorChefao("saves/Chefao.dat", ios::app);
+
+		if (!gravadorChefao)
+			cout << "Erro." << endl;
+
+		gravadorChefao << this->getVida() << ' '
+			<< this->getPosicao().x << ' '
+			<< this->getPosicao().y << ' '
+			<< this->getMovimento().x << ' '
+			<< this->getMovimento().y << ' '
+			<< this->CooldownAtaque << endl;
+
+		gravadorChefao.close();
+	}
 }

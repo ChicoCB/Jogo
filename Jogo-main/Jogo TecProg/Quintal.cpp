@@ -1,4 +1,5 @@
 #include "Quintal.h"
+#include "Jogo.h"
 
 Quintal::Quintal() :
 	porta()
@@ -14,25 +15,42 @@ void Quintal::inicializa()
 	srand(time(NULL));
 
 	listaEntidades.inclua(static_cast <Entidade*> (&Cenario));
-	//gerenciadorFisica.setListaEntidades(&listaEntidades);
-	
-	Fazendeira.inicializa();
-	Fazendeira.setJanela(Janela);
-	Fazendeira.setFaseAtual(this);
-	Fazendeira.setDimensoes(sf::Vector2f(COMPRIMENTO_JOGADOR, ALTURA_JOGADOR));
-	Fazendeira.setOrigem();
-	Fazendeira.setPosicao(sf::Vector2f(640.f, 320.f));
-	Fazendeira.setTextura("textures/Fazendeira.png");
-	Fazendeira.setTeclas(sf::Keyboard::D, sf::Keyboard::A, sf::Keyboard::W, sf::Keyboard::Space);
-	Fazendeira.setVelocidade(400.f);
-	Fazendeira.setAlturaPulo(250.f);
-	gerenciadorFisica.setFazendeira(&Fazendeira);
-	gerenciadorFisica.incluaPersonagem(&Fazendeira);
-
 	Cenario.setJanela(Janela);
 	Cenario.setTextura("textures/Background.png");
 	Cenario.setDimensoes(sf::Vector2f(COMPRIMENTO_CENARIO, ALTURA_RESOLUCAO));
 	Cenario.setPosicao(sf::Vector2f(0.f, 0.f));
+	//gerenciadorFisica.setListaEntidades(&listaEntidades);
+	
+	Fazendeira = new Jogador();
+	Fazendeira->inicializa();
+	Fazendeira->setJanela(Janela);
+	Fazendeira->setFaseAtual(this);
+	Fazendeira->setDimensoes(sf::Vector2f(COMPRIMENTO_JOGADOR, ALTURA_JOGADOR));
+	Fazendeira->setOrigem();
+	Fazendeira->setPosicao(sf::Vector2f(640.f, 320.f));
+	Fazendeira->setTextura("textures/Fazendeira.png");
+	Fazendeira->setTeclas(sf::Keyboard::D, sf::Keyboard::A, sf::Keyboard::W, sf::Keyboard::Space);
+	Fazendeira->setVelocidade(400.f);
+	Fazendeira->setAlturaPulo(250.f);
+	gerenciadorFisica.setFazendeira(Fazendeira);
+	gerenciadorFisica.incluaPersonagem(static_cast<Personagem*>(Fazendeira));
+
+	if (jogo->getMultiplayer())
+	{
+		Bruxo = new Jogador();
+		Bruxo->inicializa();
+		Bruxo->setJanela(Janela);
+		Bruxo->setFaseAtual(this);
+		Bruxo->setDimensoes(sf::Vector2f(COMPRIMENTO_JOGADOR, ALTURA_JOGADOR));
+		Bruxo->setOrigem();
+		Bruxo->setPosicao(sf::Vector2f(640.f, 320.f));
+		Bruxo->setTextura("textures/Bruxo.png");
+		Bruxo->setTeclas(sf::Keyboard::Right, sf::Keyboard::Left, sf::Keyboard::Up, sf::Keyboard::Enter);
+		Bruxo->setVelocidade(400.f);
+		Bruxo->setAlturaPulo(250.f);
+
+		gerenciadorFisica.incluaPersonagem(static_cast<Personagem*>(Bruxo));
+	}
 
 	criaPlataformas();
 
@@ -66,7 +84,9 @@ void Quintal::inicializa()
 	listaEntidades.inclua(static_cast<Entidade*> (&porta));
 	gerenciadorFisica.incluaEntidade(static_cast<Entidade*> (&porta));
 
-	listaEntidades.inclua(static_cast <Entidade*> (&Fazendeira));
+	if (Bruxo != NULL)
+		listaEntidades.inclua(static_cast <Entidade*> (Bruxo));
+	listaEntidades.inclua(static_cast <Entidade*> (Fazendeira));
 }
 
 void Quintal::desenhar()
@@ -128,4 +148,64 @@ void Quintal::criaPlataformas(){
 		//criaPlataforma(sf::Vector2f(2000.f + COMPRIMENTO_PLATAFORMA * i, 2.f*(ALTURA_RESOLUCAO/4.f - ALTURA_PLATAFORMA)/4.f + 1.f*ALTURA_PLATAFORMA + ALTURA_PLATAFORMA/2.f));
 	}
 }
+
+void Quintal::recuperar()
+{	
+	listaEntidades.inclua(static_cast<Entidade*> (&Cenario));
+	criaPlataformas();
+	Cenario.setJanela(Janela);
+	Cenario.setTextura("textures/Background.png");
+	Cenario.setDimensoes(sf::Vector2f(COMPRIMENTO_CENARIO, ALTURA_RESOLUCAO));
+	Cenario.setPosicao(sf::Vector2f(0.f, 0.f));
+	porta.setJanela(Janela);
+	porta.setJogo(jogo);
+	listaEntidades.inclua(static_cast<Entidade*> (&porta));
+	gerenciadorFisica.incluaEntidade(static_cast<Entidade*> (&porta));
+	recuperarEspinhos();
+	recuperarEstaticos();
+	recuperarPassaros();
+	recuperarTeias();
+	recuperarJogadores();
+}
+
+void Quintal::recuperarPassaros()
+{
+	ifstream recuperadorPassaros("saves/Passaros.dat", ios::in);
+
+	if (!recuperadorPassaros)
+		cout << "Erro." << endl;
+
+	while (!recuperadorPassaros.eof())
+	{
+		Passaro* novo = NULL;
+		int vida;
+		float posx, posy, movx, movy, limxdir, limxesq, cooldown;
+
+		recuperadorPassaros >> vida >> posx >> posy >> movx >> movy >> limxdir >> limxesq >> cooldown;
+
+		novo = new Passaro();
+		novo->inicializa();
+		novo->setVida(vida);
+		novo->setPosicao(sf::Vector2f(posx, posy));
+		novo->setLimiteXDir(limxdir);
+		novo->setLimiteXEsq(limxesq);
+		novo->setMovimentoX(movx);
+		novo->setMovimentoY(movy);
+		novo->setCooldownAtaque(cooldown);
+		novo->setVelocidade(200.f);
+		novo->setJanela(Janela);
+		novo->setTextura("textures/Passaro_direita.png");
+		novo->setColidePlataforma(true);
+		novo->setDimensoes(sf::Vector2f(COMPRIMENTO_ESPINHO, ALTURA_ESPINHO));
+		novo->setOrigem();
+		novo->setFaseAtual(this);
+
+		listaEntidades.inclua(static_cast<Entidade*>(novo));
+		gerenciadorFisica.incluaPersonagem(static_cast<Personagem*>(novo));
+		gerenciadorFisica.incluaEntidade(static_cast<Entidade*>(novo));
+	}
+
+	recuperadorPassaros.close();
+}
+
 

@@ -50,6 +50,11 @@ bool Personagem::podeMorrer()
 		return false;
 }
 
+void Personagem::setCooldownAtaque(float cooldownataque)
+{
+	CooldownAtaque = cooldownataque;
+}
+
 void Personagem::setOlhaDireita(bool olhardireita)
 {
 	olharDireita = olhardireita;

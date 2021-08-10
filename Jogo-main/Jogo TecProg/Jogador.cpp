@@ -114,4 +114,24 @@ void Jogador::atiraProjetil()
 	
 }
 
+void Jogador::salvar()
+{
+	if (!this->getDesalocavel())
+	{
+		ofstream gravadorJogador("saves/Jogadores.dat", ios::app);
+
+		if (!gravadorJogador)
+			cout << "Erro." << endl;
+
+		gravadorJogador << this->getVida() << ' '
+			<< this->getPosicao().x << ' '
+			<< this->getPosicao().y << ' '
+			<< this->getMovimento().x << ' '
+			<< this->getMovimento().y << ' '
+			<< this->CooldownAtaque << endl;
+
+		gravadorJogador.close();
+	}
+}
+
 

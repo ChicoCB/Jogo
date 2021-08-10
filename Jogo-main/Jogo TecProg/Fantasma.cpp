@@ -1,10 +1,10 @@
 #include "Fantasma.h"
 
-Fantasma::Fantasma():Inimigo(),
+Fantasma::Fantasma():
+	Inimigo(),
 	cima(false)
 {
 	
-
 }
 
 Fantasma::~Fantasma()
@@ -68,4 +68,28 @@ void Fantasma::atualiza(float deltaTempo)
 		Movimento.y += Velocidade;
 
 	this->movimenta(Movimento * deltaTempo);
+}
+
+void Fantasma::salvar()
+{
+	if (!this->getDesalocavel())
+	{
+		ofstream gravadorFantasma("saves/Fantasmas.dat", ios::app);
+
+		if (!gravadorFantasma)
+			cout << "Erro." << endl;
+
+		gravadorFantasma << this->getVida() << ' '
+			<< this->getPosicao().x << ' '
+			<< this->getPosicao().y << ' '
+			<< this->getMovimento().x << ' '
+			<< this->getMovimento().y << ' '
+			<< this->limiteXDir << ' '
+			<< this->limiteXEsq << ' '
+			<< this->limiteYCima << ' '
+			<< this->limiteYBaixo << ' ' 
+			<< this->CooldownAtaque << endl;
+
+		gravadorFantasma.close();
+	}
 }

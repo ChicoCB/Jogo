@@ -15,6 +15,7 @@ void Quarto::inicializa()
 	listaEntidades.inclua(static_cast <Entidade*> (&Cenario));
 	//gerenciadorFisica.setListaEntidades(&listaEntidades);
 
+	/*
 	Fazendeira.inicializa();
 	Fazendeira.setJanela(Janela);
 	Fazendeira.setFaseAtual(this);
@@ -27,26 +28,13 @@ void Quarto::inicializa()
 	Fazendeira.setAlturaPulo(250.f);
 	gerenciadorFisica.setFazendeira(&Fazendeira);
 	gerenciadorFisica.incluaPersonagem(&Fazendeira);
+	*/
 
 	Cenario.setJanela(Janela);
 	Cenario.setTextura("textures/Background_quarto.jpg");
 	Cenario.setDimensoes(sf::Vector2f(COMPRIMENTO_CENARIO, ALTURA_RESOLUCAO));
 	Cenario.setPosicao(sf::Vector2f(0.f, 0.f));
 
-	for (int i = 0; i < 10; i++) {
-
-		criaPlataforma(sf::Vector2f(900.f + COMPRIMENTO_PLATAFORMA * i, 337.5f), "textures/Estante_meio.png");
-		criaPlataforma(sf::Vector2f(1500.f + COMPRIMENTO_PLATAFORMA * i, 337.5f), "textures/Estante_meio.png");
-		criaPlataforma(sf::Vector2f(500.f + COMPRIMENTO_PLATAFORMA * i, 517.5f), "textures/Estante_meio.png");
-		criaPlataforma(sf::Vector2f(1800.f + COMPRIMENTO_PLATAFORMA * i, 157.5f), "textures/Estante_meio.png");
-		//criaPlataforma(sf::Vector2f(1800.f + COMPRIMENTO_PLATAFORMA*i, 1.f*(ALTURA_RESOLUCAO/4.f - ALTURA_PLATAFORMA)/4.f + 0.f*ALTURA_PLATAFORMA + ALTURA_PLATAFORMA/2.f));
-
-	}
-
-	for (int i = 0; i < 5; i++) {
-		criaPlataforma(sf::Vector2f(2000.f + COMPRIMENTO_PLATAFORMA * i, 517.5f), "textures/Estante_meio.png");
-		//criaPlataforma(sf::Vector2f(2000.f + COMPRIMENTO_PLATAFORMA * i, 2.f*(ALTURA_RESOLUCAO/4.f - ALTURA_PLATAFORMA)/4.f + 1.f*ALTURA_PLATAFORMA + ALTURA_PLATAFORMA/2.f));
-	}
 	for (int i = 0; i < rand() % 4 + 3; i++)
 	{
 		criaFantasma(sf::Vector2f(rand() % (static_cast<int>(COMPRIMENTO_CENARIO - 400)) + 200, 
@@ -67,7 +55,7 @@ void Quarto::inicializa()
 
 	criaChefao(sf::Vector2f(2000.f,600.f));
 
-	listaEntidades.inclua(static_cast <Entidade*> (&Fazendeira));
+	listaEntidades.inclua(static_cast <Entidade*> (Fazendeira));
 
 	criaPlataformas();
 }
@@ -86,6 +74,10 @@ void Quarto::atualiza(float deltaTempo)
 	listaEntidades.atualiza(deltaTempo);
 
 	desenhar();
+}
+
+void Quarto::recuperar()
+{
 }
 
 void Quarto::criaFantasma(sf::Vector2f posicao)
@@ -133,5 +125,21 @@ void Quarto::criaChefao(sf::Vector2f posicao)
 
 void Quarto::criaPlataformas()
 {
+	for (int i = 0; i < 10; i++) {
+
+		criaPlataforma(sf::Vector2f(900.f + COMPRIMENTO_PLATAFORMA * i, 337.5f), "textures/Estante_meio.png");
+		criaPlataforma(sf::Vector2f(1500.f + COMPRIMENTO_PLATAFORMA * i, 337.5f), "textures/Estante_meio.png");
+		criaPlataforma(sf::Vector2f(500.f + COMPRIMENTO_PLATAFORMA * i, 517.5f), "textures/Estante_meio.png");
+		criaPlataforma(sf::Vector2f(1800.f + COMPRIMENTO_PLATAFORMA * i, 157.5f), "textures/Estante_meio.png");
+		//criaPlataforma(sf::Vector2f(1800.f + COMPRIMENTO_PLATAFORMA*i, 1.f*(ALTURA_RESOLUCAO/4.f - ALTURA_PLATAFORMA)/4.f + 0.f*ALTURA_PLATAFORMA + ALTURA_PLATAFORMA/2.f));
+
+	}
+
+	for (int i = 0; i < 5; i++) {
+		criaPlataforma(sf::Vector2f(2000.f + COMPRIMENTO_PLATAFORMA * i, 517.5f), "textures/Estante_meio.png");
+		//criaPlataforma(sf::Vector2f(2000.f + COMPRIMENTO_PLATAFORMA * i, 2.f*(ALTURA_RESOLUCAO/4.f - ALTURA_PLATAFORMA)/4.f + 1.f*ALTURA_PLATAFORMA + ALTURA_PLATAFORMA/2.f));
+	}
+
 	criaChao();
 }
+

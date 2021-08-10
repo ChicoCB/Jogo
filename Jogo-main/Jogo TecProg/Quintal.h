@@ -8,6 +8,8 @@
 #include "Chefao.h"
 #include "Porta.h"
 
+class Jogo;
+
 class Quintal : public Fase
 {
 private:
@@ -23,5 +25,8 @@ public:
 
 	void criaPassaro(sf::Vector2f posicao);
 	void criaPlataformas();
+
+	void recuperar();
+	void recuperarPassaros();
 };
 

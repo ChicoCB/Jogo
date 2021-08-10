@@ -53,3 +53,21 @@ void Estatico::movimenta(sf::Vector2f movimento)
 {
 	Corpo.move(movimento);
 }
+
+void Estatico::salvar()
+{
+	if (!this->getDesalocavel())
+	{
+		ofstream gravadorEstatico("saves/Estaticos.dat", ios::app);
+
+		if (!gravadorEstatico)
+			cout << "Erro." << endl;
+
+		gravadorEstatico << this->getVida() << ' '
+			<< this->getPosicao().x << ' '
+			<< this->getPosicao().y << ' '
+			<< this->CooldownAtaque << endl;
+
+		gravadorEstatico.close();
+	}
+}

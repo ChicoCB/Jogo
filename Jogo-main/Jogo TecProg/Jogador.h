@@ -25,5 +25,7 @@ public:
 	void setTeclas(sf::Keyboard::Key direita, sf::Keyboard::Key esquerda , sf::Keyboard::Key pulo, sf::Keyboard::Key atira);
 	void setFaseAtual(Fase* faseatual);
 	void atiraProjetil();
+	void salvar();
+	
 };
 

@@ -16,7 +16,8 @@ class Fase : public Ente
 {
 protected:
 	Entidade Cenario;
-	Jogador Fazendeira;
+	Jogador* Fazendeira;
+	Jogador* Bruxo;
 	GerenciadorFisica gerenciadorFisica;
 	ListaEntidades listaEntidades;
 	vector<Projetil*> PiscinaProjeteis;
@@ -43,8 +44,10 @@ public:
 
 
 	vector<Projetil*>& getPiscinaProjeteis();
-	Jogador& getFazendeira();
+	Jogador* getFazendeira();
 	GerenciadorFisica getGerenciadorFisica();
+	void setFazendeira(Jogador* fazendeira);
+	void setBruxo(Jogador* bruxo);
 
 	virtual void atualiza(float deltaTempo);
 	void atualizaView();
@@ -52,5 +55,11 @@ public:
 	void incluaProjetil(Projetil* projetil);
 	void setView(sf::View* view);
 	void setJogo(Jogo* jg);
+	void salvar();
+
+	void recuperarEstaticos();
+	void recuperarEspinhos();
+	void recuperarTeias();
+	void recuperarJogadores();
 };
 
