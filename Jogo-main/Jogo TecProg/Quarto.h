@@ -6,6 +6,8 @@
 #include "GerenciadorFisica.h"
 #include "Chefao.h"
 
+class Jogo;
+
 class Quarto : public Fase
 {
 private:
@@ -18,8 +20,11 @@ public:
 	void desenhar();
 	void atualiza(float deltaTempo);
 
+	void recuperar();
+	void recuperarFantasmas();
+	void recuperarChefao();
+
 	void criaFantasma(sf::Vector2f posicao);
-	void criaTeia(sf::Vector2f posicao);
 	void criaChefao(sf::Vector2f posicao);
 	void criaPlataformas();
 };

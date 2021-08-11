@@ -22,5 +22,16 @@ void Porta::setJogo(Jogo* jg)
 void Porta::colidir(Personagem* personagem)
 {
 	if (personagem->getAmigavel())
+	{
+		/*
+		if (jogo->getMultiplayer())
+		{
+			jogo->getBruxo()->setPosicao(sf::Vector2f(150.f, 150.f));
+		}
+		personagem->setPosicao(sf::Vector2f(200.f, 200.f));
+		*/
+		
+		jogo->InicializaQuarto();
 		jogo->setEstado(5);
+	}
 }

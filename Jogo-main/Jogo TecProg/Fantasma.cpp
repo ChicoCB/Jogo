@@ -1,14 +1,34 @@
 #include "Fantasma.h"
 
-Fantasma::Fantasma():Inimigo(),
+Fantasma::Fantasma():
+	Inimigo(),
 	cima(false)
 {
 	
-
 }
 
 Fantasma::~Fantasma()
 {
+}
+
+void Fantasma::setLimiteXEsq(float limesq)
+{
+	limiteXEsq = limesq;
+}
+
+void Fantasma::setLimiteXDir(float limdir)
+{
+	limiteXDir = limdir;
+}
+
+void Fantasma::setLimiteYCima(float limiteycima)
+{
+	limiteYCima = limiteycima;
+}
+
+void Fantasma::setLimiteYBaixo(float limiteybaixo)
+{
+	limiteYBaixo = limiteybaixo;
 }
 
 void Fantasma::colidir(Personagem* personagem)
@@ -28,7 +48,7 @@ void Fantasma::inicializa()
 	CooldownInvencibilidade = 0;
 	CooldownInvencibilidadeMax = -1;
 	CooldownAtaque = 0;
-	CooldownAtaqueMax = 1000;
+	CooldownAtaqueMax = 1;
 }
 
 void Fantasma::atualiza(float deltaTempo)
@@ -44,7 +64,7 @@ void Fantasma::atualiza(float deltaTempo)
 		*/
 	}
 
-	CooldownAtaque++;
+	CooldownAtaque += deltaTempo;
 
 	Movimento = sf::Vector2f(0.f, 0.f);
 	sf::Vector2f posicao = getPosicao();
@@ -68,4 +88,28 @@ void Fantasma::atualiza(float deltaTempo)
 		Movimento.y += Velocidade;
 
 	this->movimenta(Movimento * deltaTempo);
+}
+
+void Fantasma::salvar()
+{
+	if (!this->getDesalocavel())
+	{
+		ofstream gravadorFantasma("saves/Fantasmas.dat", ios::app);
+
+		if (!gravadorFantasma)
+			cout << "Erro." << endl;
+
+		gravadorFantasma << this->getVida() << ' '
+			<< this->getPosicao().x << ' '
+			<< this->getPosicao().y << ' '
+			<< this->getMovimento().x << ' '
+			<< this->getMovimento().y << ' '
+			<< this->limiteXDir << ' '
+			<< this->limiteXEsq << ' '
+			<< this->limiteYCima << ' '
+			<< this->limiteYBaixo << ' ' 
+			<< this->CooldownAtaque << endl;
+
+		gravadorFantasma.close();
+	}
 }

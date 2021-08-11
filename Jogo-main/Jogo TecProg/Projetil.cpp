@@ -1,4 +1,5 @@
 #include "Projetil.h"
+#include "Fase.h"
 
 Projetil::Projetil()
 {
@@ -7,6 +8,20 @@ Projetil::Projetil()
 Projetil::~Projetil()
 {
 }
+
+void Projetil::setMovimento(sf::Vector2f movimento)
+{
+	Movimento = movimento;
+}
+
+
+/*
+void Projetil::setNaPiscina(bool napiscina)
+{
+	NaPiscina = napiscina;
+}
+*/
+
 
 void Projetil::setAmigavel(bool amigavel)
 {
@@ -24,20 +39,36 @@ void Projetil::colidir(Personagem* personagem)
 	{
 		cout << "Personagem colidiu com projetil" << endl;
 		personagem->setVida(personagem->getVida() - 1);
+		if (personagem->getVida() <= 0)
+		{
+			personagem->setDesalocavel(true);
+			if (!personagem->getAmigavel())
+			{
+				faseAtual->getFazendeira()->incrementaPontuacao();
+			}
+			
+		}
+
 		this->setDesalocavel(true);
 	}
+
 }
 
 void Projetil::atualiza(float deltaTempo)
 {
 	Movimento = sf::Vector2f(0.f, 0.f);
 
-	if (Desalocavel)
+	if (Desalocavel/* && !NaPiscina*/)
 	{
+		//NaPiscina = true;
 		this->setDimensoes(sf::Vector2f(0.f, 0.f));
 		this->setVelocidade(sf::Vector2f(0.f, 0.f));
 		this->setPosicao(sf::Vector2f(0.f, 0.f));
+		//this->faseAtual->getPiscinaProjeteis().push_back(this);
+		//cout << this->faseAtual->getPiscinaProjeteis().size() << endl;
+		//cout << getVelocidade() << deltaTempo << endl;
 	}
+
 
 	Movimento.x += Velocidade.x;
 	Movimento.y += Velocidade.y;
@@ -53,4 +84,36 @@ void Projetil::movimenta(sf::Vector2f movimento)
 void Projetil::setVelocidade(sf::Vector2f velocidade)
 {
 	Velocidade = velocidade;
+}
+
+sf::Vector2f Projetil::getVelocidade()
+{
+	return Velocidade;
+}
+
+
+void Projetil::setFaseAtual(Fase* faseatual)
+{
+	faseAtual = faseatual;
+}
+
+void Projetil::salvar()
+{
+	if (!this->getDesalocavel())
+	{
+		ofstream gravadorProjetil("saves/Projeteis.dat", ios::app);
+
+		if (!gravadorProjetil)
+			cout << "Erro." << endl;
+
+		gravadorProjetil << this->getPosicao().x << ' '
+			<< this->getPosicao().y << ' '
+			<< this->getMovimento().x << ' '
+			<< this->getMovimento().y << ' '
+			<< this->getVelocidade().x << ' '
+			<< this->getVelocidade().y << ' '
+			<< this->getAmigavel() << endl;
+
+		gravadorProjetil.close();
+	}
 }

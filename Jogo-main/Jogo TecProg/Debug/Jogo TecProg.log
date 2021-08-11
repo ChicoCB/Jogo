@@ -1,5 +1,19 @@
+<<<<<<< HEAD
 ﻿  Passaro.cpp
 D:\User\Desktop\Jogo TecProg\Jogo\Jogo-main\Jogo TecProg\Passaro.cpp(22,19): warning C4244: '=': conversão de 'float' para 'int', possível perda de dados
 D:\User\Desktop\Jogo TecProg\Jogo\Jogo-main\Jogo TecProg\Passaro.cpp(23,22): warning C4244: '=': conversão de 'float' para 'int', possível perda de dados
 D:\User\Desktop\Jogo TecProg\Jogo\Jogo-main\Jogo TecProg\Passaro.cpp(61,12): warning C4244: 'argumento': conversão de 'time_t' para 'unsigned int', possível perda de dados
+=======
+﻿  Jogo.cpp
+D:\User\Desktop\Jogo TecProg\Jogo\Jogo-main\Jogo TecProg\Jogo.cpp(5,42): warning C4244: 'argumento': conversão de 'float' para 'unsigned int', possível perda de dados
+D:\User\Desktop\Jogo TecProg\Jogo\Jogo-main\Jogo TecProg\Jogo.cpp(5,19): warning C4244: 'argumento': conversão de 'float' para 'unsigned int', possível perda de dados
+D:\User\Desktop\Jogo TecProg\Jogo\Jogo-main\Jogo TecProg\Jogo.cpp(6,42): warning C4244: 'argumento': conversão de 'float' para 'unsigned int', possível perda de dados
+D:\User\Desktop\Jogo TecProg\Jogo\Jogo-main\Jogo TecProg\Jogo.cpp(6,19): warning C4244: 'argumento': conversão de 'float' para 'unsigned int', possível perda de dados
+D:\User\Desktop\Jogo TecProg\Jogo\Jogo-main\Jogo TecProg\Jogo.cpp(7,38): warning C4244: 'argumento': conversão de 'float' para 'unsigned int', possível perda de dados
+D:\User\Desktop\Jogo TecProg\Jogo\Jogo-main\Jogo TecProg\Jogo.cpp(7,15): warning C4244: 'argumento': conversão de 'float' para 'unsigned int', possível perda de dados
+D:\User\Desktop\Jogo TecProg\Jogo\Jogo-main\Jogo TecProg\Jogo.cpp(8,38): warning C4244: 'argumento': conversão de 'float' para 'unsigned int', possível perda de dados
+D:\User\Desktop\Jogo TecProg\Jogo\Jogo-main\Jogo TecProg\Jogo.cpp(8,15): warning C4244: 'argumento': conversão de 'float' para 'unsigned int', possível perda de dados
+D:\User\Desktop\Jogo TecProg\Jogo\Jogo-main\Jogo TecProg\Jogo.cpp(9,42): warning C4244: 'argumento': conversão de 'float' para 'unsigned int', possível perda de dados
+D:\User\Desktop\Jogo TecProg\Jogo\Jogo-main\Jogo TecProg\Jogo.cpp(9,19): warning C4244: 'argumento': conversão de 'float' para 'unsigned int', possível perda de dados
+>>>>>>> pool-projeteis
   Jogo TecProg.vcxproj -> D:\User\Desktop\Jogo TecProg\Jogo\Jogo-main\Debug\Jogo TecProg.exe
