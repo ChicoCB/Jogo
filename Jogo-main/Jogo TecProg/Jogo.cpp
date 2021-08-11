@@ -5,8 +5,8 @@ Jogo::Jogo() :
     menuPrincipal(COMPRIMENTO_RESOLUCAO, ALTURA_RESOLUCAO, 4, this),
     menuJogadores(COMPRIMENTO_RESOLUCAO, ALTURA_RESOLUCAO, 3, this),
     menuFases(COMPRIMENTO_RESOLUCAO, ALTURA_RESOLUCAO, 3, this),
-    menuPause(COMPRIMENTO_RESOLUCAO, ALTURA_RESOLUCAO, 3, this),
-    menuColocacao(COMPRIMENTO_RESOLUCAO, ALTURA_RESOLUCAO, 6, this),
+    menuPause(COMPRIMENTO_RESOLUCAO, ALTURA_RESOLUCAO, 5, this),
+    menuColocacao(COMPRIMENTO_RESOLUCAO, ALTURA_RESOLUCAO, 8, this),
     Estado(0),
     Fazendeira(NULL),
     Bruxo(NULL),
@@ -34,6 +34,11 @@ Jogador* Jogo::getBruxo()
     return Bruxo;
 }
 
+Jogador* Jogo::getFazendeira()
+{
+    return Fazendeira;
+}
+
 Quarto& Jogo::getQuarto()
 {
     return Fase_Quarto;
@@ -52,6 +57,11 @@ void Jogo::setMultiplayer(bool multiplayer)
 bool Jogo::getMultiplayer()
 {
     return Multiplayer;
+}
+
+MenuColocacao& Jogo::getMenuColocacao()
+{
+    return menuColocacao;
 }
 
 void Jogo::Atualiza(float deltaTempo)

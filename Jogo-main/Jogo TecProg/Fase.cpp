@@ -96,7 +96,7 @@ void Fase::criaEstatico(sf::Vector2f posicao, const string textura)
 	novo->setDimensoes(sf::Vector2f(COMPRIMENTO_ESTATICO, ALTURA_ESTATICO));
 	novo->setOrigem();
 	novo->inicializa();
-	novo->setVida(5);
+	novo->setVida(1);
 	novo->setVelocidade(100.f);
 	novo->setJanela(Janela);
 	novo->setTextura(textura);

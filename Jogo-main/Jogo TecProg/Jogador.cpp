@@ -35,6 +35,7 @@ int Jogador::getPontuacao()
 
 void Jogador::inicializa()
 {
+	Pontuacao = 0;
 	CooldownAtaque = 0.f;
 	CooldownAtaqueMax = 0.5f;
 	Amigavel = true;
@@ -123,7 +124,7 @@ void Jogador::atiraProjetil()
 	novo->setFaseAtual(faseAtual);
 	//novo->setNaPiscina(false);
 
-	cout << "x: " << novo->getVelocidade().x << endl;
+	//cout << "x: " << novo->getVelocidade().x << endl;
 
 	//if (faseAtual->getPiscinaProjeteis().empty())
 		faseAtual->incluaProjetil(novo); //Incluído na fase
