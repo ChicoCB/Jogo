@@ -1,8 +1,8 @@
 #include "Fase.h"
 #include "Jogo.h"
 
-Fase::Fase():
-	PiscinaProjeteis()
+Fase::Fase()
+	//PiscinaProjeteis()
 {
 	Janela = NULL;
     View = NULL;
@@ -108,10 +108,12 @@ void Fase::criaEstatico(sf::Vector2f posicao, const string textura)
 	gerenciadorFisica.incluaEntidade(static_cast <Entidade*>(novo));
 }
 
+/*
 vector<Projetil*>& Fase::getPiscinaProjeteis()
 {
 	return PiscinaProjeteis;
 }
+*/
 
 Jogador* Fase::getFazendeira()
 {
@@ -150,6 +152,11 @@ void Fase::atualizaView()
 		View->setCenter(sf::Vector2f(Fazendeira->getPosicao().x, ALTURA_RESOLUCAO/2));
 }
 
+void Fase::incrementaPontuacao()
+{
+	//jogo->incrementaPontuacao();
+}
+
 void Fase::incluaProjetil(Projetil* projetil)
 {
 	//listaProjeteis.push_back(projetil);
@@ -171,6 +178,46 @@ void Fase::setJogo(Jogo* jg)
 void Fase::salvar()
 {
 	listaEntidades.salvar();
+}
+
+void Fase::recuperarProjeteis()
+{
+	ifstream recuperadorProjeteis("saves/Projeteis.dat", ios::in);
+
+	if (!recuperadorProjeteis)
+		cout << "Erro Projeteis." << endl;
+
+	while (!recuperadorProjeteis.eof())
+	{
+		Projetil* novo = NULL;
+		float posx, posy, movx, movy, velx, vely;
+		bool amigavel;
+
+		recuperadorProjeteis >> posx >> posy >> movx >> movy >> velx >> vely >> amigavel;
+
+		novo = new Projetil();
+
+		novo->setPosicao(sf::Vector2f(posx, posy));
+		novo->setVelocidade(sf::Vector2f(velx, vely));
+		novo->setMovimento(sf::Vector2f(movx, movy));
+		novo->setDimensoes(sf::Vector2f(10.f, 10.f));
+		novo->setAmigavel(amigavel);
+		novo->setOrigem();
+		novo->setJanela(Janela);
+		//novo->setTextura("");
+		//novo->setNaPiscina(false);
+
+		incluaProjetil(novo);
+
+		//listaEspinhos.push_back(novo);
+		listaEntidades.inclua(static_cast <Entidade*>(novo));
+		//listaObstaculos.push_back(static_cast<Obstaculo*>(novo));
+		gerenciadorFisica.incluaEntidade(static_cast <Entidade*>(novo));
+	}
+	recuperadorProjeteis.close();
+
+	ofstream deletar("saves/Projeteis.dat", ios::out);
+	deletar.close();
 }
 
 void Fase::recuperarEstaticos()
@@ -207,6 +254,9 @@ void Fase::recuperarEstaticos()
 	}
 
 	recuperadorEstaticos.close();
+
+	ofstream deletar("saves/Estaticos.dat", ios::out);
+	deletar.close();
 }
 
 void Fase::recuperarEspinhos()
@@ -230,7 +280,7 @@ void Fase::recuperarEspinhos()
 		novo->setDimensoes(sf::Vector2f(COMPRIMENTO_ESPINHO, ALTURA_ESPINHO));
 		novo->setOrigem();
 		novo->setJanela(Janela);
-		novo->setTextura("");
+		//novo->setTextura("");
 
 		//listaEspinhos.push_back(novo);
 		listaEntidades.inclua(static_cast <Entidade*>(novo));
@@ -238,6 +288,9 @@ void Fase::recuperarEspinhos()
 		gerenciadorFisica.incluaEntidade(static_cast <Entidade*>(novo));
 	}
 	recuperadorEspinhos.close();
+
+	ofstream deletar("saves/Espinhos.dat", ios::out);
+	deletar.close();
 }
 
 void Fase::recuperarTeias()
@@ -261,7 +314,7 @@ void Fase::recuperarTeias()
 		novo->setDimensoes(sf::Vector2f(COMPRIMENTO_TEIA, ALTURA_TEIA));
 		novo->setOrigem();
 		novo->setJanela(Janela);
-		novo->setTextura("");
+		//novo->setTextura("");
 
 		//listaEspinhos.push_back(novo);
 		listaEntidades.inclua(static_cast <Entidade*>(novo));
@@ -270,6 +323,9 @@ void Fase::recuperarTeias()
 	}
 
 	recuperadorTeias.close();
+
+	ofstream deletar("saves/Teias.dat", ios::out);
+	deletar.close();
 }
 
 void Fase::recuperarJogadores()
@@ -277,35 +333,62 @@ void Fase::recuperarJogadores()
 	ifstream recuperadorJogadores("saves/Jogadores.dat", ios::in);
 
 	if (!recuperadorJogadores)
-		cout << "Erro." << endl;
+		cout << "Erro Jogadores." << endl;
 
-	while (!recuperadorJogadores.eof())
-	{
-		int vida;
-		float posx, posy, movx, movy, cooldown;
+	int vida;
+	float posx, posy, movx, movy, cooldown;
 
-		recuperadorJogadores >> vida >> posx >> posy >> movx >> movy >> cooldown;
+	recuperadorJogadores >> vida >> posx >> posy >> movx >> movy >> cooldown;
 
-		Fazendeira = new Jogador();
-		Fazendeira->inicializa();
-		Fazendeira->setVida(vida);
-		Fazendeira->setPosicao(sf::Vector2f(posx, posy));
-		Fazendeira->setMovimentoX(movx);
-		Fazendeira->setMovimentoY(movy);
-		Fazendeira->setCooldownAtaque(cooldown);
-		Fazendeira->setVelocidade(400.f);
-		Fazendeira->setJanela(Janela);
-		Fazendeira->setTextura("textures/Fazendeira.png");
-		Fazendeira->setColidePlataforma(true);
-		Fazendeira->setDimensoes(sf::Vector2f(COMPRIMENTO_JOGADOR, ALTURA_JOGADOR));
-		Fazendeira->setTeclas(sf::Keyboard::D, sf::Keyboard::A, sf::Keyboard::W, sf::Keyboard::Space);
-		Fazendeira->setOrigem();
-		Fazendeira->setFaseAtual(this);
+	Fazendeira = new Jogador();
+	Fazendeira->inicializa();
+	Fazendeira->setVida(vida);
+	Fazendeira->setPosicao(sf::Vector2f(posx, posy));
+	Fazendeira->setTextura("textures/Fazendeira.png");
+	Fazendeira->setTeclas(sf::Keyboard::D, sf::Keyboard::A, sf::Keyboard::W, sf::Keyboard::Space);
+	Fazendeira->setMovimentoX(movx);
+	Fazendeira->setMovimentoY(movy);
+	Fazendeira->setCooldownAtaque(cooldown);
+	Fazendeira->setVelocidade(400.f);
+	Fazendeira->setAlturaPulo(250.f);
+	Fazendeira->setJanela(Janela);
+	Fazendeira->setColidePlataforma(true);
+	Fazendeira->setDimensoes(sf::Vector2f(COMPRIMENTO_JOGADOR, ALTURA_JOGADOR));
+	Fazendeira->setOrigem();
+	Fazendeira->setFaseAtual(this);
+	gerenciadorFisica.setFazendeira(Fazendeira);
+	listaEntidades.inclua(static_cast<Entidade*>(Fazendeira));
+	gerenciadorFisica.incluaPersonagem(static_cast<Personagem*>(Fazendeira));
 
-		listaEntidades.inclua(static_cast<Entidade*>(Fazendeira));
-		gerenciadorFisica.incluaPersonagem(static_cast<Personagem*>(Fazendeira));
-		gerenciadorFisica.setFazendeira(Fazendeira);
-	}
+		if (jogo->getMultiplayer())
+		{
+			cout << "criou bruxo" << endl;
+			Bruxo = new Jogador();
+			recuperadorJogadores >> vida >> posx >> posy >> movx >> movy >> cooldown;
+			
+			Bruxo->setTextura("textures/Bruxo.png");
+			
+			Bruxo->inicializa();
+			Bruxo->setVida(vida);
+			Bruxo->setPosicao(sf::Vector2f(posx, posy));
+			Bruxo->setTeclas(sf::Keyboard::Right, sf::Keyboard::Left, sf::Keyboard::Up, sf::Keyboard::Enter);			
+			Fazendeira->setMovimentoX(movx);
+			Bruxo->setMovimentoY(movy);
+			Bruxo->setCooldownAtaque(cooldown);
+			Bruxo->setVelocidade(400.f);
+			Bruxo->setAlturaPulo(250.f);
+			Bruxo->setJanela(Janela);
+			Bruxo->setColidePlataforma(true);
+			Bruxo->setDimensoes(sf::Vector2f(COMPRIMENTO_JOGADOR, ALTURA_JOGADOR));
+			Bruxo->setOrigem();
+			Bruxo->setFaseAtual(this);
 
+			listaEntidades.inclua(static_cast<Entidade*>(Bruxo));
+			gerenciadorFisica.incluaPersonagem(static_cast<Personagem*>(Bruxo));
+		}
+	
 	recuperadorJogadores.close();
+
+	ofstream deletar("saves/Jogadores.dat", ios::out);
+	deletar.close();
 }

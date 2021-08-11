@@ -10,9 +10,11 @@ Personagem::~Personagem()
 
 void Personagem::setVida(int vida)
 {
+	/*
 	if (vida == 0)
 		Desalocavel = true;
-
+	*/
+	
 	Vida = vida;
 }
 

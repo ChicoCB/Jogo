@@ -10,6 +10,7 @@ class Jogador : public Personagem
 private:
 	sf::Keyboard::Key Direita, Esquerda, Pulo, Atira;
 	Fase* faseAtual;
+	static int Pontuacao;
 
 	//static int Pontuacao;
 
@@ -19,6 +20,8 @@ public:
 	
 	//static void setPontuacao(int pontuacao);
 	//static int getPontuacao();
+	void incrementaPontuacao();
+	static int getPontuacao();
 	void inicializa();
 	void colidir();
 	void atualiza(float deltaTempo);

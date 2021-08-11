@@ -11,6 +11,26 @@ Fantasma::~Fantasma()
 {
 }
 
+void Fantasma::setLimiteXEsq(float limesq)
+{
+	limiteXEsq = limesq;
+}
+
+void Fantasma::setLimiteXDir(float limdir)
+{
+	limiteXDir = limdir;
+}
+
+void Fantasma::setLimiteYCima(float limiteycima)
+{
+	limiteYCima = limiteycima;
+}
+
+void Fantasma::setLimiteYBaixo(float limiteybaixo)
+{
+	limiteYBaixo = limiteybaixo;
+}
+
 void Fantasma::colidir(Personagem* personagem)
 {
 	if (personagem->getAmigavel())

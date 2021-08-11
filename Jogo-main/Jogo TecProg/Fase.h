@@ -20,7 +20,7 @@ protected:
 	Jogador* Bruxo;
 	GerenciadorFisica gerenciadorFisica;
 	ListaEntidades listaEntidades;
-	vector<Projetil*> PiscinaProjeteis;
+	//vector<Projetil*> PiscinaProjeteis;
 	Jogo* jogo;
 
 	sf::View* View;
@@ -43,7 +43,7 @@ public:
 	void criaTeia(sf::Vector2f posicao, const string textura = "");
 
 
-	vector<Projetil*>& getPiscinaProjeteis();
+	//vector<Projetil*>& getPiscinaProjeteis();
 	Jogador* getFazendeira();
 	GerenciadorFisica getGerenciadorFisica();
 	void setFazendeira(Jogador* fazendeira);
@@ -52,11 +52,13 @@ public:
 	virtual void atualiza(float deltaTempo);
 	void atualizaView();
 
+	void incrementaPontuacao();
 	void incluaProjetil(Projetil* projetil);
 	void setView(sf::View* view);
 	void setJogo(Jogo* jg);
 	void salvar();
 
+	void recuperarProjeteis();
 	void recuperarEstaticos();
 	void recuperarEspinhos();
 	void recuperarTeias();

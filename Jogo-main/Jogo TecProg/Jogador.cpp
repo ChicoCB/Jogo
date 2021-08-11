@@ -1,6 +1,8 @@
 #include "Jogador.h"
 #include "Fase.h"
 
+int Jogador::Pontuacao = 0;
+
 Jogador::Jogador():Personagem()
 {
 }
@@ -20,6 +22,16 @@ int Jogador::getPontuacao()
 	return Pontuacao;
 }
 */
+
+void Jogador::incrementaPontuacao()
+{
+	Pontuacao += 10;
+}
+
+int Jogador::getPontuacao()
+{
+	return Pontuacao;
+}
 
 void Jogador::inicializa()
 {
@@ -81,15 +93,17 @@ void Jogador::setFaseAtual(Fase* faseatual)
 
 void Jogador::atiraProjetil()
 {
-	
 	Projetil* novo = NULL;
 	
-	if (faseAtual->getPiscinaProjeteis().empty()) 
+	
+	//if (faseAtual->getPiscinaProjeteis().empty()) 
 		novo = new Projetil();
-	else {
+	/*else 
+	{
 		novo = faseAtual->getPiscinaProjeteis().back();
 		faseAtual->getPiscinaProjeteis().pop_back();
 	}
+	*/
 
 	if (olharDireita)
 	{
@@ -107,17 +121,16 @@ void Jogador::atiraProjetil()
 	novo->setAmigavel(true);
 	novo->setDesalocavel(false);
 	novo->setFaseAtual(faseAtual);
-	novo->setNaPiscina(false);
+	//novo->setNaPiscina(false);
 
-	if (faseAtual->getPiscinaProjeteis().empty())
+	cout << "x: " << novo->getVelocidade().x << endl;
+
+	//if (faseAtual->getPiscinaProjeteis().empty())
 		faseAtual->incluaProjetil(novo); //Incluído na fase
-	
 }
 
 void Jogador::salvar()
 {
-	if (!this->getDesalocavel())
-	{
 		ofstream gravadorJogador("saves/Jogadores.dat", ios::app);
 
 		if (!gravadorJogador)
@@ -131,7 +144,6 @@ void Jogador::salvar()
 			<< this->CooldownAtaque << endl;
 
 		gravadorJogador.close();
-	}
 }
 
 

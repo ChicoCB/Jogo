@@ -66,13 +66,14 @@ void Chefao::atiraProjetil(float altura)
 {
 	Projetil* novo = NULL;
 
-	if (faseAtual->getPiscinaProjeteis().empty())
-		novo = new Projetil();
+	
+	//if (faseAtual->getPiscinaProjeteis().empty())
+		novo = new Projetil();/*
 	else {
 		novo = faseAtual->getPiscinaProjeteis().back();
 		faseAtual->getPiscinaProjeteis().pop_back();
 	}
-
+	*/
 
 	if (olharDireita)
 	{
@@ -90,9 +91,9 @@ void Chefao::atiraProjetil(float altura)
 	novo->setAmigavel(false);
 	novo->setDesalocavel(false);
 	novo->setFaseAtual(faseAtual);
-	novo->setNaPiscina(false);
+	//novo->setNaPiscina(false);
 
-	if (faseAtual->getPiscinaProjeteis().empty())
+//	if (faseAtual->getPiscinaProjeteis().empty())
 		faseAtual->incluaProjetil(novo); //Incluído na fase
 }
 
@@ -100,19 +101,19 @@ void Chefao::atiraProjetil2()
 {
 	Projetil* novo = NULL;
 
-	if (faseAtual->getPiscinaProjeteis().empty()) 
+	//if (faseAtual->getPiscinaProjeteis().empty()) 
 		novo = new Projetil();
-	else {
-		novo = faseAtual->getPiscinaProjeteis().back();
-		faseAtual->getPiscinaProjeteis().pop_back();
-	}
+//	/else {
+	//	novo = faseAtual->getPiscinaProjeteis().back();
+	//	faseAtual->getPiscinaProjeteis().pop_back();
+	//}
 
 	float deltax = faseAtual->getFazendeira()->getPosicao().x - this->getPosicao().x;
 	float deltay = faseAtual->getFazendeira()->getPosicao().y - this->getPosicao().y;
 	float modulo = sqrt(deltax * deltax + deltay * deltay);
 
 	novo->setPosicao(sf::Vector2f(this->getPosicao().x, this->getPosicao().y));
-	novo->setVelocidade(sf::Vector2f(400 * deltax / modulo, 400 * deltay / modulo));
+	novo->setVelocidade(sf::Vector2f(400.f * deltax / modulo, 400.f * deltay / modulo));
 
 	novo->setDimensoes(sf::Vector2f(20.f, 20.f));
 	novo->setOrigem();
@@ -120,10 +121,12 @@ void Chefao::atiraProjetil2()
 	novo->setAmigavel(false);
 	novo->setDesalocavel(false);
 	novo->setFaseAtual(faseAtual);
-	novo->setNaPiscina(false);
+	//novo->setNaPiscina(false);
+	
+	//if (faseAtual->getPiscinaProjeteis().empty())
+	faseAtual->incluaProjetil(novo); //Incluído na fase	
+	//*/
 
-	if (faseAtual->getPiscinaProjeteis().empty())
-		faseAtual->incluaProjetil(novo); //Incluído na fase
 }
 
 void Chefao::atiraProjeteis()
@@ -146,8 +149,6 @@ void Chefao::salvar()
 		gravadorChefao << this->getVida() << ' '
 			<< this->getPosicao().x << ' '
 			<< this->getPosicao().y << ' '
-			<< this->getMovimento().x << ' '
-			<< this->getMovimento().y << ' '
 			<< this->CooldownAtaque << endl;
 
 		gravadorChefao.close();

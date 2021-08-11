@@ -12,6 +12,9 @@ Quintal::~Quintal()
 
 void Quintal::inicializa()
 {
+
+	View->setCenter(sf::Vector2f(COMPRIMENTO_RESOLUCAO/2, ALTURA_RESOLUCAO/2));
+
 	srand(time(NULL));
 
 	listaEntidades.inclua(static_cast <Entidade*> (&Cenario));
@@ -84,9 +87,9 @@ void Quintal::inicializa()
 	listaEntidades.inclua(static_cast<Entidade*> (&porta));
 	gerenciadorFisica.incluaEntidade(static_cast<Entidade*> (&porta));
 
+	listaEntidades.inclua(static_cast <Entidade*> (Fazendeira));
 	if (Bruxo != NULL)
 		listaEntidades.inclua(static_cast <Entidade*> (Bruxo));
-	listaEntidades.inclua(static_cast <Entidade*> (Fazendeira));
 }
 
 void Quintal::desenhar()
@@ -161,6 +164,7 @@ void Quintal::recuperar()
 	porta.setJogo(jogo);
 	listaEntidades.inclua(static_cast<Entidade*> (&porta));
 	gerenciadorFisica.incluaEntidade(static_cast<Entidade*> (&porta));
+	recuperarProjeteis();
 	recuperarEspinhos();
 	recuperarEstaticos();
 	recuperarPassaros();
@@ -206,6 +210,8 @@ void Quintal::recuperarPassaros()
 	}
 
 	recuperadorPassaros.close();
+	ofstream deletar("saves/Passaros.dat", ios::out);
+	deletar.close();
 }
 
 

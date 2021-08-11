@@ -6,6 +6,7 @@ Jogo::Jogo() :
     menuJogadores(COMPRIMENTO_RESOLUCAO, ALTURA_RESOLUCAO, 3, this),
     menuFases(COMPRIMENTO_RESOLUCAO, ALTURA_RESOLUCAO, 3, this),
     menuPause(COMPRIMENTO_RESOLUCAO, ALTURA_RESOLUCAO, 3, this),
+    menuColocacao(COMPRIMENTO_RESOLUCAO, ALTURA_RESOLUCAO, 6, this),
     Estado(0),
     Fazendeira(NULL),
     Bruxo(NULL),
@@ -26,6 +27,11 @@ void Jogo::setEstado(int estado)
 int Jogo::getEstado()
 {
     return Estado;
+}
+
+Jogador* Jogo::getBruxo()
+{
+    return Bruxo;
 }
 
 Quarto& Jogo::getQuarto()
@@ -62,6 +68,7 @@ void Jogo::Atualiza(float deltaTempo)
             menuFases.desenhar();
             break;
         case 3: //Menu Colocações
+            menuColocacao.desenhar();
             break;
         case 4: //Fase Quintal
             Fase_Quintal.atualiza(deltaTempo);
@@ -86,6 +93,7 @@ void Jogo::Inicializa()
     menuJogadores.setJanela(&gerenciadorGrafico.getJanela());
     menuFases.setJanela(&gerenciadorGrafico.getJanela());
     menuPause.setJanela(&gerenciadorGrafico.getJanela());
+    menuColocacao.setJanela(&gerenciadorGrafico.getJanela());
 
     //InicializaFases();
 
@@ -100,13 +108,16 @@ void Jogo::InicializaFases()
     Fase_Quarto.setFazendeira(Fazendeira);
     Fase_Quarto.setBruxo(Bruxo);
 
-    InicializaQuintal();
-    InicializaQuarto();
-
+    //InicializaQuintal();
+    //InicializaQuarto();
 }
 
 void Jogo::InicializaQuintal()
 {
+    if (!Multiplayer)
+        Bruxo = NULL;
+    Fase_Quintal.setFazendeira(Fazendeira);
+    Fase_Quintal.setBruxo(Bruxo);
     Fase_Quintal.setJanela(&gerenciadorGrafico.getJanela());
     Fase_Quintal.setView(&gerenciadorGrafico.getView());
     Fase_Quintal.setJogo(this);
@@ -115,6 +126,10 @@ void Jogo::InicializaQuintal()
 
 void Jogo::InicializaQuarto()
 {
+    if (!Multiplayer)
+        Bruxo = NULL;
+    Fase_Quarto.setFazendeira(Fazendeira);
+    Fase_Quarto.setBruxo(Bruxo);
     Fase_Quarto.setJanela(&gerenciadorGrafico.getJanela());
     Fase_Quarto.setView(&gerenciadorGrafico.getView());
     Fase_Quarto.setJogo(this);
@@ -158,6 +173,7 @@ void Jogo::LoopJogo()
                     menuFases.LoopMenu(&evento);
                     break;
                 case 3: //Menu Colocações
+                    menuColocacao.LoopMenu(&evento);
                     break;
                 case 6:
                     menuPause.LoopMenu(&evento);
@@ -191,7 +207,8 @@ void Jogo::Salvar()
     ofstream gravadorEstado("saves/Estado.dat", ios::app);
     if (!gravadorEstado)
         cout << "Erro." << endl;
-    gravadorEstado << menuPause.getEstadoAtual() << endl;
+    gravadorEstado << menuPause.getEstadoAtual() << ' ' 
+         << Multiplayer << endl;
     gravadorEstado.close();
 }
 
@@ -205,7 +222,7 @@ void Jogo::Recuperar()
     int estado;
 
     while (!recuperadorEstado.eof())
-        recuperadorEstado >> estado;
+        recuperadorEstado >> estado >> Multiplayer;
 
     if (estado == 4)
     {
@@ -225,4 +242,7 @@ void Jogo::Recuperar()
     }
 
     recuperadorEstado.close();
+
+    ofstream deletar("saves/Estado.dat", ios::out);
+    deletar.close();
 }

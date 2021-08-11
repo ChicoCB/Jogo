@@ -80,13 +80,13 @@ void Passaro::atiraProjetil()
 {
 	Projetil* novo = NULL;
 
-	if (faseAtual->getPiscinaProjeteis().empty()) {
+	//if (faseAtual->getPiscinaProjeteis().empty()) {
 		novo = new Projetil();
-	}
-	else {
-		novo = faseAtual->getPiscinaProjeteis().back();
-		faseAtual->getPiscinaProjeteis().pop_back();
-	}
+//	}
+	//else {
+	//	novo = faseAtual->getPiscinaProjeteis().back();
+	//	faseAtual->getPiscinaProjeteis().pop_back();
+	//}
 
 	float deltax = faseAtual->getFazendeira()->getPosicao().x - this->getPosicao().x;
 	float deltay = faseAtual->getFazendeira()->getPosicao().y - this->getPosicao().y;
@@ -95,12 +95,12 @@ void Passaro::atiraProjetil()
 	if (olharDireita)
 	{
 		novo->setPosicao(sf::Vector2f(this->getPosicao().x + this->getDimensoes().x / 2, this->getPosicao().y));
-		novo->setVelocidade(sf::Vector2f(400 * deltax / modulo, 400 * deltay / modulo));
+		novo->setVelocidade(sf::Vector2f(400.f * deltax / modulo, 400.f * deltay / modulo));
 	}
 	else
 	{
 		novo->setPosicao(sf::Vector2f(this->getPosicao().x - this->getDimensoes().x / 2, this->getPosicao().y));
-		novo->setVelocidade(sf::Vector2f(400 * deltax / modulo, 400 * deltay / modulo));
+		novo->setVelocidade(sf::Vector2f(400.f * deltax / modulo, 400.f * deltay / modulo));
 	}
 	novo->setDimensoes(sf::Vector2f(10.f, 10.f));
 	novo->setOrigem();
@@ -108,10 +108,12 @@ void Passaro::atiraProjetil()
 	novo->setAmigavel(false);
 	novo->setDesalocavel(false);
 	novo->setFaseAtual(faseAtual);
-	novo->setNaPiscina(false);
+	//novo->setNaPiscina(false);
 
-	if (faseAtual->getPiscinaProjeteis().empty())
+
+	//if (faseAtual->getPiscinaProjeteis().empty())/*
 		faseAtual->incluaProjetil(novo); //Incluído na fase
+
 }
 
 void Passaro::salvar()
