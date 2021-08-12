@@ -68,6 +68,6 @@ public:
 	void recuperarEstaticos();
 	void recuperarEspinhos();
 	void recuperarTeias();
-	void recuperarJogadores();
+	//void recuperarJogadores();
 };
 

@@ -11,6 +11,7 @@ private:
 	bool Digitando;
 	sf::String Nome;
 	int Limite;
+	int EstadoAnterior;
 
 public:
 	MenuColocacao(unsigned int comprimento, unsigned int altura, int tamanho, Jogo* jg);
@@ -18,9 +19,11 @@ public:
 
 	//void setEditavel(bool editavel);
 
+	void Recupera();
 	void Inicializa();
 
 	void setEditavel(bool Editavel);
+	void setEstadoAnterior(int estadoanterior);
 
 	void LoopMenu(sf::Event* evento);
 };

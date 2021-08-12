@@ -25,20 +25,18 @@ void Porta::colidir(Personagem* personagem)
 	{
 		if (jogo->getEstado() == 4)
 		{
-			jogo->getFazendeira()->setFaseAtual(&jogo->getQuarto());
 			jogo->getFazendeira()->setPosicao(sf::Vector2f(200.f, 200.f));
 			if (jogo->getMultiplayer())
-			{
-				jogo->getBruxo()->setFaseAtual(&jogo->getQuarto());
 				jogo->getBruxo()->setPosicao(sf::Vector2f(200.f, 200.f));
-			}
+		
+			jogo->InicializaQuarto();
 
 			jogo->setEstado(5);
 		}
 		else 
 		{
-			jogo->getMenuColocacao().setEditavel(true);
-			jogo->setEstado(3);	
+			//jogo->getMenuColocacao().setEditavel(true);
+			jogo->setEstado(7);	
 		}
 	}
 }

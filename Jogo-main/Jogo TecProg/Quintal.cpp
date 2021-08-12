@@ -158,7 +158,15 @@ void Quintal::recuperar()
 	recuperarEstaticos();
 	recuperarPassaros();
 	recuperarTeias();
-	recuperarJogadores();
+	//recuperarJogadores();
+	Fazendeira->setFaseAtual(this);
+	listaEntidades.inclua(static_cast<Entidade*>(Fazendeira));
+	listaPersonagens.inclua(static_cast <Personagem*> (Fazendeira));
+	if (jogo->getMultiplayer()) {
+		Bruxo->setFaseAtual(this);
+		listaEntidades.inclua(static_cast<Entidade*>(Bruxo));
+		listaPersonagens.inclua(static_cast <Personagem*> (Bruxo));
+	}
 }
 
 void Quintal::recuperarPassaros()
@@ -200,8 +208,8 @@ void Quintal::recuperarPassaros()
 	}
 
 	recuperadorPassaros.close();
-	ofstream deletar("saves/Passaros.dat", ios::out);
-	deletar.close();
+	//ofstream deletar("saves/Passaros.dat", ios::out);
+	//deletar.close();
 }
 
 

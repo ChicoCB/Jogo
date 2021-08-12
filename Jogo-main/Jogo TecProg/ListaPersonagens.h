@@ -17,5 +17,7 @@ public:
     void limpar();
     void proximo();
     void inicio();
+
+    Personagem* operator[](int indice);
 };
 

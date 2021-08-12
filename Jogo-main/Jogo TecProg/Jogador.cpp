@@ -78,7 +78,8 @@ void Jogador::setTeclas(sf::Keyboard::Key direita, sf::Keyboard::Key esquerda, s
 
 void Jogador::setFaseAtual(Fase* faseatual)
 {
-	faseAtual = faseatual;
+	if (faseatual != NULL)
+		faseAtual = faseatual;
 }
 
 void Jogador::atiraProjetil()

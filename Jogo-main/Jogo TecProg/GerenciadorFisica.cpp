@@ -33,18 +33,14 @@ void GerenciadorFisica::incluaEntidade(Entidade* entidade)
 
 void GerenciadorFisica::checaColisoes()
 {
-	listaPersonagens->inicio();
 	for (unsigned int i = 0; i < listaPersonagens->tamanho(); i++)
 	{
-		listaEntidades->inicio();
 		for (unsigned int j = 0; j < listaEntidades->tamanho(); j++)
 		{
-			checaColisao(listaPersonagens->getAtual(), listaEntidades->getAtual());
-			listaEntidades->proximo();
+			checaColisao((*listaPersonagens)[i], (*listaEntidades)[j]);
 		}
-		listaPersonagens->proximo();
 	}
-	cout << listaEntidades->tamanho() << endl;
+	//cout << listaEntidades->tamanho() << endl;
 }
 
 void GerenciadorFisica::checaColisao(Personagem* personagem, Entidade* entidade)

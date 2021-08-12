@@ -60,6 +60,8 @@ void Quarto::inicializa()
 	Cenario.setDimensoes(sf::Vector2f(COMPRIMENTO_CENARIO, ALTURA_RESOLUCAO));
 	Cenario.setPosicao(sf::Vector2f(0.f, 0.f));
 
+	criaPlataformas();
+
 	for (int i = 0; i < rand() % 4 + 3; i++)
 	{
 		criaFantasma(sf::Vector2f(rand() % (static_cast<int>(COMPRIMENTO_CENARIO - 400)) + 200, 
@@ -78,26 +80,26 @@ void Quarto::inicializa()
 			ALTURA_RESOLUCAO - (ALTURA_PLATAFORMA + ALTURA_TEIA / 2)));
 	}
 
-
-	/*
 	for (int i = 0; i < rand() % 6 + 3; i++)
 	{
 		criaEspinho(sf::Vector2f(rand() % (static_cast<int>(COMPRIMENTO_CENARIO-400)) + 200,
 			ALTURA_RESOLUCAO - (ALTURA_PLATAFORMA + ALTURA_ESPINHO/2)));
 	}
-	*/
-
+	
 	criaChefao(sf::Vector2f(2000.f,600.f));
 
+	if (Fazendeira == NULL)
+		cout << "Eh null" << endl;
+	Fazendeira->setFaseAtual(this);
 	listaEntidades.inclua(static_cast <Entidade*> (Fazendeira));
 	listaPersonagens.inclua(static_cast <Personagem*> (Fazendeira));
 	if (jogo->getMultiplayer())
 	{
+		Bruxo->setFaseAtual(this);
 		listaEntidades.inclua(static_cast <Entidade*> (Bruxo));
 		listaPersonagens.inclua(static_cast <Personagem*> (Bruxo));
 	}
 
-	criaPlataformas();
 }
 
 void Quarto::desenhar()
@@ -134,7 +136,6 @@ void Quarto::atualiza(float deltaTempo)
 
 void Quarto::recuperar()
 {
-	
 	listaEntidades.inclua(static_cast<Entidade*> (&Cenario));
 	criaPlataformas();
 	Cenario.setJanela(Janela);
@@ -144,13 +145,23 @@ void Quarto::recuperar()
 
 	gerenciadorFisica.setListaEntidades(&listaEntidades);
 	gerenciadorFisica.setListaPersonagens(&listaPersonagens);
-	//recuperarEspinhos();
 	recuperarProjeteis();
 	recuperarEstaticos();
 	recuperarFantasmas();
 	recuperarTeias();
+	recuperarEspinhos();
 	recuperarChefao();
-	recuperarJogadores();
+	//recuperarJogadores();
+
+	Fazendeira->setFaseAtual(this);
+	listaEntidades.inclua(static_cast<Entidade*>(Fazendeira));
+	listaPersonagens.inclua(static_cast <Personagem*> (Fazendeira));
+	if (jogo->getMultiplayer()) {
+		Bruxo->setFaseAtual(this);
+		listaEntidades.inclua(static_cast<Entidade*>(Bruxo));
+		listaPersonagens.inclua(static_cast <Personagem*> (Bruxo));
+	}
+
 }
 
 void Quarto::recuperarFantasmas()
@@ -194,8 +205,11 @@ void Quarto::recuperarFantasmas()
 
 	recuperadorFantasmas.close();
 
+	/*
 	ofstream deletar("saves/Fantasmas.dat", ios::out);
 	deletar.close();
+	*/
+
 }
 
 void Quarto::recuperarChefao()
@@ -234,8 +248,8 @@ void Quarto::recuperarChefao()
 
 	recuperadorChefao.close();
 
-	ofstream deletar("saves/Chefao.dat", ios::out);
-	deletar.close();
+	// deletar("saves/Chefao.dat", ios::out);
+	//deletar.close();
 }
 
 void Quarto::criaFantasma(sf::Vector2f posicao)
@@ -292,7 +306,6 @@ void Quarto::criaPlataformas()
 		criaPlataforma(sf::Vector2f(500.f + COMPRIMENTO_PLATAFORMA * i, 517.5f), "textures/Estante_meio.png");
 		criaPlataforma(sf::Vector2f(1800.f + COMPRIMENTO_PLATAFORMA * i, 157.5f), "textures/Estante_meio.png");
 		//criaPlataforma(sf::Vector2f(1800.f + COMPRIMENTO_PLATAFORMA*i, 1.f*(ALTURA_RESOLUCAO/4.f - ALTURA_PLATAFORMA)/4.f + 0.f*ALTURA_PLATAFORMA + ALTURA_PLATAFORMA/2.f));
-
 	}
 
 	for (int i = 0; i < 5; i++) {

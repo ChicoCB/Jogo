@@ -1,6 +1,6 @@
 #include "Chefao.h"
 
-Chefao::Chefao():Inimigo()
+Chefao::Chefao(): Inimigo(), Atirador()
 {
 }
 
@@ -26,10 +26,13 @@ void Chefao::inicializa()
 	CooldownInvencibilidadeMax = -1;
 }
 
+/*
 void Chefao::setFaseAtual(Fase* faseatual)
 {
 	faseAtual = faseatual;
 }
+
+*/
 
 void Chefao::atualiza(float deltaTempo)
 {
@@ -58,6 +61,7 @@ void Chefao::atualiza(float deltaTempo)
 	this->movimenta(Movimento * deltaTempo);
 }
 
+/*
 void Chefao::atiraProjetil(float altura)
 {
 	Projetil* novo = NULL;
@@ -88,7 +92,7 @@ void Chefao::atiraProjetil2()
 {
 	Projetil* novo = NULL;
 
-	novo = new Projetil();	
+	novo = new Projetil();
 
 	float deltax = faseAtual->getFazendeira()->getPosicao().x - this->getPosicao().x;
 	float deltay = faseAtual->getFazendeira()->getPosicao().y - this->getPosicao().y;
@@ -104,16 +108,26 @@ void Chefao::atiraProjetil2()
 	novo->setDesalocavel(false);
 	novo->setFaseAtual(faseAtual);
 
-	faseAtual->incluaProjetil(novo); //Incluído na fase	
+	faseAtual->incluaProjetil(novo); //Incluído na fase
 
 }
+*/
+
 
 void Chefao::atiraProjeteis()
 {
+	atiraProjetilHorizontal(olharDireita, getPosicao(), getDimensoes(), getPosicao().y);
+	atiraProjetilHorizontal(olharDireita, getPosicao(), getDimensoes(), getPosicao().y +  getDimensoes().y/2);
+	atiraProjetilHorizontal(olharDireita, getPosicao(), getDimensoes(), getPosicao().y - getDimensoes().y/2);
+
+	atiraProjetilDirecionado(olharDireita, getPosicao(), getDimensoes());
+	/*
 	atiraProjetil2();
 	atiraProjetil(this->getPosicao().y + this->getDimensoes().y / 2);
 	atiraProjetil(this->getPosicao().y);
 	atiraProjetil(this->getPosicao().y - this->getDimensoes().y / 2);
+	*/
+
 }
 
 void Chefao::salvar()

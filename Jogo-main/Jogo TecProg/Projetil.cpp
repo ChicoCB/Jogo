@@ -49,20 +49,18 @@ void Projetil::atualiza(float deltaTempo)
 {
 	Movimento = sf::Vector2f(0.f, 0.f);
 
-	/*
-	if (Desalocavel)
-	{
-		this->setDimensoes(sf::Vector2f(0.f, 0.f));
-		this->setVelocidade(sf::Vector2f(0.f, 0.f));
-		this->setPosicao(sf::Vector2f(0.f, 0.f));
-		//cout << getVelocidade() << deltaTempo << endl;
-	}
-	*/
-
 	Movimento.x += Velocidade.x;
 	Movimento.y += Velocidade.y;
 
 	this->movimenta(Movimento * deltaTempo);
+
+	if (this->getPosicao().x <= -this->getDimensoes().x / 2 ||
+		this->getPosicao().x >= COMPRIMENTO_CENARIO + this->getDimensoes().x / 2 ||
+		this->getPosicao().y <= -this->getDimensoes().y / 2 ||
+		this->getPosicao().y >= ALTURA_RESOLUCAO + this->getDimensoes().y / 2) 
+	{
+		this->setDesalocavel(true);
+	}
 }
 
 void Projetil::movimenta(sf::Vector2f movimento)

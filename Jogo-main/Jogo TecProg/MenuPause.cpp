@@ -40,6 +40,7 @@ void MenuPause::LoopMenu(sf::Event* evento)
 				jogo->Salvar();
 				break;
 			case 2:
+				jogo->getMenuColocacao().setEstadoAnterior(jogo->getEstado());
 				jogo->getMenuColocacao().setEditavel(true);
 				jogo->setEstado(3);
 				break;

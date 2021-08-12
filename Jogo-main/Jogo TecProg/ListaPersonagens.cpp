@@ -39,8 +39,6 @@ void ListaPersonagens::limpar()
 		{
 			listaPersonagens.pop(pE);
 		}
-
-		
 	}
 }
 
@@ -52,5 +50,16 @@ void ListaPersonagens::proximo()
 void ListaPersonagens::inicio()
 {
 	listaPersonagens.inicio();
+}
+
+Personagem* ListaPersonagens::operator[](int indice)
+{
+	listaPersonagens.inicio();
+
+	for (int i = 0; i < indice; i++) {
+		listaPersonagens.proximo();
+	}
+
+	return getAtual();
 }
 

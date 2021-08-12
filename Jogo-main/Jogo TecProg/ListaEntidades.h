@@ -23,6 +23,7 @@ public:
 
     void remove(Entidade* pentidade);
 
+    Entidade* operator[](int indice);
 };
 
 

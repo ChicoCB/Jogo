@@ -104,3 +104,14 @@ void ListaEntidades::remove(Entidade* pentidade)
 {
     listaEntidades.remove(pentidade);
 }
+
+Entidade* ListaEntidades::operator[](int indice)
+{
+    listaEntidades.inicio();
+
+    for (int i = 0; i < indice; i++) {
+        listaEntidades.proximo();
+    }
+
+    return getAtual();
+}

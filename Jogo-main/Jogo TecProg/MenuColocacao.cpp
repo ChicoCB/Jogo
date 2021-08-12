@@ -2,8 +2,9 @@
 #include "Jogo.h"
 
 MenuColocacao::MenuColocacao(unsigned int comprimento, unsigned int altura, int tamanho, Jogo* jg):
-	Menu(comprimento, altura, tamanho, jg)
-{
+	Menu(comprimento, altura, tamanho, jg),
+	EstadoAnterior(0)
+{	
 	Inicializa();
 }
 
@@ -36,7 +37,7 @@ void MenuColocacao::LoopMenu(sf::Event* evento)
 					if (Nome.getSize() != 0)
 						Nome.erase(Nome.getSize() - 1);
 				}
-				else if (evento->text.unicode < 128) {
+				else if (evento->text.unicode > 31 && evento->text.unicode < 128) {
 					Nome.insert(Nome.getSize(), evento->text.unicode);
 				}
 
@@ -67,6 +68,28 @@ void MenuColocacao::LoopMenu(sf::Event* evento)
 					switch (Indice)
 					{
 						case 5:
+							if (1) {
+								ofstream deletarColocacao("saves/Colocacao.dat", ios::out);
+								deletarColocacao.close();
+
+								ofstream gravadorColocacao("saves/Colocacao.dat", ios::app);
+								if (!gravadorColocacao)
+									cout << "Erro." << endl;
+
+								string string1 = menu[1].getString(),
+									string2 = menu[2].getString(),
+									string3 = menu[3].getString(),
+									string4 = menu[4].getString();
+
+								cout << string1 << " " << string2 << " " << string3 << " " << string4 << " ";
+
+								gravadorColocacao << string1 << '\n'
+												  << string2 << '\n'
+									              << string3 << '\n'
+									              << string4 << '\n' << endl;
+
+								gravadorColocacao.close();
+							}
 							break;
 						case 6:
 							menu[1].setString("0 - Vazio");
@@ -76,7 +99,7 @@ void MenuColocacao::LoopMenu(sf::Event* evento)
 							break;
 						case 7:
 							menu[Indice].setFillColor(sf::Color::Green);
-							jogo->setEstado(0);
+							jogo->setEstado(EstadoAnterior);
 							break;
 					}
 				
@@ -84,7 +107,43 @@ void MenuColocacao::LoopMenu(sf::Event* evento)
 		}
 }
 
-void MenuColocacao::Inicializa() {
+void MenuColocacao::Recupera() 
+{
+	ifstream recuperadorColocacao("saves/Colocacao.dat", ios::in);
+
+	if (!recuperadorColocacao)
+		cout << "Erro." << endl;
+
+	int i = 1;
+	string aux, string = "";
+
+	while (!recuperadorColocacao.eof()) {
+		recuperadorColocacao >> aux;
+		string += aux + " ";
+		aux = "";
+		if (recuperadorColocacao.get() == '\n') {
+			menu[i].setString(string);
+			i++;
+			string = "";
+		}
+	}
+	//recuperadorColocacao >> string1 >> string2 >> string3 >> string4;
+
+	//cout << string1 << " " << string2 << " " << string3 << " " << string4 << " ";
+
+	/*
+	menu[1].setString(string1);
+	menu[2].setString(string2);
+	menu[3].setString(string3);
+	menu[4].setString(string4);
+	*/
+
+	recuperadorColocacao.close();
+
+}
+
+void MenuColocacao::Inicializa() 
+{
 	
 	Digitando = false;
 
@@ -143,4 +202,9 @@ void MenuColocacao::setEditavel(bool Editavel)
 		Limite = 5;
 	}
 
+}
+
+void MenuColocacao::setEstadoAnterior(int estadoanterior)
+{
+	EstadoAnterior = estadoanterior;
 }

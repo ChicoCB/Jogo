@@ -231,8 +231,6 @@ void Fase::recuperarProjeteis()
 	}
 	recuperadorProjeteis.close();
 
-	ofstream deletar("saves/Projeteis.dat", ios::out);
-	deletar.close();
 }
 
 void Fase::recuperarEstaticos()
@@ -269,8 +267,8 @@ void Fase::recuperarEstaticos()
 
 	recuperadorEstaticos.close();
 
-	ofstream deletar("saves/Estaticos.dat", ios::out);
-	deletar.close();
+	//ofstream deletar("saves/Estaticos.dat", ios::out);
+	//deletar.close();
 }
 
 void Fase::recuperarEspinhos()
@@ -300,8 +298,8 @@ void Fase::recuperarEspinhos()
 	}
 	recuperadorEspinhos.close();
 
-	ofstream deletar("saves/Espinhos.dat", ios::out);
-	deletar.close();
+	//ofstream deletar("saves/Espinhos.dat", ios::out);
+	//deletar.close();
 }
 
 void Fase::recuperarTeias()
@@ -332,10 +330,11 @@ void Fase::recuperarTeias()
 
 	recuperadorTeias.close();
 
-	ofstream deletar("saves/Teias.dat", ios::out);
-	deletar.close();
+	//ofstream deletar("saves/Teias.dat", ios::out);
+	//deletar.close();
 }
 
+/*
 void Fase::recuperarJogadores()
 {
 	ifstream recuperadorJogadores("saves/Jogadores.dat", ios::in);
@@ -363,7 +362,6 @@ void Fase::recuperarJogadores()
 	Fazendeira->setColidePlataforma(true);
 	Fazendeira->setDimensoes(sf::Vector2f(COMPRIMENTO_JOGADOR, ALTURA_JOGADOR));
 	Fazendeira->setOrigem();
-	Fazendeira->setFaseAtual(this);
 	//gerenciadorFisica.setFazendeira(Fazendeira);
 	listaEntidades.inclua(static_cast<Entidade*>(Fazendeira));
 	listaPersonagens.inclua(static_cast <Personagem*> (Fazendeira));
@@ -374,13 +372,13 @@ void Fase::recuperarJogadores()
 			cout << "criou bruxo" << endl;
 			Bruxo = new Jogador();
 			recuperadorJogadores >> vida >> posx >> posy >> movx >> movy >> cooldown;
-			
+
 			Bruxo->setTextura("textures/Bruxo.png");
-			
+
 			Bruxo->inicializa();
 			Bruxo->setVida(vida);
 			Bruxo->setPosicao(sf::Vector2f(posx, posy));
-			Bruxo->setTeclas(sf::Keyboard::Right, sf::Keyboard::Left, sf::Keyboard::Up, sf::Keyboard::Enter);			
+			Bruxo->setTeclas(sf::Keyboard::Right, sf::Keyboard::Left, sf::Keyboard::Up, sf::Keyboard::Enter);
 			Bruxo->setMovimentoX(movx);
 			Bruxo->setMovimentoY(movy);
 			Bruxo->setCooldownAtaque(cooldown);
@@ -390,14 +388,16 @@ void Fase::recuperarJogadores()
 			Bruxo->setColidePlataforma(true);
 			Bruxo->setDimensoes(sf::Vector2f(COMPRIMENTO_JOGADOR, ALTURA_JOGADOR));
 			Bruxo->setOrigem();
-			Bruxo->setFaseAtual(this);
 
 			listaEntidades.inclua(static_cast<Entidade*>(Bruxo));
 			listaPersonagens.inclua(static_cast <Personagem*> (Bruxo));
 		}
-	
+
 	recuperadorJogadores.close();
 
-	ofstream deletar("saves/Jogadores.dat", ios::out);
-	deletar.close();
+	//ofstream deletar("saves/Jogadores.dat", ios::out);
+	//deletar.close();
 }
+*/
+
+
