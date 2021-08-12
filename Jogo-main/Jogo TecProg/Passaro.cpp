@@ -44,16 +44,12 @@ void Passaro::setFaseAtual(Fase* faseatual)
 
 void Passaro::atualiza(float deltaTempo)
 {
+	/*
 	if (Desalocavel)
 	{
-		this->setDimensoes(sf::Vector2f(0.f, 0.f));
-		this->setVelocidade(0.f);
-		this->setPosicao(sf::Vector2f(0.f, 0.f));
-		/*
-		Jogador::setPontuacao(Jogador::getPontuacao() + 1);
-		cout << "Score: " << Jogador::getPontuacao() << endl;
-		*/
+		
 	}
+	*/
 
 	Movimento = sf::Vector2f(0.f, 0.f);
 	sf::Vector2f posicao = getPosicao();
@@ -80,13 +76,7 @@ void Passaro::atiraProjetil()
 {
 	Projetil* novo = NULL;
 
-	//if (faseAtual->getPiscinaProjeteis().empty()) {
-		novo = new Projetil();
-//	}
-	//else {
-	//	novo = faseAtual->getPiscinaProjeteis().back();
-	//	faseAtual->getPiscinaProjeteis().pop_back();
-	//}
+	novo = new Projetil();
 
 	float deltax = faseAtual->getFazendeira()->getPosicao().x - this->getPosicao().x;
 	float deltay = faseAtual->getFazendeira()->getPosicao().y - this->getPosicao().y;
@@ -108,12 +98,8 @@ void Passaro::atiraProjetil()
 	novo->setAmigavel(false);
 	novo->setDesalocavel(false);
 	novo->setFaseAtual(faseAtual);
-	//novo->setNaPiscina(false);
 
-
-	//if (faseAtual->getPiscinaProjeteis().empty())/*
-		faseAtual->incluaProjetil(novo); //Incluído na fase
-
+	faseAtual->incluaProjetil(novo); //Incluído na fase
 }
 
 void Passaro::salvar()

@@ -12,7 +12,6 @@ Fase::~Fase()
 {
 //Desalocar todas as entidades de uma só vez?
     View = NULL;
-
 }
 
 void Fase::criaEntidades()
@@ -32,7 +31,7 @@ void Fase::criaPlataforma(sf::Vector2f posicao, const string textura, sf::Vector
 	listaEntidades.inclua(static_cast <Entidade*> (nova));
 	//listaObstaculos.push_back(static_cast<Obstaculo*>(nova));
 	//gerenciadorFisica.incluaPlataforma(nova);
-	gerenciadorFisica.incluaEntidade(static_cast<Entidade*>(nova));
+	//gerenciadorFisica.incluaEntidade(static_cast<Entidade*>(nova));
 }
 
 void Fase::criaChao(){
@@ -47,7 +46,7 @@ void Fase::criaChao(){
 	//ListaPlataformas.push_back(nova);
 	listaEntidades.inclua(static_cast <Entidade*> (nova));
 	//gerenciadorFisica.incluaPlataforma(nova);
-	gerenciadorFisica.incluaEntidade(static_cast<Entidade*>(nova));
+	//gerenciadorFisica.incluaEntidade(static_cast<Entidade*>(nova));
 }
 
 void Fase::criaEspinho(sf::Vector2f posicao, const string textura)
@@ -65,7 +64,7 @@ void Fase::criaEspinho(sf::Vector2f posicao, const string textura)
 	//listaEspinhos.push_back(novo);
 	listaEntidades.inclua(static_cast <Entidade*>(novo));
 	//listaObstaculos.push_back(static_cast<Obstaculo*>(novo));
-	gerenciadorFisica.incluaEntidade(static_cast <Entidade*>(novo));
+	//gerenciadorFisica.incluaEntidade(static_cast <Entidade*>(novo));
 }
 
 void Fase::criaTeia(sf::Vector2f posicao, const string textura)
@@ -84,7 +83,12 @@ void Fase::criaTeia(sf::Vector2f posicao, const string textura)
 	//ListaTeias.push_back(novo);
 	listaEntidades.inclua(static_cast <Entidade*>(novo));
 	//listaObstaculos.push_back(static_cast<Obstaculo*>(novo));
-	gerenciadorFisica.incluaEntidade(static_cast <Entidade*>(novo));
+	//gerenciadorFisica.incluaEntidade(static_cast <Entidade*>(novo));
+}
+
+void Fase::setChefaoMorreu(bool chefaomorreu)
+{
+	ChefaoMorreu = chefaomorreu;
 }
 
 void Fase::criaEstatico(sf::Vector2f posicao, const string textura)
@@ -96,7 +100,7 @@ void Fase::criaEstatico(sf::Vector2f posicao, const string textura)
 	novo->setDimensoes(sf::Vector2f(COMPRIMENTO_ESTATICO, ALTURA_ESTATICO));
 	novo->setOrigem();
 	novo->inicializa();
-	novo->setVida(5);
+	novo->setVida(1);
 	novo->setVelocidade(100.f);
 	novo->setJanela(Janela);
 	novo->setTextura(textura);
@@ -104,8 +108,9 @@ void Fase::criaEstatico(sf::Vector2f posicao, const string textura)
 
 	//listaEstaticos.push_back(novo);
 	listaEntidades.inclua(static_cast <Entidade*> (novo));
-	gerenciadorFisica.incluaPersonagem(novo);
-	gerenciadorFisica.incluaEntidade(static_cast <Entidade*>(novo));
+	listaPersonagens.inclua(static_cast <Personagem*> (novo));
+	//gerenciadorFisica.incluaPersonagem(novo);
+	//gerenciadorFisica.incluaEntidade(static_cast <Entidade*>(novo));
 }
 
 /*
@@ -148,8 +153,13 @@ void Fase::atualiza(float deltaTempo)
 
 void Fase::atualizaView()
 {
+
 	if (Fazendeira->getPosicao().x > COMPRIMENTO_RESOLUCAO / 2 && Fazendeira->getPosicao().x < COMPRIMENTO_CENARIO - COMPRIMENTO_RESOLUCAO / 2)
 		View->setCenter(sf::Vector2f(Fazendeira->getPosicao().x, ALTURA_RESOLUCAO/2));
+	else if (Fazendeira->getPosicao().x > COMPRIMENTO_CENARIO - COMPRIMENTO_RESOLUCAO / 2)
+		View->setCenter(sf::Vector2f(COMPRIMENTO_CENARIO - COMPRIMENTO_RESOLUCAO / 2, ALTURA_RESOLUCAO/2));
+	else
+		View->setCenter(sf::Vector2f(COMPRIMENTO_RESOLUCAO / 2, ALTURA_RESOLUCAO/2));
 }
 
 void Fase::incrementaPontuacao()
@@ -162,7 +172,7 @@ void Fase::incluaProjetil(Projetil* projetil)
 	//listaProjeteis.push_back(projetil);
 	listaEntidades.inclua(projetil);
 	//gerenciadorFisica.incluaProjetil(projetil);
-	gerenciadorFisica.incluaEntidade(static_cast<Entidade*>(projetil));
+	//gerenciadorFisica.incluaEntidade(static_cast<Entidade*>(projetil));
 }
 
 void Fase::setView(sf::View* view)
@@ -173,6 +183,11 @@ void Fase::setView(sf::View* view)
 void Fase::setJogo(Jogo* jg)
 {
 	jogo = jg;
+}
+
+Jogo* Fase::getJogo()
+{
+	return jogo;
 }
 
 void Fase::salvar()
@@ -210,9 +225,9 @@ void Fase::recuperarProjeteis()
 		incluaProjetil(novo);
 
 		//listaEspinhos.push_back(novo);
-		listaEntidades.inclua(static_cast <Entidade*>(novo));
+		//listaEntidades.inclua(static_cast <Entidade*>(novo));
 		//listaObstaculos.push_back(static_cast<Obstaculo*>(novo));
-		gerenciadorFisica.incluaEntidade(static_cast <Entidade*>(novo));
+		//gerenciadorFisica.incluaEntidade(static_cast <Entidade*>(novo));
 	}
 	recuperadorProjeteis.close();
 
@@ -249,8 +264,7 @@ void Fase::recuperarEstaticos()
 		novo->setCooldownAtaque(cooldown);
 
 		listaEntidades.inclua(static_cast <Entidade*> (novo));
-		gerenciadorFisica.incluaPersonagem(novo);
-		gerenciadorFisica.incluaEntidade(static_cast <Entidade*>(novo));
+		listaPersonagens.inclua(static_cast <Personagem*> (novo));
 	}
 
 	recuperadorEstaticos.close();
@@ -282,10 +296,7 @@ void Fase::recuperarEspinhos()
 		novo->setJanela(Janela);
 		//novo->setTextura("");
 
-		//listaEspinhos.push_back(novo);
 		listaEntidades.inclua(static_cast <Entidade*>(novo));
-		//listaObstaculos.push_back(static_cast<Obstaculo*>(novo));
-		gerenciadorFisica.incluaEntidade(static_cast <Entidade*>(novo));
 	}
 	recuperadorEspinhos.close();
 
@@ -316,10 +327,7 @@ void Fase::recuperarTeias()
 		novo->setJanela(Janela);
 		//novo->setTextura("");
 
-		//listaEspinhos.push_back(novo);
 		listaEntidades.inclua(static_cast <Entidade*>(novo));
-		//listaObstaculos.push_back(static_cast<Obstaculo*>(novo));
-		gerenciadorFisica.incluaEntidade(static_cast <Entidade*>(novo));
 	}
 
 	recuperadorTeias.close();
@@ -356,9 +364,10 @@ void Fase::recuperarJogadores()
 	Fazendeira->setDimensoes(sf::Vector2f(COMPRIMENTO_JOGADOR, ALTURA_JOGADOR));
 	Fazendeira->setOrigem();
 	Fazendeira->setFaseAtual(this);
-	gerenciadorFisica.setFazendeira(Fazendeira);
+	//gerenciadorFisica.setFazendeira(Fazendeira);
 	listaEntidades.inclua(static_cast<Entidade*>(Fazendeira));
-	gerenciadorFisica.incluaPersonagem(static_cast<Personagem*>(Fazendeira));
+	listaPersonagens.inclua(static_cast <Personagem*> (Fazendeira));
+	//gerenciadorFisica.incluaPersonagem(static_cast<Personagem*>(Fazendeira));
 
 		if (jogo->getMultiplayer())
 		{
@@ -372,7 +381,7 @@ void Fase::recuperarJogadores()
 			Bruxo->setVida(vida);
 			Bruxo->setPosicao(sf::Vector2f(posx, posy));
 			Bruxo->setTeclas(sf::Keyboard::Right, sf::Keyboard::Left, sf::Keyboard::Up, sf::Keyboard::Enter);			
-			Fazendeira->setMovimentoX(movx);
+			Bruxo->setMovimentoX(movx);
 			Bruxo->setMovimentoY(movy);
 			Bruxo->setCooldownAtaque(cooldown);
 			Bruxo->setVelocidade(400.f);
@@ -384,7 +393,7 @@ void Fase::recuperarJogadores()
 			Bruxo->setFaseAtual(this);
 
 			listaEntidades.inclua(static_cast<Entidade*>(Bruxo));
-			gerenciadorFisica.incluaPersonagem(static_cast<Personagem*>(Bruxo));
+			listaPersonagens.inclua(static_cast <Personagem*> (Bruxo));
 		}
 	
 	recuperadorJogadores.close();

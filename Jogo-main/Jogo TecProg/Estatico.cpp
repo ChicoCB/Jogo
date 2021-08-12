@@ -1,6 +1,6 @@
 #include "Estatico.h"
 
-Estatico::Estatico()
+Estatico::Estatico():Inimigo()
 {
 }
 
@@ -19,11 +19,7 @@ void Estatico::atualiza(float deltaTempo)
 		this->setOrigem();
 	}
 	
-	if (Desalocavel)
-	{
-		this->setDimensoes(sf::Vector2f(0.f, 0.f));
-		this->setVelocidade(0.f);
-	}
+	
 
 	Movimento.y += 981.f * deltaTempo;
 	this->movimenta(Movimento * deltaTempo);

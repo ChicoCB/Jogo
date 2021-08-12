@@ -1,7 +1,8 @@
 #include "Quarto.h"
 #include "Jogo.h"
 
-Quarto::Quarto()
+Quarto::Quarto() :
+	Fase()
 {
 }
 
@@ -15,9 +16,13 @@ void Quarto::inicializa()
 
 	srand(time(NULL));
 
-	listaEntidades.inclua(static_cast <Entidade*> (&Cenario));
-	//gerenciadorFisica.setListaEntidades(&listaEntidades);
+	gerenciadorFisica.setListaEntidades(&listaEntidades);
+	gerenciadorFisica.setListaPersonagens(&listaPersonagens);
+	//gerenciadorFisica.setFazendeira(Fazendeira);
 
+	listaEntidades.inclua(static_cast <Entidade*> (&Cenario));
+
+	/*
 	Fazendeira = new Jogador();
 	Fazendeira->inicializa();
 	Fazendeira->setJanela(Janela);
@@ -30,7 +35,7 @@ void Quarto::inicializa()
 	Fazendeira->setVelocidade(400.f);
 	Fazendeira->setAlturaPulo(250.f);
 	gerenciadorFisica.setFazendeira(Fazendeira);
-	gerenciadorFisica.incluaPersonagem(static_cast<Personagem*>(Fazendeira));
+	//gerenciadorFisica.incluaPersonagem(static_cast<Personagem*>(Fazendeira));
 
 	if (jogo->getMultiplayer())
 	{
@@ -46,8 +51,9 @@ void Quarto::inicializa()
 		Bruxo->setVelocidade(400.f);
 		Bruxo->setAlturaPulo(250.f);
 
-		gerenciadorFisica.incluaPersonagem(static_cast<Personagem*>(Bruxo));
+		//gerenciadorFisica.incluaPersonagem(static_cast<Personagem*>(Bruxo));
 	}
+	*/
 
 	Cenario.setJanela(Janela);
 	Cenario.setTextura("textures/Background_quarto.jpg");
@@ -84,8 +90,12 @@ void Quarto::inicializa()
 	criaChefao(sf::Vector2f(2000.f,600.f));
 
 	listaEntidades.inclua(static_cast <Entidade*> (Fazendeira));
+	listaPersonagens.inclua(static_cast <Personagem*> (Fazendeira));
 	if (jogo->getMultiplayer())
+	{
 		listaEntidades.inclua(static_cast <Entidade*> (Bruxo));
+		listaPersonagens.inclua(static_cast <Personagem*> (Bruxo));
+	}
 
 	criaPlataformas();
 }
@@ -97,11 +107,27 @@ void Quarto::desenhar()
 
 void Quarto::atualiza(float deltaTempo)
 {
+	listaPersonagens.limpar();
+	listaEntidades.limpar();
+
 	atualizaView();
 
 	gerenciadorFisica.checaColisoes();
 
 	listaEntidades.atualiza(deltaTempo);
+
+	if (ChefaoMorreu)
+	{
+		ChefaoMorreu = false;
+		Porta* cabideiro;
+
+		cabideiro = new Porta();
+
+		cabideiro->setJogo(jogo);
+		cabideiro->setJanela(Janela);
+		
+		listaEntidades.inclua(static_cast<Entidade*> (cabideiro));
+	}
 
 	desenhar();
 }
@@ -115,6 +141,9 @@ void Quarto::recuperar()
 	Cenario.setTextura("textures/Background_quarto.jpg");
 	Cenario.setDimensoes(sf::Vector2f(COMPRIMENTO_CENARIO, ALTURA_RESOLUCAO));
 	Cenario.setPosicao(sf::Vector2f(0.f, 0.f));
+
+	gerenciadorFisica.setListaEntidades(&listaEntidades);
+	gerenciadorFisica.setListaPersonagens(&listaPersonagens);
 	//recuperarEspinhos();
 	recuperarProjeteis();
 	recuperarEstaticos();
@@ -158,8 +187,9 @@ void Quarto::recuperarFantasmas()
 		novo->setOrigem();
 
 		listaEntidades.inclua(static_cast<Entidade*>(novo));
-		gerenciadorFisica.incluaPersonagem(static_cast<Personagem*>(novo));
-		gerenciadorFisica.incluaEntidade(static_cast<Entidade*>(novo));
+		listaPersonagens.inclua(static_cast <Personagem*> (novo));
+		//gerenciadorFisica.incluaPersonagem(static_cast<Personagem*>(novo));
+		//erenciadorFisica.incluaEntidade(static_cast<Entidade*>(novo));
 	}
 
 	recuperadorFantasmas.close();
@@ -197,8 +227,9 @@ void Quarto::recuperarChefao()
 		novo->setFaseAtual(this);
 
 		listaEntidades.inclua(static_cast<Entidade*>(novo));
-		gerenciadorFisica.incluaPersonagem(static_cast<Personagem*>(novo));
-		gerenciadorFisica.incluaEntidade(static_cast<Entidade*>(novo));
+		listaPersonagens.inclua(static_cast <Personagem*> (novo));
+		//gerenciadorFisica.incluaPersonagem(static_cast<Personagem*>(novo));
+		//gerenciadorFisica.incluaEntidade(static_cast<Entidade*>(novo));
 	}
 
 	recuperadorChefao.close();
@@ -220,8 +251,9 @@ void Quarto::criaFantasma(sf::Vector2f posicao)
 
 	//ListaFantasmas.push_back(novo);
 	listaEntidades.inclua(static_cast <Entidade*>(novo));
-	gerenciadorFisica.incluaEntidade(static_cast <Entidade*>(novo));
-	gerenciadorFisica.incluaPersonagem(novo);
+	listaPersonagens.inclua(static_cast <Personagem*> (novo));
+	//gerenciadorFisica.incluaEntidade(static_cast <Entidade*>(novo));
+	//gerenciadorFisica.incluaPersonagem(novo);
 
 	novo->setColidePlataforma(false);
 	novo->inicializa();
@@ -246,8 +278,9 @@ void Quarto::criaChefao(sf::Vector2f posicao)
 	novo->setColidePlataforma(true);
 
 	listaEntidades.inclua(static_cast <Entidade*> (novo));
-	gerenciadorFisica.incluaPersonagem(static_cast <Personagem*> (novo));
-	gerenciadorFisica.incluaEntidade(static_cast <Entidade*>(novo));
+	listaPersonagens.inclua(static_cast <Personagem*> (novo));
+	//gerenciadorFisica.incluaPersonagem(static_cast <Personagem*> (novo));
+	//gerenciadorFisica.incluaEntidade(static_cast <Entidade*>(novo));
 }
 
 void Quarto::criaPlataformas()
@@ -268,5 +301,7 @@ void Quarto::criaPlataformas()
 	}
 
 	criaChao();
+	criaPlataforma(sf::Vector2f(-COMPRIMENTO_PLATAFORMA / 2, ALTURA_RESOLUCAO / 2), "", sf::Vector2f(COMPRIMENTO_PLATAFORMA, ALTURA_RESOLUCAO));
+	criaPlataforma(sf::Vector2f(COMPRIMENTO_CENARIO + COMPRIMENTO_PLATAFORMA / 2, ALTURA_RESOLUCAO / 2), "", sf::Vector2f(COMPRIMENTO_PLATAFORMA, ALTURA_RESOLUCAO));
 }
 

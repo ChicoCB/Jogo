@@ -12,14 +12,10 @@ private:
 	Fase* faseAtual;
 	static int Pontuacao;
 
-	//static int Pontuacao;
-
 public:
 	Jogador();
 	~Jogador();
 	
-	//static void setPontuacao(int pontuacao);
-	//static int getPontuacao();
 	void incrementaPontuacao();
 	static int getPontuacao();
 	void inicializa();

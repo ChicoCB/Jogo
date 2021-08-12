@@ -5,8 +5,8 @@ Jogo::Jogo() :
     menuPrincipal(COMPRIMENTO_RESOLUCAO, ALTURA_RESOLUCAO, 4, this),
     menuJogadores(COMPRIMENTO_RESOLUCAO, ALTURA_RESOLUCAO, 3, this),
     menuFases(COMPRIMENTO_RESOLUCAO, ALTURA_RESOLUCAO, 3, this),
-    menuPause(COMPRIMENTO_RESOLUCAO, ALTURA_RESOLUCAO, 3, this),
-    menuColocacao(COMPRIMENTO_RESOLUCAO, ALTURA_RESOLUCAO, 6, this),
+    menuPause(COMPRIMENTO_RESOLUCAO, ALTURA_RESOLUCAO, 5, this),
+    menuColocacao(COMPRIMENTO_RESOLUCAO, ALTURA_RESOLUCAO, 8, this),
     Estado(0),
     Fazendeira(NULL),
     Bruxo(NULL),
@@ -34,6 +34,11 @@ Jogador* Jogo::getBruxo()
     return Bruxo;
 }
 
+Jogador* Jogo::getFazendeira()
+{
+    return Fazendeira;
+}
+
 Quarto& Jogo::getQuarto()
 {
     return Fase_Quarto;
@@ -54,6 +59,11 @@ bool Jogo::getMultiplayer()
     return Multiplayer;
 }
 
+MenuColocacao& Jogo::getMenuColocacao()
+{
+    return menuColocacao;
+}
+
 void Jogo::Atualiza(float deltaTempo)
 {
     //Estado = MenuPrincipal.getEstado();
@@ -68,6 +78,7 @@ void Jogo::Atualiza(float deltaTempo)
             menuFases.desenhar();
             break;
         case 3: //Menu Colocações
+            gerenciadorGrafico.resetaView();
             menuColocacao.desenhar();
             break;
         case 4: //Fase Quintal
@@ -95,8 +106,8 @@ void Jogo::Inicializa()
     menuPause.setJanela(&gerenciadorGrafico.getJanela());
     menuColocacao.setJanela(&gerenciadorGrafico.getJanela());
 
+    //InicializaJogadores();
     //InicializaFases();
-
 }
 
 void Jogo::InicializaFases()
@@ -108,8 +119,8 @@ void Jogo::InicializaFases()
     Fase_Quarto.setFazendeira(Fazendeira);
     Fase_Quarto.setBruxo(Bruxo);
 
-    //InicializaQuintal();
-    //InicializaQuarto();
+    InicializaQuintal();
+    InicializaQuarto();
 }
 
 void Jogo::InicializaQuintal()
@@ -134,6 +145,34 @@ void Jogo::InicializaQuarto()
     Fase_Quarto.setView(&gerenciadorGrafico.getView());
     Fase_Quarto.setJogo(this);
     Fase_Quarto.inicializa();
+}
+
+void Jogo::InicializaJogadores()
+{
+    Fazendeira = new Jogador();
+    Fazendeira->inicializa();
+    Fazendeira->setJanela(&gerenciadorGrafico.getJanela());
+    Fazendeira->setDimensoes(sf::Vector2f(COMPRIMENTO_JOGADOR, ALTURA_JOGADOR));
+    Fazendeira->setOrigem();
+    Fazendeira->setPosicao(sf::Vector2f(640.f, 320.f));
+    Fazendeira->setTextura("textures/Fazendeira.png");
+    Fazendeira->setTeclas(sf::Keyboard::D, sf::Keyboard::A, sf::Keyboard::W, sf::Keyboard::Space);
+    Fazendeira->setVelocidade(400.f);
+    Fazendeira->setAlturaPulo(250.f);
+
+    if (Multiplayer)
+    {
+        Bruxo = new Jogador();
+        Bruxo->inicializa();
+        Bruxo->setJanela(&gerenciadorGrafico.getJanela());
+        Bruxo->setDimensoes(sf::Vector2f(COMPRIMENTO_JOGADOR, ALTURA_JOGADOR));
+        Bruxo->setOrigem();
+        Bruxo->setPosicao(sf::Vector2f(640.f, 320.f));
+        Bruxo->setTextura("textures/Bruxo.png");
+        Bruxo->setTeclas(sf::Keyboard::Right, sf::Keyboard::Left, sf::Keyboard::Up, sf::Keyboard::Enter);
+        Bruxo->setVelocidade(400.f);
+        Bruxo->setAlturaPulo(250.f);
+    }
 }
 
 void Jogo::Executar()

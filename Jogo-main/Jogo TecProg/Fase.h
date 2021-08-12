@@ -8,6 +8,7 @@
 #include "Espinho.h"
 #include "Estatico.h"
 #include "ListaEntidades.h"
+#include "ListaPersonagens.h"
 #include "Projetil.h"
 
 class Jogo;
@@ -20,6 +21,8 @@ protected:
 	Jogador* Bruxo;
 	GerenciadorFisica gerenciadorFisica;
 	ListaEntidades listaEntidades;
+	ListaPersonagens listaPersonagens;
+	bool ChefaoMorreu;
 	//vector<Projetil*> PiscinaProjeteis;
 	Jogo* jogo;
 
@@ -42,6 +45,7 @@ public:
 	void criaEspinho(sf::Vector2f posicao, const string textura = "");
 	void criaTeia(sf::Vector2f posicao, const string textura = "");
 
+	void setChefaoMorreu(bool chefaomorreu);
 
 	//vector<Projetil*>& getPiscinaProjeteis();
 	Jogador* getFazendeira();
@@ -55,8 +59,10 @@ public:
 	void incrementaPontuacao();
 	void incluaProjetil(Projetil* projetil);
 	void setView(sf::View* view);
-	void setJogo(Jogo* jg);
 	void salvar();
+
+	void setJogo(Jogo* jg);
+	Jogo* getJogo();
 
 	void recuperarProjeteis();
 	void recuperarEstaticos();

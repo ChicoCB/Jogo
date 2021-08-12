@@ -34,11 +34,7 @@ void Chefao::setFaseAtual(Fase* faseatual)
 void Chefao::atualiza(float deltaTempo)
 {
 	if (Desalocavel)
-	{
-		this->setDimensoes(sf::Vector2f(0.f, 0.f));
-		this->setVelocidade(0.f);
-		this->setPosicao(sf::Vector2f(0.f, 0.f));
-	}
+		faseAtual->setChefaoMorreu(true);
 
 	Movimento = sf::Vector2f(0.f, 0.f);
 
@@ -66,14 +62,7 @@ void Chefao::atiraProjetil(float altura)
 {
 	Projetil* novo = NULL;
 
-	
-	//if (faseAtual->getPiscinaProjeteis().empty())
-		novo = new Projetil();/*
-	else {
-		novo = faseAtual->getPiscinaProjeteis().back();
-		faseAtual->getPiscinaProjeteis().pop_back();
-	}
-	*/
+	novo = new Projetil();
 
 	if (olharDireita)
 	{
@@ -91,22 +80,15 @@ void Chefao::atiraProjetil(float altura)
 	novo->setAmigavel(false);
 	novo->setDesalocavel(false);
 	novo->setFaseAtual(faseAtual);
-	//novo->setNaPiscina(false);
 
-//	if (faseAtual->getPiscinaProjeteis().empty())
-		faseAtual->incluaProjetil(novo); //Incluído na fase
+	faseAtual->incluaProjetil(novo); //Incluído na fase
 }
 
 void Chefao::atiraProjetil2()
 {
 	Projetil* novo = NULL;
 
-	//if (faseAtual->getPiscinaProjeteis().empty()) 
-		novo = new Projetil();
-//	/else {
-	//	novo = faseAtual->getPiscinaProjeteis().back();
-	//	faseAtual->getPiscinaProjeteis().pop_back();
-	//}
+	novo = new Projetil();	
 
 	float deltax = faseAtual->getFazendeira()->getPosicao().x - this->getPosicao().x;
 	float deltay = faseAtual->getFazendeira()->getPosicao().y - this->getPosicao().y;
@@ -121,11 +103,8 @@ void Chefao::atiraProjetil2()
 	novo->setAmigavel(false);
 	novo->setDesalocavel(false);
 	novo->setFaseAtual(faseAtual);
-	//novo->setNaPiscina(false);
-	
-	//if (faseAtual->getPiscinaProjeteis().empty())
+
 	faseAtual->incluaProjetil(novo); //Incluído na fase	
-	//*/
 
 }
 

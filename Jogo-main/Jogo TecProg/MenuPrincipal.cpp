@@ -51,6 +51,7 @@ void MenuPrincipal::LoopMenu(sf::Event* evento)
 				jogo->Recuperar();
 				break;
 			case 2:
+				jogo->getMenuColocacao().setEditavel(false);
 				jogo->setEstado(3);
 				break;
 			case 3:

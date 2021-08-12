@@ -36,14 +36,18 @@ public:
 	Quintal& getQuintal();
 	void setMultiplayer(bool multiplayer);
 	bool getMultiplayer();
+
+	MenuColocacao& getMenuColocacao();
 	
 	Jogador* getBruxo();
+	Jogador* getFazendeira();
 
 	void Atualiza(float deltaTempo);
 	void Inicializa();
 	void InicializaFases();
 	void InicializaQuintal();
 	void InicializaQuarto();
+	void InicializaJogadores();
 	void Executar();
 	void LoopJogo();
 	void Salvar();

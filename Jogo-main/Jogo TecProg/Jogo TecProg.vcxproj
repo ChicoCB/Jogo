@@ -156,7 +156,9 @@
     <ClCompile Include="GerenciadorGrafico.cpp" />
     <ClCompile Include="Inimigo.cpp" />
     <ClCompile Include="Jogo.cpp" />
+    <ClCompile Include="Lista.cpp" />
     <ClCompile Include="ListaEntidades.cpp" />
+    <ClCompile Include="ListaPersonagens.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Jogador.cpp" />
     <ClCompile Include="Menu.cpp" />
@@ -188,7 +190,9 @@
     <ClInclude Include="Inimigo.h" />
     <ClInclude Include="Jogo.h" />
     <ClInclude Include="Jogador.h" />
+    <ClInclude Include="Lista.h" />
     <ClInclude Include="ListaEntidades.h" />
+    <ClInclude Include="ListaPersonagens.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="MenuColocacao.h" />
     <ClInclude Include="MenuFases.h" />
