@@ -7,7 +7,7 @@ ListaEntidades::ListaEntidades()
 
 ListaEntidades::~ListaEntidades()
 {
-    listaEntidades.limpar();
+    listaEntidades.limparTudo();
 }
 
 Entidade* ListaEntidades::getAtual()
@@ -51,6 +51,11 @@ void ListaEntidades::limpar()
 
         
     }
+}
+
+void ListaEntidades::limparTudo()
+{
+    listaEntidades.limparTudo();
 }
 
 void ListaEntidades::desenhar()

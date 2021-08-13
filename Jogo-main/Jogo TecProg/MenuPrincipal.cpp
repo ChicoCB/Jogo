@@ -46,8 +46,12 @@ void MenuPrincipal::LoopMenu(sf::Event* evento)
 			{
 			case 0:
 				jogo->setEstado(1);
+				jogo->getQuintal().limparTudo();
+				jogo->getQuarto().limparTudo();
 				break;
 			case 1:
+				jogo->getQuintal().limparTudo();
+				jogo->getQuarto().limparTudo();
 				jogo->Recuperar();
 				break;
 			case 2:

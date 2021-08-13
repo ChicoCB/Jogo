@@ -41,7 +41,7 @@ public:
     void anterior();
     void inicio();
     int tamanho();
-    void limpar();
+    void limparTudo();
     void remove(TIPO* ptipo);
     void pop(TIPO* ptipo);
 };
@@ -145,7 +145,7 @@ inline int Lista<TIPO>::tamanho()
 }
 
 template<class TIPO>
-inline void Lista<TIPO>::limpar()
+inline void Lista<TIPO>::limparTudo()
 {
     Elemento <TIPO>* pAux = NULL;
 
@@ -233,6 +233,7 @@ inline void Lista<TIPO>::pop(TIPO* ptipo)
         pUltimo = pAux->getAnte();
         pUltimo->setProx(NULL);
     }
+   // delete pAux;
 }
 
 /*

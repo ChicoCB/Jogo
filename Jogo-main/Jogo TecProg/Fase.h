@@ -56,7 +56,7 @@ public:
 	virtual void atualiza(float deltaTempo);
 	void atualizaView();
 
-	void incrementaPontuacao();
+	//void incrementaPontuacao();
 	void incluaProjetil(Projetil* projetil);
 	void setView(sf::View* view);
 	void salvar();

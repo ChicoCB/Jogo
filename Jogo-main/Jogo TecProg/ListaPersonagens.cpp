@@ -6,7 +6,7 @@ ListaPersonagens::ListaPersonagens()
 
 ListaPersonagens::~ListaPersonagens()
 {
-	listaPersonagens.limpar();
+	listaPersonagens.limparTudo();
 }
 
 Personagem* ListaPersonagens::getAtual()
@@ -40,6 +40,11 @@ void ListaPersonagens::limpar()
 			listaPersonagens.pop(pE);
 		}
 	}
+}
+
+void ListaPersonagens::limparTudo()
+{
+	listaPersonagens.limparTudo();
 }
 
 void ListaPersonagens::proximo()

@@ -13,8 +13,8 @@ Fase::Fase():
 
 Fase::~Fase()
 {
-//Desalocar todas as entidades de uma só vez?
-    View = NULL;
+	
+  
 }
 
 void Fase::criaPlataforma(sf::Vector2f posicao, const string textura)
@@ -168,10 +168,12 @@ void Fase::atualizaView()
 		View->setCenter(sf::Vector2f(COMPRIMENTO_RESOLUCAO / 2, ALTURA_RESOLUCAO/2));
 }
 
+/*
 void Fase::incrementaPontuacao()
 {
 	//jogo->incrementaPontuacao();
 }
+*/
 
 void Fase::incluaProjetil(Projetil* projetil)
 {

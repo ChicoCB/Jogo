@@ -50,11 +50,13 @@ void Porta::colidir(Personagem* personagem)
 			//jogo->InicializaQuarto();
 
 			jogo->setEstado(5);
+			jogo->getQuintal().limparTudo();
 		}
 		else 
 		{
 			//jogo->getMenuColocacao().setEditavel(true);
 			jogo->setEstado(7);	
+			jogo->getQuarto().limparTudo();
 		}
 	}
 }

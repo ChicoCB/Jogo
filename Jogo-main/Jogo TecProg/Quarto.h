@@ -21,6 +21,7 @@ public:
 	void inicializa();
 	void desenhar();
 	void atualiza(float deltaTempo);
+	void limparTudo();
 
 	void setChefaoMorreu(bool chefaomorreu);
 

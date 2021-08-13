@@ -9,6 +9,7 @@ Quintal::Quintal() :
 
 Quintal::~Quintal()
 {
+	this->limparTudo();
 }
 
 void Quintal::inicializa()
@@ -94,6 +95,16 @@ void Quintal::atualiza(float deltaTempo)
 	listaEntidades.atualiza(deltaTempo);
 
 	desenhar();
+}
+
+void Quintal::limparTudo()
+{
+	listaPersonagens.limparTudo();
+	listaEntidades.limparTudo();
+	View = NULL;
+	Fazendeira = NULL;
+	Bruxo = NULL;
+	jogo = NULL;
 }
 
 void Quintal::criaPassaro(sf::Vector2f posicao)

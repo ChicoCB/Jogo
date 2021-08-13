@@ -15,6 +15,7 @@ public:
     void inclua(Entidade* pentidade); 
     void atualiza(float deltaTempo);
     void limpar();
+    void limparTudo();
     void desenhar();
     void salvar();
     int tamanho();

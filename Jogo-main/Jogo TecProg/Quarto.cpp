@@ -8,6 +8,7 @@ Quarto::Quarto() :
 
 Quarto::~Quarto()
 {
+	this->limparTudo();
 }
 
 void Quarto::inicializa()
@@ -132,6 +133,16 @@ void Quarto::atualiza(float deltaTempo)
 	}
 
 	desenhar();
+}
+
+void Quarto::limparTudo()
+{
+	listaPersonagens.limparTudo();
+	listaEntidades.limparTudo();
+	View = NULL;
+	Fazendeira = NULL;
+	Bruxo = NULL;
+	jogo = NULL;
 }
 
 void Quarto::setChefaoMorreu(bool chefaomorreu)

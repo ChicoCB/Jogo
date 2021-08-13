@@ -1,16 +1,2 @@
-﻿  Jogador.cpp
-  Jogo.cpp
-D:\User\Desktop\Jogo TecProg\Jogo\Jogo-main\Jogo TecProg\Jogo.cpp(5,42): warning C4244: 'argumento': conversão de 'float' para 'unsigned int', possível perda de dados
-D:\User\Desktop\Jogo TecProg\Jogo\Jogo-main\Jogo TecProg\Jogo.cpp(5,19): warning C4244: 'argumento': conversão de 'float' para 'unsigned int', possível perda de dados
-D:\User\Desktop\Jogo TecProg\Jogo\Jogo-main\Jogo TecProg\Jogo.cpp(6,42): warning C4244: 'argumento': conversão de 'float' para 'unsigned int', possível perda de dados
-D:\User\Desktop\Jogo TecProg\Jogo\Jogo-main\Jogo TecProg\Jogo.cpp(6,19): warning C4244: 'argumento': conversão de 'float' para 'unsigned int', possível perda de dados
-D:\User\Desktop\Jogo TecProg\Jogo\Jogo-main\Jogo TecProg\Jogo.cpp(7,38): warning C4244: 'argumento': conversão de 'float' para 'unsigned int', possível perda de dados
-D:\User\Desktop\Jogo TecProg\Jogo\Jogo-main\Jogo TecProg\Jogo.cpp(7,15): warning C4244: 'argumento': conversão de 'float' para 'unsigned int', possível perda de dados
-D:\User\Desktop\Jogo TecProg\Jogo\Jogo-main\Jogo TecProg\Jogo.cpp(8,38): warning C4244: 'argumento': conversão de 'float' para 'unsigned int', possível perda de dados
-D:\User\Desktop\Jogo TecProg\Jogo\Jogo-main\Jogo TecProg\Jogo.cpp(8,15): warning C4244: 'argumento': conversão de 'float' para 'unsigned int', possível perda de dados
-D:\User\Desktop\Jogo TecProg\Jogo\Jogo-main\Jogo TecProg\Jogo.cpp(9,42): warning C4244: 'argumento': conversão de 'float' para 'unsigned int', possível perda de dados
-D:\User\Desktop\Jogo TecProg\Jogo\Jogo-main\Jogo TecProg\Jogo.cpp(9,19): warning C4244: 'argumento': conversão de 'float' para 'unsigned int', possível perda de dados
-D:\User\Desktop\Jogo TecProg\Jogo\Jogo-main\Jogo TecProg\Jogo.cpp(10,37): warning C4244: 'argumento': conversão de 'float' para 'unsigned int', possível perda de dados
-D:\User\Desktop\Jogo TecProg\Jogo\Jogo-main\Jogo TecProg\Jogo.cpp(10,14): warning C4244: 'argumento': conversão de 'float' para 'unsigned int', possível perda de dados
-  Gerando Código...
+﻿  MenuPrincipal.cpp
   Jogo TecProg.vcxproj -> D:\User\Desktop\Jogo TecProg\Jogo\Jogo-main\Debug\Jogo TecProg.exe

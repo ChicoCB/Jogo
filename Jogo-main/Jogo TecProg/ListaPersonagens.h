@@ -15,6 +15,7 @@ public:
     void inclua(Personagem* ppersonagem);
     int tamanho();
     void limpar();
+    void limparTudo();
     void proximo();
     void inicio();
 
