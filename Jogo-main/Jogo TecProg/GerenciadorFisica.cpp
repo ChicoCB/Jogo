@@ -1,4 +1,6 @@
 #include "GerenciadorFisica.h"
+//#include "Personagem.h"
+//#include "Jogador.h"
 
 GerenciadorFisica::GerenciadorFisica()
 {

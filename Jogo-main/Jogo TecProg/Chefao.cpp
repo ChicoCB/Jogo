@@ -1,4 +1,5 @@
 #include "Chefao.h"
+#include "Fase.h"
 
 Chefao::Chefao(): Inimigo(), Atirador()
 {
@@ -36,6 +37,7 @@ void Chefao::setFaseAtual(Fase* faseatual)
 
 void Chefao::atualiza(float deltaTempo)
 {
+	
 	if (Desalocavel)
 		faseAtual->setChefaoMorreu(true);
 
@@ -54,11 +56,11 @@ void Chefao::atualiza(float deltaTempo)
 		olharDireita = false;
 
 	CooldownAtaque += deltaTempo;
+		this->movimenta(Movimento * deltaTempo);
 
 	if (!Desalocavel && this->podeAtacar())
 		this->atiraProjeteis();
 
-	this->movimenta(Movimento * deltaTempo);
 }
 
 /*
@@ -116,11 +118,11 @@ void Chefao::atiraProjetil2()
 
 void Chefao::atiraProjeteis()
 {
-	atiraProjetilHorizontal(olharDireita, getPosicao(), getDimensoes(), getPosicao().y);
-	atiraProjetilHorizontal(olharDireita, getPosicao(), getDimensoes(), getPosicao().y +  getDimensoes().y/2);
-	atiraProjetilHorizontal(olharDireita, getPosicao(), getDimensoes(), getPosicao().y - getDimensoes().y/2);
+	atiraProjetilHorizontal(this, getPosicao().y);
+	atiraProjetilHorizontal(this, getPosicao().y +  getDimensoes().y/2);
+	atiraProjetilHorizontal(this, getPosicao().y - getDimensoes().y/2);
 
-	atiraProjetilDirecionado(olharDireita, getPosicao(), getDimensoes());
+	atiraProjetilDirecionado(this);
 	/*
 	atiraProjetil2();
 	atiraProjetil(this->getPosicao().y + this->getDimensoes().y / 2);

@@ -3,7 +3,7 @@
 #include "Entidade.h"
 #include "Personagem.h"
 #include "Plataforma.h"
-#include "Jogador.h"
+//#include "Jogador.h"
 #include "Espinho.h"
 #include "Teia.h"
 #include "Passaro.h"

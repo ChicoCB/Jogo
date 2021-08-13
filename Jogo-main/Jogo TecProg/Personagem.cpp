@@ -33,6 +33,11 @@ bool Personagem::getAmigavel()
 	return Amigavel;
 }
 
+bool Personagem::getOlharDireita()
+{
+	return olharDireita;
+}
+
 void Personagem::atualiza(float deltaTempo)
 {
 }

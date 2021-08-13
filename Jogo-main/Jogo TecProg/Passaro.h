@@ -4,6 +4,8 @@
 
 class Fase;
 
+class Jogador;
+
 class Passaro : public Inimigo
 {
 private:

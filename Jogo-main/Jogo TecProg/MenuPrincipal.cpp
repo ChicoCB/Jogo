@@ -46,6 +46,7 @@ void MenuPrincipal::LoopMenu(sf::Event* evento)
 			{
 			case 0:
 				jogo->setEstado(1);
+				cout << "Teste 3" << endl;
 				break;
 			case 1:
 				jogo->Recuperar();

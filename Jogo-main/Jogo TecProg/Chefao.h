@@ -3,6 +3,8 @@
 #include "Atirador.h"
 //#include "Fase.h"
 
+class Fase;
+
 class Chefao : 
 	public Inimigo,
 	public Atirador

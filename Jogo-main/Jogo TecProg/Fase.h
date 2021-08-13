@@ -12,6 +12,7 @@
 #include "Projetil.h"
 
 class Jogo;
+//class Jogador;
 
 class Fase : public Ente
 {

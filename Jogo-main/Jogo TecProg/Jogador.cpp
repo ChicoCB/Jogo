@@ -3,7 +3,7 @@
 
 int Jogador::Pontuacao = 0;
 
-Jogador::Jogador():Personagem()
+Jogador::Jogador() :Personagem(), Atirador()
 {
 }
 
@@ -59,7 +59,8 @@ void Jogador::atualiza(float deltaTempo)
 	}
 	if (sf::Keyboard::isKeyPressed(Atira) && this->podeAtacar())
 	{
-		atiraProjetil();
+		//atiraProjetil();
+		atiraProjetilHorizontal(this);
 	}
 
 	Movimento.y += 981.f * deltaTempo;
@@ -76,16 +77,20 @@ void Jogador::setTeclas(sf::Keyboard::Key direita, sf::Keyboard::Key esquerda, s
 	Atira = atira;
 }
 
+/*
 void Jogador::setFaseAtual(Fase* faseatual)
 {
 	if (faseatual != NULL)
 		faseAtual = faseatual;
 }
+*/
 
+
+/*
 void Jogador::atiraProjetil()
 {
 	Projetil* novo = NULL;
-	
+
 	novo = new Projetil();
 
 	if (olharDireita)
@@ -104,9 +109,11 @@ void Jogador::atiraProjetil()
 	novo->setAmigavel(true);
 	novo->setDesalocavel(false);
 	novo->setFaseAtual(faseAtual);
-	
+
 	faseAtual->incluaProjetil(novo); //Incluído na fase
 }
+*/
+
 
 void Jogador::salvar()
 {

@@ -1,5 +1,6 @@
 #include "Passaro.h"
 #include "Fase.h"
+#include "Jogador.h"
 
 Passaro::Passaro():Inimigo()
 {

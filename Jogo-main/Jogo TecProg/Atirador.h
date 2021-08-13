@@ -1,6 +1,11 @@
 #pragma once
-#include "Fase.h"
 //#include "Entidade.h"
+#include "stdafx.h"
+//
+//#include "Fase.h"
+class Fase;
+class Personagem;
+//class Jogador;
 
 class Atirador// :
 	//public Entidade 
@@ -14,8 +19,8 @@ public:
 
 	void setFaseAtual(Fase* faseatual);
 
-	void atiraProjetilHorizontal(bool olharDireita, sf::Vector2f Posicao, sf::Vector2f Dimensao);
-	void atiraProjetilHorizontal(bool olharDireita, sf::Vector2f Posicao, sf::Vector2f Dimensao, float Altura);
-	void atiraProjetilDirecionado(bool olharDireita, sf::Vector2f Posicao, sf::Vector2f Dimensao);
+	void atiraProjetilHorizontal(Personagem* personagem);
+	void atiraProjetilHorizontal(Personagem* personagem, float Altura);
+	void atiraProjetilDirecionado(Personagem* personagem);
 };
 

@@ -1,5 +1,6 @@
 #include "Fase.h"
 #include "Jogo.h"
+#include "Jogador.h"
 
 Fase::Fase()
 	//PiscinaProjeteis()
@@ -125,10 +126,13 @@ Jogador* Fase::getFazendeira()
 	return Fazendeira;
 }
 
+/*
 GerenciadorFisica Fase::getGerenciadorFisica()
 {
 	return gerenciadorFisica;
 }
+*/
+
 
 void Fase::setFazendeira(Jogador* fazendeira)
 {

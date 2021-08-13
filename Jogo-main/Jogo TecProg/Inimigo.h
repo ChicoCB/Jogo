@@ -1,6 +1,11 @@
 #pragma once
 #include "Personagem.h"
-#include "Jogador.h"
+//#include "Jogador.h"
+
+
+
+class Jogador;
+
 
 class Inimigo : public Personagem
 {

@@ -1,4 +1,5 @@
 #include "Inimigo.h"
+#include "Jogador.h"
 
 Inimigo::Inimigo() : Personagem()
 {

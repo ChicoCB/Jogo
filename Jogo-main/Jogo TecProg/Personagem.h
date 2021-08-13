@@ -30,6 +30,7 @@ public:
 	int getVida();
 	void setAmigavel(bool amigavel);
 	bool getAmigavel();
+	bool getOlharDireita();
 	bool podeAtacar();
 	void setMovimentoX(float movimentox);
 	void setMovimentoY(float movimentoy);
