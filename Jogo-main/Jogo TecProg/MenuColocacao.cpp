@@ -76,17 +76,14 @@ void MenuColocacao::LoopMenu(sf::Event* evento)
 							if (!gravadorColocacao)
 								cout << "Erro." << endl;
 
-							string string1 = menu[1].getString(),
-								string2 = menu[2].getString(),
-								string3 = menu[3].getString(),
-								string4 = menu[4].getString();
+							for (int i = 1; i <= 4; i++) {
+								string saux = menu[i].getString();
+								if (saux.back() == ' ')
+									saux.pop_back();
 
-							cout << string1 << " " << string2 << " " << string3 << " " << string4 << " ";
-
-							gravadorColocacao << string1 << '\n'
-								<< string2 << '\n'
-								<< string3 << '\n'
-								<< string4 << '\n' << endl;
+								gravadorColocacao << saux << '\n';
+							}
+							
 
 							gravadorColocacao.close();
 						}
