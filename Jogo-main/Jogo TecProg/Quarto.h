@@ -5,12 +5,14 @@
 #include "Estatico.h"
 #include "GerenciadorFisica.h"
 #include "Chefao.h"
+#include "Porta.h"
 
 class Jogo;
 
 class Quarto : public Fase
 {
 private:
+	bool ChefaoMorreu;
 
 public:
 	Quarto();
@@ -20,9 +22,12 @@ public:
 	void desenhar();
 	void atualiza(float deltaTempo);
 
+	void setChefaoMorreu(bool chefaomorreu);
+
 	void recuperar();
 	void recuperarFantasmas();
 	void recuperarChefao();
+	void recuperarPorta();
 
 	void criaFantasma(sf::Vector2f posicao);
 	void criaChefao(sf::Vector2f posicao);

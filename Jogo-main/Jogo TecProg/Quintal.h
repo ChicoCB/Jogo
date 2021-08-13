@@ -5,7 +5,6 @@
 #include "Fantasma.h"
 #include "Estatico.h"
 #include "GerenciadorFisica.h"
-#include "Chefao.h"
 #include "Porta.h"
 
 class Jogo;

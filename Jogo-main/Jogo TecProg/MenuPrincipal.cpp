@@ -17,7 +17,7 @@ Menu(comprimento, altura, tamanho, jg)
 	menu[1].setFont(Fonte);
 	menu[2].setFillColor(sf::Color::Green);
 	menu[2].setCharacterSize(24);
-	menu[2].setString("Pontuação");
+	menu[2].setString("Verificar Pontuação");
 	menu[2].setPosition(sf::Vector2f(COMPRIMENTO_RESOLUCAO / 4, 450));
 	menu[2].setFont(Fonte);
 	menu[3].setFillColor(sf::Color::Green);
@@ -51,6 +51,7 @@ void MenuPrincipal::LoopMenu(sf::Event* evento)
 				jogo->Recuperar();
 				break;
 			case 2:
+				jogo->getMenuColocacao().setEstadoAnterior(jogo->getEstado());
 				jogo->getMenuColocacao().setEditavel(false);
 				jogo->setEstado(3);
 				break;

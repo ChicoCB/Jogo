@@ -9,8 +9,7 @@ class Projetil : public Entidade
 private:
 	sf::Vector2f Velocidade;
 	sf::Vector2f Movimento;
-	bool Amigavel; //Se o projétil mata inimigo ou jogador.
-	//bool NaPiscina;
+	bool Amigavel;
 	Fase* faseAtual;
 
 public:
@@ -18,7 +17,6 @@ public:
 	~Projetil();
 
 	void setMovimento(sf::Vector2f movimento);
-	//void setNaPiscina(bool napiscina);
 	void setAmigavel(bool amigavel);
 	bool getAmigavel();
 	void colidir(Personagem* personagem);

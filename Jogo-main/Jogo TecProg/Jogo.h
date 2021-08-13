@@ -6,6 +6,7 @@
 #include "MenuJogadores.h"
 #include "MenuPause.h"
 #include "MenuColocacao.h"
+#include "Creditos.h"
 #include "Quintal.h"
 #include "Quarto.h"
 #include "Jogador.h"
@@ -25,6 +26,7 @@ private:
 	MenuFases menuFases;
 	MenuPause menuPause;
 	MenuColocacao menuColocacao;
+	Creditos creditos;
 
 public:
 	Jogo();
@@ -47,9 +49,13 @@ public:
 	void InicializaFases();
 	void InicializaQuintal();
 	void InicializaQuarto();
+	void InicializaJogadores();
 	void Executar();
 	void LoopJogo();
 	void Salvar();
 	void Recuperar();
+	void LimparArquivos();
+
+	void RecuperarJogadores();
 };
 

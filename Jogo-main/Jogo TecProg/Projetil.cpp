@@ -1,7 +1,7 @@
 #include "Projetil.h"
 #include "Fase.h"
 
-Projetil::Projetil()
+Projetil::Projetil():Entidade()
 {
 }
 
@@ -13,15 +13,6 @@ void Projetil::setMovimento(sf::Vector2f movimento)
 {
 	Movimento = movimento;
 }
-
-
-/*
-void Projetil::setNaPiscina(bool napiscina)
-{
-	NaPiscina = napiscina;
-}
-*/
-
 
 void Projetil::setAmigavel(bool amigavel)
 {
@@ -47,7 +38,6 @@ void Projetil::colidir(Personagem* personagem)
 				faseAtual->getFazendeira()->incrementaPontuacao();
 				cout << faseAtual->getFazendeira()->getPontuacao() << endl;
 			}
-			
 		}
 
 		this->setDesalocavel(true);
@@ -59,22 +49,18 @@ void Projetil::atualiza(float deltaTempo)
 {
 	Movimento = sf::Vector2f(0.f, 0.f);
 
-	if (Desalocavel/* && !NaPiscina*/)
-	{
-		//NaPiscina = true;
-		this->setDimensoes(sf::Vector2f(0.f, 0.f));
-		this->setVelocidade(sf::Vector2f(0.f, 0.f));
-		this->setPosicao(sf::Vector2f(0.f, 0.f));
-		//this->faseAtual->getPiscinaProjeteis().push_back(this);
-		//cout << this->faseAtual->getPiscinaProjeteis().size() << endl;
-		//cout << getVelocidade() << deltaTempo << endl;
-	}
-
-
 	Movimento.x += Velocidade.x;
 	Movimento.y += Velocidade.y;
 
 	this->movimenta(Movimento * deltaTempo);
+
+	if (this->getPosicao().x <= -this->getDimensoes().x / 2 ||
+		this->getPosicao().x >= COMPRIMENTO_CENARIO + this->getDimensoes().x / 2 ||
+		this->getPosicao().y <= -this->getDimensoes().y / 2 ||
+		this->getPosicao().y >= ALTURA_RESOLUCAO + this->getDimensoes().y / 2) 
+	{
+		this->setDesalocavel(true);
+	}
 }
 
 void Projetil::movimenta(sf::Vector2f movimento)

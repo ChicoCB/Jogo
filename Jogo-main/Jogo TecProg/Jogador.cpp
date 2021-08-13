@@ -1,27 +1,32 @@
 #include "Jogador.h"
 #include "Fase.h"
+#include "Jogo.h"
 
 int Jogador::Pontuacao = 0;
 
-Jogador::Jogador():Personagem()
+Jogador::Jogador():
+	Personagem(),
+	podePular(true),
+	alturaPulo(150.f)
 {
+	Amigavel = true;
+	Vida = 10;
+	CooldownAtaqueMax = 0.5f;
 }
 
 Jogador::~Jogador()
 {
 }
 
-/*
-void Jogador::setPontuacao(int pontuacao)
+void Jogador::setPodePular(bool podepular)
 {
-	Pontuacao = pontuacao;
+	podePular = podepular;
 }
 
-int Jogador::getPontuacao()
+void Jogador::setAlturaPulo(float alturapulo)
 {
-	return Pontuacao;
+	alturaPulo = alturapulo;
 }
-*/
 
 void Jogador::incrementaPontuacao()
 {
@@ -35,14 +40,6 @@ int Jogador::getPontuacao()
 
 void Jogador::inicializa()
 {
-	Pontuacao = 0;
-	CooldownAtaque = 0.f;
-	CooldownAtaqueMax = 0.5f;
-	Amigavel = true;
-	colidePlataforma = true;
-	Neutralizavel = true;
-	CooldownInvencibilidade = 0;
-	CooldownInvencibilidadeMax = -1;
 }
 
 void Jogador::colidir()
@@ -51,7 +48,16 @@ void Jogador::colidir()
 
 void Jogador::atualiza(float deltaTempo)
 {
+	if (Desalocavel)
+	{
+		Desalocavel = false;
+		faseAtual->getJogo()->setEstado(7);
+	}
+
 	Movimento.x = 0.f;
+
+	if (podePular)
+		Velocidade = 400.f;
 
 	if (sf::Keyboard::isKeyPressed(Direita))
 	{
@@ -70,8 +76,10 @@ void Jogador::atualiza(float deltaTempo)
 	}
 	if (sf::Keyboard::isKeyPressed(Atira) && this->podeAtacar())
 	{
-		atiraProjetil();
+		this->atiraProjetilHorizontal(this);
+		CooldownAtaque = 0;
 	}
+
 
 	Movimento.y += 981.f * deltaTempo;
 	CooldownAtaque += deltaTempo;
@@ -87,24 +95,20 @@ void Jogador::setTeclas(sf::Keyboard::Key direita, sf::Keyboard::Key esquerda, s
 	Atira = atira;
 }
 
+/*
 void Jogador::setFaseAtual(Fase* faseatual)
 {
-	faseAtual = faseatual;
+	if (faseatual != NULL)
+		faseAtual = faseatual;
 }
+*/
 
+/*
 void Jogador::atiraProjetil()
 {
 	Projetil* novo = NULL;
-	
-	
-	//if (faseAtual->getPiscinaProjeteis().empty()) 
-		novo = new Projetil();
-	/*else 
-	{
-		novo = faseAtual->getPiscinaProjeteis().back();
-		faseAtual->getPiscinaProjeteis().pop_back();
-	}
-	*/
+
+	novo = new Projetil();
 
 	if (olharDireita)
 	{
@@ -122,29 +126,25 @@ void Jogador::atiraProjetil()
 	novo->setAmigavel(true);
 	novo->setDesalocavel(false);
 	novo->setFaseAtual(faseAtual);
-	//novo->setNaPiscina(false);
 
-	//cout << "x: " << novo->getVelocidade().x << endl;
-
-	//if (faseAtual->getPiscinaProjeteis().empty())
-		faseAtual->incluaProjetil(novo); //Incluído na fase
+	faseAtual->incluaProjetil(novo); //Incluído na fase
 }
+*/
 
 void Jogador::salvar()
 {
-		ofstream gravadorJogador("saves/Jogadores.dat", ios::app);
+	ofstream gravadorJogador("saves/Jogadores.dat", ios::app);
 
-		if (!gravadorJogador)
-			cout << "Erro." << endl;
+	if (!gravadorJogador)
+		cout << "Erro." << endl;
 
-		gravadorJogador << this->getVida() << ' '
-			<< this->getPosicao().x << ' '
-			<< this->getPosicao().y << ' '
-			<< this->getMovimento().x << ' '
-			<< this->getMovimento().y << ' '
-			<< this->CooldownAtaque << endl;
+	gravadorJogador << this->getVida() << ' '
+		<< this->getPosicao().x << ' '
+		<< this->getPosicao().y << ' '
+		<< this->getMovimento().x << ' '
+		<< this->getMovimento().y << ' '
+		<< this->CooldownAtaque << endl;
 
-		gravadorJogador.close();
+	gravadorJogador.close();
 }
-
 
