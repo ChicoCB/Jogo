@@ -6,37 +6,37 @@ class Personagem : public Entidade
 {
 protected:
 	int Vida;
-	float Velocidade, alturaPulo;
-	bool podePular,olharDireita;
+	float Velocidade;
+	bool olharDireita;
 	bool Amigavel, colidePlataforma;
 	float CooldownAtaque, CooldownAtaqueMax;
-	float CooldownInvencibilidade, CooldownInvencibilidadeMax;
 	int Neutralizavel;
 
 public:
 	Personagem();
 	~Personagem();
 
-	virtual void inicializa() = 0;
-	virtual void atualiza(float deltaTempo);
-	virtual void colidir();
-
-	bool podeMorrer();
-	void setCooldownAtaque(float cooldownataque);
 	void setOlhaDireita(bool olhardireita);
+	bool getOlharDireita();
 	void setColidePlataforma(bool colideplataforma);
 	bool getColidePlataforma();
 	void setVida(int vida);
 	int getVida();
 	void setAmigavel(bool amigavel);
 	bool getAmigavel();
-	bool podeAtacar();
+	float getVelocidade();
+	void setCooldownAtaque(float cooldownataque);
 	void setMovimentoX(float movimentox);
 	void setMovimentoY(float movimentoy);
 	void setVelocidade(float velocidade);
-	void setPodePular(bool podepular);
-	void setAlturaPulo(float alturapulo);
-	float getVelocidade();
+
+	bool podeAtacar();
+
+	virtual void setPodePular(bool podepular);
+	virtual bool podeMorrer();
+
 	virtual void salvar() = 0;
+	virtual void atualiza(float deltaTempo) = 0;
+	virtual void colidir(Personagem* personagem);
 };
 

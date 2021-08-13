@@ -1,6 +1,6 @@
 #pragma once
-#include "Personagem.h"
 #include "Lista.h"
+#include "Personagem.h"
 
 class ListaPersonagens
 {
@@ -11,10 +11,14 @@ public:
     ListaPersonagens();
     ~ListaPersonagens();
 
-    void inclua(Personagem* personagem);
-    void atualiza(float deltaTempo);
-    void desenhar();
-    int getTamanho();
-    Personagem* indice(int i);
+    Personagem* getAtual();
+    void inclua(Personagem* ppersonagem);
+    int tamanho();
+    void limpar();
+    void limparTudo();
+    void proximo();
+    void inicio();
+
+    Personagem* operator[](int indice);
 };
 

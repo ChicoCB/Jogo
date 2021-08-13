@@ -17,7 +17,6 @@ public:
 	void setLimiteYBaixo(float limiteybaixo);
 
 	void colidir(Personagem* personagem);
-	void inicializa();
 	void atualiza(float deltaTempo);
 	void salvar();
 };

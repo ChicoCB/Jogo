@@ -1,6 +1,6 @@
 #include "Plataforma.h"
 
-Plataforma::Plataforma()
+Plataforma::Plataforma():Obstaculo()
 {
 }
 
@@ -45,8 +45,8 @@ void Plataforma::colidir(Personagem* personagem)
 				{
 					personagem->movimenta(sf::Vector2f(0.f, -intersecaoY));
 					personagem->setMovimentoY(0.f);
+				}
 			}
-		}
 	}
 }
 

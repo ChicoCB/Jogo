@@ -6,29 +6,65 @@ ListaPersonagens::ListaPersonagens()
 
 ListaPersonagens::~ListaPersonagens()
 {
+	listaPersonagens.limparTudo();
 }
 
-void ListaPersonagens::inclua(Personagem* personagem)
+Personagem* ListaPersonagens::getAtual()
 {
-	listaPersonagens.incluaTipo(personagem);
+	return listaPersonagens.getAtual();
 }
 
-void ListaPersonagens::atualiza(float deltaTempo)
+void ListaPersonagens::inclua(Personagem* ppersonagem)
 {
-	listaPersonagens.atualiza(deltaTempo);
+	listaPersonagens.incluaTipo(ppersonagem);
 }
 
-void ListaPersonagens::desenhar()
+int ListaPersonagens::tamanho()
 {
-	listaPersonagens.desenhar();
+	return listaPersonagens.tamanho();
 }
 
-int ListaPersonagens::getTamanho()
+void ListaPersonagens::limpar()
 {
-	return listaPersonagens.getTamanho();
+	listaPersonagens.inicio();
+
+	while (listaPersonagens.getAtual() != NULL)
+	{
+		Personagem* pE = NULL;
+
+		pE = listaPersonagens.getAtual();
+
+		listaPersonagens.proximo();
+		if (pE->getDesalocavel())
+		{
+			listaPersonagens.pop(pE);
+		}
+	}
 }
 
-Personagem* ListaPersonagens::indice(int i)
+void ListaPersonagens::limparTudo()
 {
-	return listaPersonagens.indice(i);
+	listaPersonagens.limparTudo();
 }
+
+void ListaPersonagens::proximo()
+{
+	listaPersonagens.proximo();
+}
+
+void ListaPersonagens::inicio()
+{
+	listaPersonagens.inicio();
+}
+
+Personagem* ListaPersonagens::operator[](int indice)
+{
+	listaPersonagens.inicio();
+
+	for (int i = 0; i < indice; i++) {
+		listaPersonagens.proximo();
+	}
+
+	return getAtual();
+}
+

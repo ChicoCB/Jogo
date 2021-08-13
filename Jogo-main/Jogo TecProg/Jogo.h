@@ -6,6 +6,7 @@
 #include "MenuJogadores.h"
 #include "MenuPause.h"
 #include "MenuColocacao.h"
+#include "Creditos.h"
 #include "Quintal.h"
 #include "Quarto.h"
 #include "Jogador.h"
@@ -25,6 +26,7 @@ private:
 	MenuFases menuFases;
 	MenuPause menuPause;
 	MenuColocacao menuColocacao;
+	Creditos creditos;
 
 public:
 	Jogo();
@@ -36,17 +38,24 @@ public:
 	Quintal& getQuintal();
 	void setMultiplayer(bool multiplayer);
 	bool getMultiplayer();
+
+	MenuColocacao& getMenuColocacao();
 	
 	Jogador* getBruxo();
+	Jogador* getFazendeira();
 
 	void Atualiza(float deltaTempo);
 	void Inicializa();
 	void InicializaFases();
 	void InicializaQuintal();
 	void InicializaQuarto();
+	void InicializaJogadores();
 	void Executar();
 	void LoopJogo();
 	void Salvar();
 	void Recuperar();
+	void LimparArquivos();
+
+	void RecuperarJogadores();
 };
 
