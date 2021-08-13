@@ -1,5 +1,6 @@
 #include "Entidade.h"
 #include "Personagem.h"
+#include "GerenciadorGrafico.h"
 
 Entidade::Entidade():
 	Ente(),
@@ -79,7 +80,7 @@ void Entidade::atualiza(float deltaTempo)
 
 void Entidade::desenhar()
 {
-	Janela->draw(Corpo);
+	pGerenciadorGrafico->desenhar(this);
 }
 
 void Entidade::salvar()

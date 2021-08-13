@@ -3,6 +3,7 @@
 
 class Fase;
 class Personagem;
+class Jogo;
 
 class Atirador
 {
@@ -15,7 +16,6 @@ public:
 
 	void setFaseAtual(Fase* faseatual);
 
-	void atiraProjetilHorizontal(Personagem* personagem);
 	void atiraProjetilHorizontal(Personagem* personagem, float altura);
 	void atiraProjetilDirecionado(Personagem* personagem, float dimensao);
 };

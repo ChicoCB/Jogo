@@ -19,47 +19,13 @@ void Quarto::inicializa()
 
 	gerenciadorColisoes.setListaEntidades(&listaEntidades);
 	gerenciadorColisoes.setListaPersonagens(&listaPersonagens);
-	//gerenciadorFisica.setFazendeira(Fazendeira);
 
 	listaEntidades.inclua(static_cast <Entidade*> (&Cenario));
 
-	/*
-	Fazendeira = new Jogador();
-	Fazendeira->inicializa();
-	Fazendeira->setJanela(Janela);
-	Fazendeira->setFaseAtual(this);
-	Fazendeira->setDimensoes(sf::Vector2f(COMPRIMENTO_JOGADOR, ALTURA_JOGADOR));
-	Fazendeira->setOrigem();
-	Fazendeira->setPosicao(sf::Vector2f(640.f, 320.f));
-	Fazendeira->setTextura("textures/Fazendeira.png");
-	Fazendeira->setTeclas(sf::Keyboard::D, sf::Keyboard::A, sf::Keyboard::W, sf::Keyboard::Space);
-	Fazendeira->setVelocidade(400.f);
-	Fazendeira->setAlturaPulo(250.f);
-	gerenciadorFisica.setFazendeira(Fazendeira);
-	//gerenciadorFisica.incluaPersonagem(static_cast<Personagem*>(Fazendeira));
-
-	if (jogo->getMultiplayer())
-	{
-		Bruxo = new Jogador();
-		Bruxo->inicializa();
-		Bruxo->setJanela(Janela);
-		Bruxo->setFaseAtual(this);
-		Bruxo->setDimensoes(sf::Vector2f(COMPRIMENTO_JOGADOR, ALTURA_JOGADOR));
-		Bruxo->setOrigem();
-		Bruxo->setPosicao(sf::Vector2f(640.f, 320.f));
-		Bruxo->setTextura("textures/Bruxo.png");
-		Bruxo->setTeclas(sf::Keyboard::Right, sf::Keyboard::Left, sf::Keyboard::Up, sf::Keyboard::Enter);
-		Bruxo->setVelocidade(400.f);
-		Bruxo->setAlturaPulo(250.f);
-
-		//gerenciadorFisica.incluaPersonagem(static_cast<Personagem*>(Bruxo));
-	}
-	*/
-
-	Cenario.setJanela(Janela);
 	Cenario.setTextura("textures/Background_quarto.jpg");
 	Cenario.setDimensoes(sf::Vector2f(COMPRIMENTO_CENARIO, ALTURA_RESOLUCAO));
 	Cenario.setPosicao(sf::Vector2f(COMPRIMENTO_RESOLUCAO, ALTURA_RESOLUCAO / 2));
+	Cenario.setGerenciadorGrafico(pGerenciadorGrafico);
 
 	criaPlataformas();
 
@@ -91,12 +57,11 @@ void Quarto::inicializa()
 
 	if (pFazendeira == NULL)
 		cout << "Eh null" << endl;
-	//Fazendeira->setFaseAtual(this);
+
 	listaEntidades.inclua(static_cast <Entidade*> (pFazendeira));
 	listaPersonagens.inclua(static_cast <Personagem*> (pFazendeira));
 	if (pJogo->getMultiplayer())
 	{
-		//Bruxo->setFaseAtual(this);
 		listaEntidades.inclua(static_cast <Entidade*> (pBruxo));
 		listaPersonagens.inclua(static_cast <Personagem*> (pBruxo));
 	}
@@ -127,7 +92,7 @@ void Quarto::atualiza(float deltaTempo)
 		cabideiro = new Porta();
 
 		cabideiro->setJogo(pJogo);
-		cabideiro->setJanela(Janela);
+		cabideiro->setGerenciadorGrafico(pGerenciadorGrafico);
 		
 		listaEntidades.inclua(static_cast<Entidade*> (cabideiro));
 	}
@@ -145,19 +110,14 @@ void Quarto::limparTudo()
 	pJogo = NULL;
 }
 
-void Quarto::setChefaoMorreu(bool chefaomorreu)
-{
-	ChefaoMorreu = chefaomorreu;
-}
-
 void Quarto::recuperar()
 {
 	listaEntidades.inclua(static_cast<Entidade*> (&Cenario));
 	criaPlataformas();
-	Cenario.setJanela(Janela);
 	Cenario.setTextura("textures/Background_quarto.jpg");
 	Cenario.setDimensoes(sf::Vector2f(COMPRIMENTO_CENARIO, ALTURA_RESOLUCAO));
 	Cenario.setPosicao(sf::Vector2f(COMPRIMENTO_RESOLUCAO, ALTURA_RESOLUCAO / 2));
+	Cenario.setGerenciadorGrafico(pGerenciadorGrafico);
 
 	gerenciadorColisoes.setListaEntidades(&listaEntidades);
 	gerenciadorColisoes.setListaPersonagens(&listaPersonagens);
@@ -206,7 +166,7 @@ void Quarto::recuperarFantasmas()
 		novo->setLimiteXEsq(limxesq);
 		novo->setCooldownAtaque(cooldown);
 		novo->setVelocidade(200.f);
-		novo->setJanela(Janela);
+		novo->setGerenciadorGrafico(pGerenciadorGrafico);
 		novo->setTextura("textures/Fantasma_direita.png");
 		novo->setColidePlataforma(false);
 		novo->setDimensoes(sf::Vector2f(COMPRIMENTO_FANTASMA, ALTURA_FANTASMA));
@@ -238,7 +198,7 @@ void Quarto::recuperarChefao()
 		novo->setPosicao(sf::Vector2f(posx, posy));
 		novo->setCooldownAtaque(cooldown);
 		novo->setVelocidade(50.f);
-		novo->setJanela(Janela);
+		novo->setGerenciadorGrafico(pGerenciadorGrafico);
 		novo->setTextura("");
 		novo->setColidePlataforma(true);
 		novo->setDimensoes(sf::Vector2f(COMPRIMENTO_CHEFAO, ALTURA_CHEFAO));
@@ -269,7 +229,7 @@ void Quarto::recuperarPorta()
 
 		novo->setPosicao(sf::Vector2f(posx, posy));
 		novo->setDimensoes(sf::Vector2f(50.0f, 100.0f));
-		novo->setJanela(Janela);
+		novo->setGerenciadorGrafico(pGerenciadorGrafico);
 		novo->setJogo(pJogo);
 
 		listaEntidades.inclua(static_cast <Entidade*>(novo));
@@ -284,7 +244,7 @@ void Quarto::criaFantasma(sf::Vector2f posicao)
 
 	novo->setPosicao(posicao);
 	novo->setDimensoes(sf::Vector2f(COMPRIMENTO_FANTASMA, ALTURA_FANTASMA));
-	novo->setJanela(Janela);
+	novo->setGerenciadorGrafico(pGerenciadorGrafico);
 	novo->setTextura("textures/Fantasma_direita.png");
 	novo->setLimiteXEsq(posicao.x);
 	novo->setLimiteXDir(posicao.x + 200.0f);
@@ -307,9 +267,9 @@ void Quarto::criaChefao(sf::Vector2f posicao)
 	novo->setDimensoes(sf::Vector2f(COMPRIMENTO_CHEFAO, ALTURA_CHEFAO));
 	novo->setVida(3);
 	novo->setVelocidade(50.f);
-	novo->setJanela(Janela);
 	novo->setTextura("");
 	novo->setColidePlataforma(true);
+	novo->setGerenciadorGrafico(pGerenciadorGrafico);
 
 	listaEntidades.inclua(static_cast <Entidade*> (novo));
 	listaPersonagens.inclua(static_cast <Personagem*> (novo));

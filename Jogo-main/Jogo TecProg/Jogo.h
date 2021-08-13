@@ -38,6 +38,7 @@ public:
 	Quintal& getQuintal();
 	void setMultiplayer(bool multiplayer);
 	bool getMultiplayer();
+	GerenciadorGrafico& getGerenciadorGrafico();
 
 	MenuColocacao& getMenuColocacao();
 	

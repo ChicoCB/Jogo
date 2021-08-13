@@ -48,7 +48,7 @@ void MenuPause::LoopMenu(sf::Event* evento)
 				jogo->setEstado(0);
 				break;
 			case 4:
-				Janela->close();
+				pGerenciadorGrafico->fechar();
 				break;
 			}
 		}

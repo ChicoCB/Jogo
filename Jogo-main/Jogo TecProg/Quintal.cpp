@@ -22,10 +22,10 @@ void Quintal::inicializa()
 	gerenciadorColisoes.setListaPersonagens(&listaPersonagens);
 
 	listaEntidades.inclua(static_cast <Entidade*> (&Cenario));
-	Cenario.setJanela(Janela);
 	Cenario.setTextura("textures/Background.png");
 	Cenario.setDimensoes(sf::Vector2f(COMPRIMENTO_CENARIO, ALTURA_RESOLUCAO));
 	Cenario.setPosicao(sf::Vector2f(COMPRIMENTO_RESOLUCAO, ALTURA_RESOLUCAO/2));
+	Cenario.setGerenciadorGrafico(pGerenciadorGrafico);
 
 	criaPlataformas();
 
@@ -54,8 +54,8 @@ void Quintal::inicializa()
 			"textures/Estatico_vulneravel.png");
 	}
 
-	porta.setJanela(Janela);
 	porta.setJogo(pJogo);
+	porta.setGerenciadorGrafico(pGerenciadorGrafico);
 	listaEntidades.inclua(static_cast<Entidade*> (&porta));
 
 	listaEntidades.inclua(static_cast <Entidade*> (pFazendeira));
@@ -108,10 +108,10 @@ void Quintal::criaPassaro(sf::Vector2f posicao)
 	novo->setDimensoes(sf::Vector2f(COMPRIMENTO_ESPINHO, ALTURA_ESPINHO));
 	novo->setVida(3);
 	novo->setVelocidade(200.f);
-	novo->setJanela(Janela);
 	novo->setTextura("textures/Passaro_direita.png");
 	novo->setLimiteXEsq(posicao.x);
 	novo->setLimiteXDir(posicao.x + 300.0f);
+	novo->setGerenciadorGrafico(pGerenciadorGrafico);
 
 	listaEntidades.inclua(static_cast <Entidade*> (novo));
 	listaPersonagens.inclua(static_cast <Personagem*> (novo));
@@ -141,12 +141,12 @@ void Quintal::recuperar()
 {	
 	listaEntidades.inclua(static_cast<Entidade*> (&Cenario));
 	criaPlataformas();
-	Cenario.setJanela(Janela);
 	Cenario.setTextura("textures/Background.png");
 	Cenario.setDimensoes(sf::Vector2f(COMPRIMENTO_CENARIO, ALTURA_RESOLUCAO));
 	Cenario.setPosicao(sf::Vector2f(COMPRIMENTO_RESOLUCAO, ALTURA_RESOLUCAO / 2));
-	porta.setJanela(Janela);
+	Cenario.setGerenciadorGrafico(pGerenciadorGrafico);
 	porta.setJogo(pJogo);
+	porta.setGerenciadorGrafico(pGerenciadorGrafico);
 	listaEntidades.inclua(static_cast<Entidade*> (&porta));
 
 	gerenciadorColisoes.setListaEntidades(&listaEntidades);
@@ -195,7 +195,7 @@ void Quintal::recuperarPassaros()
 		novo->setLimiteXEsq(limxesq);
 		novo->setCooldownAtaque(cooldown);
 		novo->setVelocidade(200.f);
-		novo->setJanela(Janela);
+		novo->setGerenciadorGrafico(pGerenciadorGrafico);
 		novo->setTextura("textures/Passaro_direita.png");
 		novo->setDimensoes(sf::Vector2f(COMPRIMENTO_ESPINHO, ALTURA_ESPINHO));
 		novo->setFaseAtual(this);

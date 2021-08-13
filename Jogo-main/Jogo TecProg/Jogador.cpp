@@ -68,7 +68,7 @@ void Jogador::atualiza(float deltaTempo)
 	}
 	if (sf::Keyboard::isKeyPressed(Atira) && this->podeAtacar())
 	{
-		this->atiraProjetilHorizontal(this);
+		this->atiraProjetilHorizontal(this, getPosicao().y);
 		CooldownAtaque = 0;
 	}
 

@@ -19,11 +19,11 @@ void Fase::criaPlataforma(sf::Vector2f posicao, const string textura)
 {
 	Plataforma* nova = NULL;
 	nova = new Plataforma();
-	nova->setDimensoes(sf::Vector2f(COMPRIMENTO_PLATAFORMA,ALTURA_PLATAFORMA));
+	nova->setDimensoes(sf::Vector2f(COMPRIMENTO_PLATAFORMA, ALTURA_PLATAFORMA));
 	nova->setPosicao(posicao);
+	//nova->setOrigem();
 	nova->setTextura(textura);
-	nova->setJanela(Janela);
-
+	nova->setGerenciadorGrafico(pGerenciadorGrafico);
 	listaEntidades.inclua(static_cast <Entidade*> (nova));
 }
 
@@ -33,9 +33,9 @@ void Fase::criaPlataforma(sf::Vector2f posicao, const string textura, sf::Vector
 	nova = new Plataforma();
 	nova->setDimensoes(sf::Vector2f(tamanho));
 	nova->setPosicao(posicao);
+	//nova->setOrigem();
 	nova->setTextura(textura);
-	nova->setJanela(Janela);
-
+	nova->setGerenciadorGrafico(pGerenciadorGrafico);
 	listaEntidades.inclua(static_cast <Entidade*> (nova));
 }
 
@@ -46,7 +46,7 @@ void Fase::criaBordas()
 	nova->getCorpo().setFillColor(sf::Color::Transparent);
 	nova->setDimensoes(sf::Vector2f(COMPRIMENTO_CENARIO, ALTURA_PLATAFORMA));
 	nova->setPosicao(sf::Vector2f(COMPRIMENTO_CENARIO / 2, ALTURA_RESOLUCAO - ALTURA_PLATAFORMA / 2));
-	nova->setJanela(Janela);
+	nova->setGerenciadorGrafico(pGerenciadorGrafico);
 
 	listaEntidades.inclua(static_cast <Entidade*> (nova));
 
@@ -59,11 +59,15 @@ void Fase::criaEspinho(sf::Vector2f posicao, const string textura)
 	Espinho* novo = NULL; 
 	novo = new Espinho();
 
+	//Passar por parâmetro na função e cria genericamente
 	novo->setPosicao(posicao);
-	novo->setDimensoes(sf::Vector2f(COMPRIMENTO_ESPINHO, ALTURA_ESPINHO));
-	novo->setJanela(Janela);
 	novo->setTextura(textura);
 
+	//Construtora bastaria
+	novo->setDimensoes(sf::Vector2f(COMPRIMENTO_ESPINHO, ALTURA_ESPINHO));
+
+	//Genérico de todo obstáculo
+	novo->setGerenciadorGrafico(pGerenciadorGrafico);
 	listaEntidades.inclua(static_cast <Entidade*>(novo));
 }
 
@@ -72,11 +76,15 @@ void Fase::criaTeia(sf::Vector2f posicao, const string textura)
 	Teia* novo = NULL;
 	novo = new Teia();
 
+	//Passar por parâmetro na função e cria genericamente
 	novo->setPosicao(posicao);
-	novo->setDimensoes(sf::Vector2f(COMPRIMENTO_TEIA, ALTURA_TEIA));
-	novo->setJanela(Janela);
 	novo->setTextura("");
 
+	//Construtora bastaria
+	novo->setDimensoes(sf::Vector2f(COMPRIMENTO_TEIA, ALTURA_TEIA));
+
+	//Genérico de todo obstáculo
+	novo->setGerenciadorGrafico(pGerenciadorGrafico);
 	listaEntidades.inclua(static_cast <Entidade*>(novo));
 }
 
@@ -84,18 +92,33 @@ void Fase::setChefaoMorreu(bool chefaomorreu)
 {
 }
 
+/*
+	for (int i = 0; i < rand() % 4 + 3; i++)
+	{
+		Estatico* novo = NULL;
+		novo = new Estatico();
+		criaInimigo(novo, sf::Vector2f(rand() % (static_cast<int>(COMPRIMENTO_CENARIO - 400)) + 200,
+			rand() % static_cast<int>(ALTURA_RESOLUCAO) - (ALTURA_PLATAFORMA + ALTURA_ESTATICO/2)),
+			"textures/Estatico_vulneravel.png");
+	}
+*/
+
 void Fase::criaEstatico(sf::Vector2f posicao, const string textura)
 {
 	Estatico* novo = NULL;
 	novo = new Estatico();
 
+	//Passar por parâmetro na função e cria genericamente
 	novo->setPosicao(posicao);
+	novo->setTextura(textura);
+
+	//Construtora bastaria
 	novo->setDimensoes(sf::Vector2f(COMPRIMENTO_ESTATICO, ALTURA_ESTATICO));
 	novo->setVida(4);
 	novo->setVelocidade(100.f);
-	novo->setJanela(Janela);
-	novo->setTextura(textura);
 
+	//Genérico de todo personagem
+	novo->setGerenciadorGrafico(pGerenciadorGrafico);
 	listaEntidades.inclua(static_cast <Entidade*> (novo));
 	listaPersonagens.inclua(static_cast <Personagem*> (novo));
 }
@@ -118,11 +141,14 @@ void Fase::setBruxo(Jogador* bruxo)
 void Fase::atualizaView()
 {
 	if (pFazendeira->getPosicao().x > COMPRIMENTO_RESOLUCAO / 2 && pFazendeira->getPosicao().x < COMPRIMENTO_CENARIO - COMPRIMENTO_RESOLUCAO / 2)
-		pView->setCenter(sf::Vector2f(pFazendeira->getPosicao().x, ALTURA_RESOLUCAO/2));
+		pGerenciadorGrafico->atualizaView(sf::Vector2f(pFazendeira->getPosicao().x, ALTURA_RESOLUCAO/2));
+		//pView->setCenter(sf::Vector2f(pFazendeira->getPosicao().x, ALTURA_RESOLUCAO/2));
 	else if (pFazendeira->getPosicao().x > COMPRIMENTO_CENARIO - COMPRIMENTO_RESOLUCAO / 2)
-		pView->setCenter(sf::Vector2f(COMPRIMENTO_CENARIO - COMPRIMENTO_RESOLUCAO / 2, ALTURA_RESOLUCAO/2));
+		pGerenciadorGrafico->atualizaView(sf::Vector2f(COMPRIMENTO_CENARIO - COMPRIMENTO_RESOLUCAO / 2, ALTURA_RESOLUCAO/2));
+		//pView->setCenter(sf::Vector2f(COMPRIMENTO_CENARIO - COMPRIMENTO_RESOLUCAO / 2, ALTURA_RESOLUCAO/2));
 	else
-		pView->setCenter(sf::Vector2f(COMPRIMENTO_RESOLUCAO / 2, ALTURA_RESOLUCAO/2));
+		pGerenciadorGrafico->atualizaView(sf::Vector2f(COMPRIMENTO_RESOLUCAO / 2, ALTURA_RESOLUCAO/2));
+		//pView->setCenter(sf::Vector2f(COMPRIMENTO_RESOLUCAO / 2, ALTURA_RESOLUCAO/2));
 }
 
 void Fase::incluaProjetil(Projetil* projetil)
@@ -171,7 +197,7 @@ void Fase::recuperarProjeteis()
 		novo->setVelocidade(sf::Vector2f(velx, vely));
 		novo->setDimensoes(sf::Vector2f(10.f, 10.f));
 		novo->setAmigavel(amigavel);
-		novo->setJanela(Janela);
+		novo->setGerenciadorGrafico(pGerenciadorGrafico);
 
 		incluaProjetil(novo);
 	}
@@ -200,7 +226,7 @@ void Fase::recuperarEstaticos()
 		novo->setDimensoes(sf::Vector2f(COMPRIMENTO_ESTATICO, ALTURA_ESTATICO));
 		novo->setVida(vida);
 		novo->setVelocidade(100.f);
-		novo->setJanela(Janela);
+		novo->setGerenciadorGrafico(pGerenciadorGrafico);
 		novo->setTextura("textures/Estatico_vulneravel.png");
 		novo->setCooldownAtaque(cooldown);
 
@@ -229,7 +255,7 @@ void Fase::recuperarEspinhos()
 
 		novo->setPosicao(sf::Vector2f(posx,posy));
 		novo->setDimensoes(sf::Vector2f(COMPRIMENTO_ESPINHO, ALTURA_ESPINHO));
-		novo->setJanela(Janela);
+		novo->setGerenciadorGrafico(pGerenciadorGrafico);
 
 		listaEntidades.inclua(static_cast <Entidade*>(novo));
 	}
@@ -255,7 +281,7 @@ void Fase::recuperarTeias()
 
 		novo->setPosicao(sf::Vector2f(posx, posy));
 		novo->setDimensoes(sf::Vector2f(COMPRIMENTO_TEIA, ALTURA_TEIA));
-		novo->setJanela(Janela);
+		novo->setGerenciadorGrafico(pGerenciadorGrafico);
 
 		listaEntidades.inclua(static_cast <Entidade*>(novo));
 	}

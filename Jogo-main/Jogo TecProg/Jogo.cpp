@@ -60,6 +60,11 @@ bool Jogo::getMultiplayer()
     return Multiplayer;
 }
 
+GerenciadorGrafico& Jogo::getGerenciadorGrafico()
+{
+    return gerenciadorGrafico;
+}
+
 MenuColocacao& Jogo::getMenuColocacao()
 {
     return menuColocacao;
@@ -107,16 +112,16 @@ void Jogo::Inicializa()
     gerenciadorGrafico.getJanela().setView(gerenciadorGrafico.getView());
     //Janela.setView(View);
 
-    menuPrincipal.setJanela(&gerenciadorGrafico.getJanela());
-    menuJogadores.setJanela(&gerenciadorGrafico.getJanela());
-    menuFases.setJanela(&gerenciadorGrafico.getJanela());
-    menuPause.setJanela(&gerenciadorGrafico.getJanela());
-    menuColocacao.setJanela(&gerenciadorGrafico.getJanela());
+    menuPrincipal.setGerenciadorGrafico(&gerenciadorGrafico);
+    menuJogadores.setGerenciadorGrafico(&gerenciadorGrafico);
+    menuFases.setGerenciadorGrafico(&gerenciadorGrafico);
+    menuPause.setGerenciadorGrafico(&gerenciadorGrafico);
+    menuColocacao.setGerenciadorGrafico(&gerenciadorGrafico);
 
     menuColocacao.Recupera();
     //(static_cast<Menu>(creditos)).setJanela(&gerenciadorGrafico.getJanela());
     //(static_cast<Entidade>(creditos)).setJanela(&gerenciadorGrafico.getJanela());
-    creditos.setJanela(&gerenciadorGrafico.getJanela());
+    creditos.setGerenciadorGrafico(&gerenciadorGrafico);
 
     //InicializaJogadores();
     //InicializaFases();
@@ -126,12 +131,6 @@ void Jogo::InicializaFases()
 {
     if (!Multiplayer)
         Bruxo = NULL;    
-    /*
-    Fase_Quintal.setFazendeira(Fazendeira);
-    Fase_Quintal.setBruxo(Bruxo);
-    Fase_Quarto.setFazendeira(Fazendeira);
-    Fase_Quarto.setBruxo(Bruxo);
-    */
 
     InicializaQuarto();
     InicializaQuintal();
@@ -141,9 +140,9 @@ void Jogo::InicializaQuintal()
 {
     if (!Multiplayer)
         Bruxo = NULL;
+    Fase_Quintal.setGerenciadorGrafico(&gerenciadorGrafico);
     Fase_Quintal.setFazendeira(Fazendeira);
     Fase_Quintal.setBruxo(Bruxo);
-    Fase_Quintal.setJanela(&gerenciadorGrafico.getJanela());
     Fase_Quintal.setView(&gerenciadorGrafico.getView());
     Fase_Quintal.setJogo(this);
     Fase_Quintal.inicializa();
@@ -153,9 +152,9 @@ void Jogo::InicializaQuarto()
 {
     if (!Multiplayer)
         Bruxo = NULL;
+    Fase_Quarto.setGerenciadorGrafico(&gerenciadorGrafico);
     Fase_Quarto.setFazendeira(Fazendeira);
     Fase_Quarto.setBruxo(Bruxo);
-    Fase_Quarto.setJanela(&gerenciadorGrafico.getJanela());
     Fase_Quarto.setView(&gerenciadorGrafico.getView());
     Fase_Quarto.setJogo(this);
     Fase_Quarto.inicializa();
@@ -164,7 +163,7 @@ void Jogo::InicializaQuarto()
 void Jogo::InicializaJogadores()
 {
     Fazendeira = new Jogador();
-    Fazendeira->setJanela(&gerenciadorGrafico.getJanela());
+    Fazendeira->setGerenciadorGrafico(&gerenciadorGrafico);
     Fazendeira->setDimensoes(sf::Vector2f(COMPRIMENTO_JOGADOR, ALTURA_JOGADOR));
     Fazendeira->setPosicao(sf::Vector2f(640.f, 320.f));
     Fazendeira->setTextura("textures/Fazendeira.png");
@@ -175,9 +174,8 @@ void Jogo::InicializaJogadores()
     if (Multiplayer)
     {
         Bruxo = new Jogador();
-        Bruxo->setJanela(&gerenciadorGrafico.getJanela());
+        Bruxo->setGerenciadorGrafico(&gerenciadorGrafico);
         Bruxo->setDimensoes(sf::Vector2f(COMPRIMENTO_JOGADOR, ALTURA_JOGADOR));
-       // Bruxo->setOrigem();
         Bruxo->setPosicao(sf::Vector2f(640.f, 320.f));
         Bruxo->setTextura("textures/Bruxo.png");
         Bruxo->setTeclas(sf::Keyboard::Right, sf::Keyboard::Left, sf::Keyboard::Up, sf::Keyboard::Enter);
@@ -194,9 +192,11 @@ void Jogo::Executar()
 
 void Jogo::LoopJogo()
 {
+    //gerenciadorGrafico.LoopJogo(this, );
+
     sf::Clock Tempo;
 
-    while (gerenciadorGrafico.getJanela().isOpen())
+    while (gerenciadorGrafico.isOpen())
     {
         sf::Event evento;
         while (gerenciadorGrafico.getJanela().pollEvent(evento))
@@ -209,9 +209,11 @@ void Jogo::LoopJogo()
                 {
                     menuPause.setEstadoAtual(Estado);
                     Estado = 6;
+                    //jogo->setEstado(6);
                 }
-
-            switch (Estado) {
+ 
+            switch (Estado) 
+            {
                 case 0: //Menu Principal
                     menuPrincipal.LoopMenu(&evento);
                     break;
@@ -234,7 +236,7 @@ void Jogo::LoopJogo()
         }
     
     
-        gerenciadorGrafico.getJanela().clear();
+        gerenciadorGrafico.clear();
 
         float DeltaTempo = Tempo.restart().asSeconds();
         if (DeltaTempo > 1.f / 20.f)
@@ -242,8 +244,9 @@ void Jogo::LoopJogo()
 
         Atualiza(DeltaTempo);
         
-        gerenciadorGrafico.getJanela().setView(gerenciadorGrafico.getView());
-        gerenciadorGrafico.getJanela().display();
+        gerenciadorGrafico.updateView();
+
+        gerenciadorGrafico.display();
     }
 
 }
@@ -268,9 +271,7 @@ void Jogo::Salvar()
 
 void Jogo::Recuperar()
 {
-
     ifstream recuperadorEstado("saves/Estado.dat", ios::in);
-
 
     if (!recuperadorEstado)
         cout << "Erro ao abrir arquivo." << endl;
@@ -288,10 +289,10 @@ void Jogo::Recuperar()
     Fase_Quintal.setBruxo(Bruxo);
     Fase_Quarto.setFazendeira(Fazendeira);
     Fase_Quarto.setBruxo(Bruxo);
-
+    Fase_Quintal.setGerenciadorGrafico(&getGerenciadorGrafico());
+    Fase_Quarto.setGerenciadorGrafico(&getGerenciadorGrafico());
     if (estado == 4)
     {
-        Fase_Quintal.setJanela(&gerenciadorGrafico.getJanela());
         Fase_Quintal.setView(&gerenciadorGrafico.getView());
         Fase_Quintal.setJogo(this);
         Fase_Quintal.recuperar();
@@ -299,13 +300,13 @@ void Jogo::Recuperar()
     }
     else if (estado == 5)
     {
-        Fase_Quarto.setJanela(&gerenciadorGrafico.getJanela());
         Fase_Quarto.setView(&gerenciadorGrafico.getView());
         Fase_Quarto.setJogo(this);
         Fase_Quarto.recuperar();
         Estado = estado;
     }
-    for (int i = 0; i < pontos / 10; i++) {
+    for (int i = 0; i < pontos / 10; i++) 
+    {
         Fazendeira->incrementaPontuacao();
     }
 
@@ -358,7 +359,7 @@ void Jogo::RecuperarJogadores()
     Fazendeira->setCooldownAtaque(cooldown);
     Fazendeira->setVelocidade(400.f);
     Fazendeira->setAlturaPulo(250.f);
-    Fazendeira->setJanela(&gerenciadorGrafico.getJanela());
+    Fazendeira->setGerenciadorGrafico(&getGerenciadorGrafico());
     Fazendeira->setColidePlataforma(true);
     Fazendeira->setDimensoes(sf::Vector2f(COMPRIMENTO_JOGADOR, ALTURA_JOGADOR));
 
@@ -378,16 +379,10 @@ void Jogo::RecuperarJogadores()
         Bruxo->setCooldownAtaque(cooldown);
         Bruxo->setVelocidade(400.f);
         Bruxo->setAlturaPulo(250.f);
-        Bruxo->setJanela(&gerenciadorGrafico.getJanela());
+        Fazendeira->setGerenciadorGrafico(&getGerenciadorGrafico());
         Bruxo->setColidePlataforma(true);
         Bruxo->setDimensoes(sf::Vector2f(COMPRIMENTO_JOGADOR, ALTURA_JOGADOR));
-
-        //listaEntidades.inclua(static_cast<Entidade*>(Bruxo));
-        //listaPersonagens.inclua(static_cast <Personagem*> (Bruxo));
     }
 
     recuperadorJogadores.close();
-
-    //ofstream deletar("saves/Jogadores.dat", ios::out);
-    //deletar.close();
 }

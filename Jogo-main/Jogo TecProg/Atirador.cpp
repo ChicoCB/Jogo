@@ -1,6 +1,7 @@
 #include "Atirador.h"
 #include "Fase.h"
 #include "Personagem.h"
+#include "Jogo.h"
 
 Atirador::Atirador():
 	faseAtual(NULL)
@@ -13,31 +14,6 @@ Atirador::~Atirador()
 
 void Atirador::setFaseAtual(Fase* faseatual) {
 	faseAtual = faseatual;
-}
-
-void Atirador::atiraProjetilHorizontal(Personagem* personagem)
-{
-	Projetil* novo = NULL;
-
-	novo = new Projetil();
-
-	if (personagem->getOlharDireita())
-	{
-		novo->setPosicao(sf::Vector2f(personagem->getPosicao().x + personagem->getDimensoes().x / 2, personagem->getPosicao().y));
-		novo->setVelocidade(sf::Vector2f(600.f, 0.f));
-	}
-	else
-	{
-		novo->setPosicao(sf::Vector2f(personagem->getPosicao().x - personagem->getDimensoes().x / 2, personagem->getPosicao().y));
-		novo->setVelocidade(sf::Vector2f(-600.f, 0.f));
-	}
-	novo->setDimensoes(sf::Vector2f(10.f, 10.f));
-	novo->setJanela(faseAtual->getJanela());
-	novo->setAmigavel(personagem->getAmigavel());
-	novo->setDesalocavel(false);
-	novo->setFaseAtual(faseAtual);
-
-	faseAtual->incluaProjetil(novo); //Incluído na fase
 }
 
 void Atirador::atiraProjetilHorizontal(Personagem* personagem, float altura)
@@ -57,10 +33,11 @@ void Atirador::atiraProjetilHorizontal(Personagem* personagem, float altura)
 		novo->setVelocidade(sf::Vector2f(-600.f, 0.f));
 	}
 	novo->setDimensoes(sf::Vector2f(10.f, 10.f));
-	novo->setJanela(faseAtual->getJanela());
+	//novo->setJanela(faseAtual->getJanela());
 	novo->setAmigavel(personagem->getAmigavel());
 	novo->setDesalocavel(false);
 	novo->setFaseAtual(faseAtual);
+	novo->setGerenciadorGrafico(&faseAtual->getJogo()->getGerenciadorGrafico());
 
 	faseAtual->incluaProjetil(novo); //Incluído na fase
 }
@@ -85,10 +62,11 @@ void Atirador::atiraProjetilDirecionado(Personagem* personagem, float dimensao)
 			novo->setVelocidade(sf::Vector2f(400.f * deltax / modulo, 400.f * deltay / modulo));
 
 			novo->setDimensoes(sf::Vector2f(dimensao, dimensao));
-			novo->setJanela(faseAtual->getJanela());
+			//novo->setJanela(faseAtual->getJanela());
 			novo->setAmigavel(personagem->getAmigavel());
 			novo->setDesalocavel(false);
 			novo->setFaseAtual(faseAtual);
+			novo->setGerenciadorGrafico(&faseAtual->getJogo()->getGerenciadorGrafico());
 
 			faseAtual->incluaProjetil(novo); //Incluído na fase	
 		}

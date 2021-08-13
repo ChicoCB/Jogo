@@ -4,7 +4,7 @@
 Menu::Menu(unsigned int comprimento, unsigned int altura, int tamanho, Jogo* jg)
 {
 	if (!Fonte.loadFromFile("arial.ttf"))
-		cout << "Erro" << endl;
+		cout << "Erro ao carregar fonte." << endl;
 
 	jogo = jg;
 	Indice = 0;
@@ -44,5 +44,5 @@ void Menu::moverBaixo()
 void Menu::desenhar()
 {
 	for (int i = 0; i < Tamanho; i++)
-		Janela->draw(menu[i]); 
+		pGerenciadorGrafico->desenhar(menu[i]);
 }

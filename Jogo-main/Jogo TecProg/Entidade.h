@@ -3,6 +3,7 @@
 #include "Ente.h"
 
 class Personagem;
+class GerenciadorGrafico;
 
 class Entidade : public Ente
 {
@@ -18,8 +19,7 @@ protected:
 public:
 	Entidade();
 	virtual ~Entidade();
-	
-	
+
 	void setDimensoes(sf::Vector2f dimensoes);
 	sf::Vector2f getDimensoes();
 	void setPosicao(sf::Vector2f posicao);

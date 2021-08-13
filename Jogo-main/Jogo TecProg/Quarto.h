@@ -22,8 +22,6 @@ public:
 	void atualiza(float deltaTempo);
 	void limparTudo();
 
-	void setChefaoMorreu(bool chefaomorreu);
-
 	void recuperar();
 	void recuperarFantasmas();
 	void recuperarChefao();

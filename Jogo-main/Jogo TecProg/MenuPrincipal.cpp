@@ -60,7 +60,7 @@ void MenuPrincipal::LoopMenu(sf::Event* evento)
 				jogo->setEstado(3);
 				break;
 			case 3:
-				Janela->close();
+				pGerenciadorGrafico->getJanela().close();
 				break;
 			}
 		}
