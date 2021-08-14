@@ -73,6 +73,7 @@ MenuColocacao& Jogo::getMenuColocacao()
 void Jogo::Atualiza(float deltaTempo)
 {
     //Estado = MenuPrincipal.getEstado();
+
     switch (Estado) {
         case 0: //Menu Principal
             gerenciadorGrafico.resetaView();
@@ -192,52 +193,31 @@ void Jogo::Executar()
 
 void Jogo::LoopJogo()
 {
-    //gerenciadorGrafico.LoopJogo(this, );
-
-    sf::Clock Tempo;
+    gerenciadorGrafico.LoopJogo(this, Estado);
+    /*
+     sf::Clock Tempo;
 
     while (gerenciadorGrafico.isOpen())
     {
         sf::Event evento;
         while (gerenciadorGrafico.getJanela().pollEvent(evento))
         {
-            if (evento.type == sf::Event::Closed)
-                gerenciadorGrafico.getJanela().close();
-
-            if (evento.type == sf::Event::KeyPressed)
-                if (evento.key.code == sf::Keyboard::Key::Escape)
+            if (evento.type == sf::Event::TextEntered) {
+                if (evento.text.unicode == 27)
                 {
                     menuPause.setEstadoAtual(Estado);
                     Estado = 6;
                     //jogo->setEstado(6);
                 }
- 
-            switch (Estado) 
-            {
-                case 0: //Menu Principal
-                    menuPrincipal.LoopMenu(&evento);
-                    break;
-                case 1: //Menu Jogadores
-                    menuJogadores.LoopMenu(&evento);
-                    break;
-                case 2: //Menu Fases
-                    menuFases.LoopMenu(&evento);
-                    break;
-                case 3: //Menu Colocações
-                    menuColocacao.LoopMenu(&evento);
-                    break;
-                case 6:
-                    menuPause.LoopMenu(&evento);
-                    break;
-                case 7: //Tela salvamento
-                    creditos.LoopMenu(&evento);
-                    break;
+                cout << evento.text.unicode << endl;
+                MenusJogo(Estado, evento.text.unicode);
             }
+            if (evento.type == sf::Event::Closed)
+                gerenciadorGrafico.getJanela().close();
         }
-    
+
     
         gerenciadorGrafico.clear();
-
         float DeltaTempo = Tempo.restart().asSeconds();
         if (DeltaTempo > 1.f / 20.f)
             DeltaTempo = 1.f / 20.f;
@@ -248,8 +228,40 @@ void Jogo::LoopJogo()
 
         gerenciadorGrafico.display();
     }
-
+    */
+   
 }
+
+void Jogo::MenusJogo(int estado, char tecla)
+{
+    switch (estado)
+    {
+    case 0: //Menu Principal
+        menuPrincipal.LoopMenu(tecla);
+        break;
+        case 1: //Menu Jogadores
+            cout << "Entrou aqui" << endl;
+        menuJogadores.LoopMenu(tecla);
+        break;
+       
+    case 2: //Menu Fases
+        menuFases.LoopMenu(tecla);
+        break;
+
+    case 3: //Menu Colocações
+        menuColocacao.LoopMenu(tecla);
+        break;
+      
+    case 6:
+        menuPause.LoopMenu(tecla);
+        break;
+       
+    case 7: //Tela salvamento
+        creditos.LoopMenu(tecla);
+        break;
+    }      
+}
+
 
 void Jogo::Salvar()
 {
@@ -336,6 +348,14 @@ void Jogo::LimparArquivos()
     ofstream deletarPorta("saves/Porta.dat", ios::out);
     deletarPorta.close();
 }
+
+void Jogo::setEstadoAtual(int estado)
+{
+    menuPause.setEstadoAtual(estado);
+
+}
+
+
 
 void Jogo::RecuperarJogadores()
 {

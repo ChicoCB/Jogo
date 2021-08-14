@@ -21,15 +21,13 @@ int MenuPause::getEstadoAtual()
 	return EstadoAtual;
 }
 
-void MenuPause::LoopMenu(sf::Event* evento)
+void MenuPause::LoopMenu(char tecla)
 {
-	if (evento->type == sf::Event::KeyPressed)
-	{
-		if (evento->key.code == sf::Keyboard::Key::W)
+		if (tecla == 'w' || tecla == 'W')
 			moverCima();
-		if (evento->key.code == sf::Keyboard::Key::S)
+		if (tecla == 's' || tecla == 'S')
 			moverBaixo();
-		if (evento->key.code == sf::Keyboard::Key::Enter)
+		if (tecla == 13)
 		{
 			switch (Indice)
 			{
@@ -52,7 +50,7 @@ void MenuPause::LoopMenu(sf::Event* evento)
 				break;
 			}
 		}
-	}
+	
 }
 
 void MenuPause::Inicializa()

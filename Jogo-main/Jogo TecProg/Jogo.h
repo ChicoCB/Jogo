@@ -57,6 +57,10 @@ public:
 	void Recuperar();
 	void LimparArquivos();
 
+	void setEstadoAtual(int estado);
+
+	void MenusJogo(int estado, char tecla);
+
 	void RecuperarJogadores();
 };
 

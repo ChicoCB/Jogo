@@ -1,4 +1,5 @@
 #include "GerenciadorGrafico.h"
+#include "Jogo.h"
 
 GerenciadorGrafico::GerenciadorGrafico():
 	Janela(sf::VideoMode(static_cast <unsigned int>(COMPRIMENTO_RESOLUCAO), static_cast <unsigned int>(ALTURA_RESOLUCAO)),
@@ -6,6 +7,59 @@ GerenciadorGrafico::GerenciadorGrafico():
     View(sf::Vector2f(COMPRIMENTO_RESOLUCAO/2, ALTURA_RESOLUCAO/2), sf::Vector2f(COMPRIMENTO_RESOLUCAO, ALTURA_RESOLUCAO))
 {
 }
+
+void GerenciadorGrafico::LoopJogo(Jogo* jogo, int estado)
+{
+    sf::Clock Tempo;
+    int Estado = estado;
+
+    while (isOpen())
+    {
+        sf::Event evento;
+        while (getJanela().pollEvent(evento))
+        {
+            if (evento.type == sf::Event::TextEntered) {
+                if (evento.text.unicode == 27)
+                {
+                    jogo->setEstadoAtual(Estado);
+                    Estado = 6;
+                    jogo->setEstado(6);
+                }
+                //cout << evento.text.unicode << endl;
+                jogo->MenusJogo(Estado, evento.text.unicode);
+            }
+            if (evento.type == sf::Event::Closed)
+                getJanela().close();
+            //cout << TeclaApertada() << endl;
+        }
+
+        clear();
+        float DeltaTempo = Tempo.restart().asSeconds();
+        if (DeltaTempo > 1.f / 20.f)
+            DeltaTempo = 1.f / 20.f;
+
+        jogo->Atualiza(DeltaTempo);
+        Estado = jogo->getEstado();
+
+        updateView();
+
+        display();
+    }
+}
+
+char GerenciadorGrafico::TeclaApertada()
+{
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
+        return 'D';
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
+        return 'A';
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))
+        return 'W';
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))
+        return ' ';
+}
+
+
 
 GerenciadorGrafico::~GerenciadorGrafico()
 {
@@ -72,6 +126,8 @@ bool GerenciadorGrafico::isOpen()
 {
 	return Janela.isOpen();
 }
+
+
 
 /*
 void GerenciadorGrafico::pollEvent(sf::Event* evento)

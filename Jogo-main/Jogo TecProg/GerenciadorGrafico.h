@@ -2,6 +2,8 @@
 #include "stdafx.h"
 #include "Entidade.h"
 
+class Jogo;
+
 class GerenciadorGrafico
 {
 private:
@@ -30,6 +32,9 @@ public:
 	void clear();
 	bool isOpen();
 	//void pollEvent(sf::Event* evento);
+	void LoopJogo(Jogo* jogo, int estado);
+
+	char TeclaApertada();
 };
 
 

@@ -25,6 +25,6 @@ public:
 	void setEditavel(bool Editavel);
 	void setEstadoAnterior(int estadoanterior);
 
-	void LoopMenu(sf::Event* evento);
+	void LoopMenu(char tecla);
 };
 
