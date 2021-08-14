@@ -4,7 +4,7 @@
 
 Fase::Fase():
 	Ente(),
-	pView(NULL),
+	//pView(NULL),
 	pFazendeira(NULL),
 	pBruxo(NULL),
 	pJogo(NULL)
@@ -156,10 +156,13 @@ void Fase::incluaProjetil(Projetil* projetil)
 	listaEntidades.inclua(projetil);
 }
 
+/*
 void Fase::setView(sf::View* view)
 {
-    pView = view;
+	pView = view;
 }
+*/
+
 
 void Fase::setJogo(Jogo* jg)
 {

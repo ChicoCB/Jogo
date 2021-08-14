@@ -20,7 +20,7 @@ protected:
 	Jogador* pFazendeira;
 	Jogador* pBruxo;
 	Jogo* pJogo;
-	sf::View* pView; //pGerenciadorGrafico
+	//sf::View* pView; //pGerenciadorGrafico
 
 	GerenciadorColisoes gerenciadorColisoes;
 	ListaEntidades listaEntidades;
@@ -35,7 +35,7 @@ public:
 	void setFazendeira(Jogador* pfazendeira);
 	Jogador* getFazendeira();
 	void setBruxo(Jogador* pbruxo);
-	void setView(sf::View* pview);
+	// setView(sf::View* pview);
 
 	//Cria objetos que estão em ambas as fases
 	void criaPlataforma(sf::Vector2f posicao, const string textura = "textures/Plataforma_meio.png");

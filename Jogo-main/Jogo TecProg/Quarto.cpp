@@ -2,7 +2,7 @@
 #include "Jogo.h"
 
 Quarto::Quarto() :
-	Fase()
+	Fase(), ChefaoMorreu(false)
 {
 }
 
@@ -13,7 +13,8 @@ Quarto::~Quarto()
 
 void Quarto::inicializa()
 {
-	pView->setCenter(sf::Vector2f(COMPRIMENTO_RESOLUCAO/2, ALTURA_RESOLUCAO/2));
+	//pView->setCenter(sf::Vector2f(COMPRIMENTO_RESOLUCAO/2, ALTURA_RESOLUCAO/2));
+	pGerenciadorGrafico->atualizaView(sf::Vector2f(COMPRIMENTO_RESOLUCAO / 2, ALTURA_RESOLUCAO / 2));
 
 	srand(time(NULL));
 
@@ -86,6 +87,7 @@ void Quarto::atualiza(float deltaTempo)
 
 	if (ChefaoMorreu)
 	{
+		cout << "Sumonando porta." << endl;
 		ChefaoMorreu = false;
 		Porta* cabideiro;
 
@@ -104,7 +106,7 @@ void Quarto::limparTudo()
 {
 	listaPersonagens.limparTudo();
 	listaEntidades.limparTudo();
-	pView = NULL;
+	//pView = NULL;
 	pFazendeira = NULL;
 	pBruxo = NULL;
 	pJogo = NULL;
@@ -235,6 +237,11 @@ void Quarto::recuperarPorta()
 		listaEntidades.inclua(static_cast <Entidade*>(novo));
 	}
 	recuperadorPorta.close();
+}
+
+void Quarto::setChefaoMorreu(bool chefaomorreu)
+{
+	ChefaoMorreu = chefaomorreu;
 }
 
 void Quarto::criaFantasma(sf::Vector2f posicao)

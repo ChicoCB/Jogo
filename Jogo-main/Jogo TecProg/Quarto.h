@@ -26,6 +26,7 @@ public:
 	void recuperarFantasmas();
 	void recuperarChefao();
 	void recuperarPorta();
+	void setChefaoMorreu(bool chefaomorreu);
 
 	void criaFantasma(sf::Vector2f posicao);
 	void criaChefao(sf::Vector2f posicao);

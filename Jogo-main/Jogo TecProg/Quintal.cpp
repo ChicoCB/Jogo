@@ -14,7 +14,8 @@ Quintal::~Quintal()
 
 void Quintal::inicializa()
 {
-	pView->setCenter(sf::Vector2f(COMPRIMENTO_RESOLUCAO/2, ALTURA_RESOLUCAO/2));
+	//pView->setCenter(sf::Vector2f(COMPRIMENTO_RESOLUCAO/2, ALTURA_RESOLUCAO/2));
+	pGerenciadorGrafico->atualizaView(sf::Vector2f(COMPRIMENTO_RESOLUCAO / 2, ALTURA_RESOLUCAO / 2));
 
 	srand(time(NULL));
 
@@ -92,7 +93,7 @@ void Quintal::limparTudo()
 {
 	listaPersonagens.limparTudo();
 	listaEntidades.limparTudo();
-	pView = NULL;
+	//pView = NULL;
 	pFazendeira = NULL;
 	pBruxo = NULL;
 	pJogo = NULL;

@@ -1,10 +1,11 @@
 #include "GerenciadorGrafico.h"
 #include "Jogo.h"
 
-GerenciadorGrafico::GerenciadorGrafico():
-	Janela(sf::VideoMode(static_cast <unsigned int>(COMPRIMENTO_RESOLUCAO), static_cast <unsigned int>(ALTURA_RESOLUCAO)),
-			"Jogo"/*, sf::Style::Fullscreen*/),
-    View(sf::Vector2f(COMPRIMENTO_RESOLUCAO/2, ALTURA_RESOLUCAO/2), sf::Vector2f(COMPRIMENTO_RESOLUCAO, ALTURA_RESOLUCAO))
+GerenciadorGrafico::GerenciadorGrafico() :
+    Janela(sf::VideoMode(static_cast <unsigned int>(COMPRIMENTO_RESOLUCAO), static_cast <unsigned int>(ALTURA_RESOLUCAO)),
+        "Jogo"/*, sf::Style::Fullscreen*/),
+    View(sf::Vector2f(COMPRIMENTO_RESOLUCAO / 2, ALTURA_RESOLUCAO / 2), sf::Vector2f(COMPRIMENTO_RESOLUCAO, ALTURA_RESOLUCAO))//,
+    //id(0)
 {
 }
 
@@ -25,7 +26,7 @@ void GerenciadorGrafico::LoopJogo(Jogo* jogo, int estado)
                     Estado = 6;
                     jogo->setEstado(6);
                 }
-                cout << evento.text.unicode << endl;
+                //cout << evento.text.unicode << endl;
                 jogo->MenusJogo(Estado, evento.text.unicode);
             }
             if (evento.type == sf::Event::Closed)
@@ -46,8 +47,6 @@ void GerenciadorGrafico::LoopJogo(Jogo* jogo, int estado)
         display();
     }
 }
-
-
 
 GerenciadorGrafico::~GerenciadorGrafico()
 {

@@ -8,6 +8,9 @@ class GerenciadorGrafico
 {
 private:
 
+	//int id;
+	//vector<sf::RectangleShape*> Corpos;
+
 	sf::RenderWindow Janela;
 	sf::View View;
 	sf::Event evento;

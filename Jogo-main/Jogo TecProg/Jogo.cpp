@@ -111,7 +111,6 @@ void Jogo::Atualiza(float deltaTempo)
 void Jogo::Inicializa()
 {
     gerenciadorGrafico.getJanela().setView(gerenciadorGrafico.getView());
-    //Janela.setView(View);
 
     menuPrincipal.setGerenciadorGrafico(&gerenciadorGrafico);
     menuJogadores.setGerenciadorGrafico(&gerenciadorGrafico);
@@ -120,12 +119,10 @@ void Jogo::Inicializa()
     menuColocacao.setGerenciadorGrafico(&gerenciadorGrafico);
 
     menuColocacao.Recupera();
-    //(static_cast<Menu>(creditos)).setJanela(&gerenciadorGrafico.getJanela());
-    //(static_cast<Entidade>(creditos)).setJanela(&gerenciadorGrafico.getJanela());
+   
     creditos.setGerenciadorGrafico(&gerenciadorGrafico);
 
-    //InicializaJogadores();
-    //InicializaFases();
+
 }
 
 void Jogo::InicializaFases()
@@ -144,7 +141,7 @@ void Jogo::InicializaQuintal()
     Fase_Quintal.setGerenciadorGrafico(&gerenciadorGrafico);
     Fase_Quintal.setFazendeira(Fazendeira);
     Fase_Quintal.setBruxo(Bruxo);
-    Fase_Quintal.setView(&gerenciadorGrafico.getView());
+    //Fase_Quintal.setView(&gerenciadorGrafico.getView());
     Fase_Quintal.setJogo(this);
     Fase_Quintal.inicializa();
 }
@@ -156,7 +153,7 @@ void Jogo::InicializaQuarto()
     Fase_Quarto.setGerenciadorGrafico(&gerenciadorGrafico);
     Fase_Quarto.setFazendeira(Fazendeira);
     Fase_Quarto.setBruxo(Bruxo);
-    Fase_Quarto.setView(&gerenciadorGrafico.getView());
+    //Fase_Quarto.setView(&gerenciadorGrafico.getView());
     Fase_Quarto.setJogo(this);
     Fase_Quarto.inicializa();
 }
@@ -305,14 +302,14 @@ void Jogo::Recuperar()
     Fase_Quarto.setGerenciadorGrafico(&getGerenciadorGrafico());
     if (estado == 4)
     {
-        Fase_Quintal.setView(&gerenciadorGrafico.getView());
+        //Fase_Quintal.setView(&gerenciadorGrafico.getView());
         Fase_Quintal.setJogo(this);
         Fase_Quintal.recuperar();
         Estado = estado;
     }
     else if (estado == 5)
     {
-        Fase_Quarto.setView(&gerenciadorGrafico.getView());
+        //Fase_Quarto.setView(&gerenciadorGrafico.getView());
         Fase_Quarto.setJogo(this);
         Fase_Quarto.recuperar();
         Estado = estado;
