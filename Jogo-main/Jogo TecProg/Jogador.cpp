@@ -51,22 +51,26 @@ void Jogador::atualiza(float deltaTempo)
 	if (podePular)
 		Velocidade = 400.f;
 
-	if (sf::Keyboard::isKeyPressed(Direita))
+	char TeclaDireita, TeclaEsquerda, TeclaPulo, TeclaAtira;
+
+	pGerenciadorGrafico->TeclaApertada(&TeclaDireita, &TeclaEsquerda, &TeclaPulo, &TeclaAtira);
+
+	if (TeclaDireita == Direita || TeclaDireita == '>')
 	{
 		Movimento.x += Velocidade;
 		olharDireita = true;
 	}
-	if (sf::Keyboard::isKeyPressed(Esquerda))
+	if (TeclaEsquerda == Esquerda || TeclaEsquerda == '<')
 	{
 		Movimento.x -= Velocidade;
 		olharDireita = false;
 	}
-	if (podePular && sf::Keyboard::isKeyPressed(Pulo))
+	if (podePular && (TeclaPulo == Pulo || TeclaPulo == 'J'))
 	{
 		podePular = false;
 		Movimento.y = -sqrt(2 * 981.f * alturaPulo);
 	}
-	if (sf::Keyboard::isKeyPressed(Atira) && this->podeAtacar())
+	if ((TeclaAtira == Atira || TeclaAtira == 'S') && this->podeAtacar())
 	{
 		this->atiraProjetilHorizontal(this, getPosicao().y);
 		CooldownAtaque = 0;
@@ -79,7 +83,7 @@ void Jogador::atualiza(float deltaTempo)
 	this->movimenta(Movimento * deltaTempo);
 }
 
-void Jogador::setTeclas(sf::Keyboard::Key direita, sf::Keyboard::Key esquerda, sf::Keyboard::Key pulo, sf::Keyboard::Key atira)
+void Jogador::setTeclas(char direita, char esquerda, char pulo, char atira)
 {
 	Direita = direita;
 	Esquerda = esquerda;

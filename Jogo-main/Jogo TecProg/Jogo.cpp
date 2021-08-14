@@ -168,7 +168,7 @@ void Jogo::InicializaJogadores()
     Fazendeira->setDimensoes(sf::Vector2f(COMPRIMENTO_JOGADOR, ALTURA_JOGADOR));
     Fazendeira->setPosicao(sf::Vector2f(640.f, 320.f));
     Fazendeira->setTextura("textures/Fazendeira.png");
-    Fazendeira->setTeclas(sf::Keyboard::D, sf::Keyboard::A, sf::Keyboard::W, sf::Keyboard::Space);
+    Fazendeira->setTeclas('D', 'A', 'W', ' ');
     Fazendeira->setVelocidade(400.f);
     Fazendeira->setAlturaPulo(250.f);
 
@@ -179,7 +179,7 @@ void Jogo::InicializaJogadores()
         Bruxo->setDimensoes(sf::Vector2f(COMPRIMENTO_JOGADOR, ALTURA_JOGADOR));
         Bruxo->setPosicao(sf::Vector2f(640.f, 320.f));
         Bruxo->setTextura("textures/Bruxo.png");
-        Bruxo->setTeclas(sf::Keyboard::Right, sf::Keyboard::Left, sf::Keyboard::Up, sf::Keyboard::Enter);
+        Bruxo->setTeclas('R', 'L','U', 'E');
         Bruxo->setVelocidade(400.f);
         Bruxo->setAlturaPulo(250.f);
     }
@@ -373,7 +373,7 @@ void Jogo::RecuperarJogadores()
     Fazendeira->setVida(vida);
     Fazendeira->setPosicao(sf::Vector2f(posx, posy));
     Fazendeira->setTextura("textures/Fazendeira.png");
-    Fazendeira->setTeclas(sf::Keyboard::D, sf::Keyboard::A, sf::Keyboard::W, sf::Keyboard::Space);
+    Fazendeira->setTeclas('D', 'A', 'W', ' ');
     Fazendeira->setMovimentoX(movx);
     Fazendeira->setMovimentoY(movy);
     Fazendeira->setCooldownAtaque(cooldown);
@@ -393,7 +393,7 @@ void Jogo::RecuperarJogadores()
 
         Bruxo->setVida(vida);
         Bruxo->setPosicao(sf::Vector2f(posx, posy));
-        Bruxo->setTeclas(sf::Keyboard::Right, sf::Keyboard::Left, sf::Keyboard::Up, sf::Keyboard::Enter);
+        Bruxo->setTeclas('R', 'L', 'U', 'E');
         Bruxo->setMovimentoX(movx);
         Bruxo->setMovimentoY(movy);
         Bruxo->setCooldownAtaque(cooldown);

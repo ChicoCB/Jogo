@@ -10,7 +10,7 @@ class Jogo;
 class Jogador : public Personagem, public Atirador
 {
 private:
-	sf::Keyboard::Key Direita, Esquerda, Pulo, Atira;
+	char Direita, Esquerda, Pulo, Atira;
 	bool podePular;
 	float alturaPulo;
 	static int Pontuacao;
@@ -21,7 +21,7 @@ public:
 
 	void setPodePular(bool podepular);
 	void setAlturaPulo(float alturapulo);
-	void setTeclas(sf::Keyboard::Key direita, sf::Keyboard::Key esquerda, sf::Keyboard::Key pulo, sf::Keyboard::Key atira);
+	void setTeclas(char direita, char esquerda, char pulo, char atira);
 
 	void incrementaPontuacao();
 	static int getPontuacao();

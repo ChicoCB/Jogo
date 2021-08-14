@@ -34,7 +34,7 @@ public:
 	//void pollEvent(sf::Event* evento);
 	void LoopJogo(Jogo* jogo, int estado);
 
-	char TeclaApertada();
+	void TeclaApertada(char* direita, char* esquerda, char *pulo, char *atira);
 };
 
 

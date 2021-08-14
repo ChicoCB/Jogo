@@ -25,7 +25,7 @@ void GerenciadorGrafico::LoopJogo(Jogo* jogo, int estado)
                     Estado = 6;
                     jogo->setEstado(6);
                 }
-                //cout << evento.text.unicode << endl;
+                cout << evento.text.unicode << endl;
                 jogo->MenusJogo(Estado, evento.text.unicode);
             }
             if (evento.type == sf::Event::Closed)
@@ -45,18 +45,6 @@ void GerenciadorGrafico::LoopJogo(Jogo* jogo, int estado)
 
         display();
     }
-}
-
-char GerenciadorGrafico::TeclaApertada()
-{
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
-        return 'D';
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
-        return 'A';
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))
-        return 'W';
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))
-        return ' ';
 }
 
 
@@ -127,11 +115,43 @@ bool GerenciadorGrafico::isOpen()
 	return Janela.isOpen();
 }
 
-
-
-/*
-void GerenciadorGrafico::pollEvent(sf::Event* evento)
+void GerenciadorGrafico::TeclaApertada(char* direita, char* esquerda, char* pulo, char* atira)
 {
-	Janela.pollEvent(evento);
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
+        *direita = 'D';
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
+        *esquerda = 'A';
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))
+        *pulo = 'W';
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))
+        *atira = ' ';
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right))
+    {
+        if (*direita == 'D')
+            *direita = '>';
+        else
+            *direita = 'R';
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left))
+    {
+        if (*esquerda == 'A')
+            *esquerda = '<';
+        else
+            *esquerda = 'L';
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up))
+    {
+        if (*pulo == 'W')
+            *pulo = 'J';
+        else
+            *pulo = 'U';
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Enter))
+    {
+        if (*atira == ' ')
+            *atira = 'S';
+        else
+            *atira = 'E';
+    }
 }
-*/
+
