@@ -1,12 +1,15 @@
 #include "GerenciadorGrafico.h"
 #include "Jogo.h"
 
+//int GerenciadorGrafico::IdAtual = 0;
+
 GerenciadorGrafico::GerenciadorGrafico() :
     Janela(sf::VideoMode(static_cast <unsigned int>(COMPRIMENTO_RESOLUCAO), static_cast <unsigned int>(ALTURA_RESOLUCAO)),
         "Jogo"/*, sf::Style::Fullscreen*/),
-    View(sf::Vector2f(COMPRIMENTO_RESOLUCAO / 2, ALTURA_RESOLUCAO / 2), sf::Vector2f(COMPRIMENTO_RESOLUCAO, ALTURA_RESOLUCAO))//,
-    //id(0)
+    View(sf::Vector2f(COMPRIMENTO_RESOLUCAO / 2, ALTURA_RESOLUCAO / 2), sf::Vector2f(COMPRIMENTO_RESOLUCAO, ALTURA_RESOLUCAO)),
+    IdAtual(0)
 {
+    Janela.setView(View);
 }
 
 void GerenciadorGrafico::LoopJogo(Jogo* jogo, int estado)
@@ -26,12 +29,10 @@ void GerenciadorGrafico::LoopJogo(Jogo* jogo, int estado)
                     Estado = 6;
                     jogo->setEstado(6);
                 }
-                //cout << evento.text.unicode << endl;
                 jogo->MenusJogo(Estado, evento.text.unicode);
             }
             if (evento.type == sf::Event::Closed)
                 getJanela().close();
-            //cout << TeclaApertada() << endl;
         }
 
         clear();
@@ -77,11 +78,76 @@ void GerenciadorGrafico::atualizaView(sf::Vector2f posicao)
 	View.setCenter(posicao);
 }
 
+/*
+vector<sf::RectangleShape*>& GerenciadorGrafico::getListaCorpos()
+{
+    return ListaCorpos;
+}
+*/
+
+void GerenciadorGrafico::criaCorpo(Entidade* pentidade, float dimx, float dimy, float posx, float posy, string text)
+{
+    sf::Texture* Textura = new sf::Texture();
+    sf::RectangleShape* Corpo = new sf::RectangleShape();
+
+    Corpo->setSize(sf::Vector2f(dimx, dimy));
+    Corpo->setPosition(sf::Vector2f(posx, posy));
+    Corpo->setOrigin(dimx/2, dimy/2);
+
+    if (!Textura->loadFromFile(text))
+        cerr << "Erro. Nao foi possivel carregar a textura de uma Entidade." << endl;
+    Corpo->setTexture(Textura);
+   // Corpo->setTextureRect(sf::IntRect(150, 300, 300, 300));
+
+    ListaCorpos.push_back(Corpo);
+
+    pentidade->setId(IdAtual);
+
+    IdAtual++;
+}
+
+void GerenciadorGrafico::setDimensoes(int id, float x, float y)
+{
+    ListaCorpos[id]->setSize(sf::Vector2f(x, y));
+}
+
+float GerenciadorGrafico::getDimensoesX(int id)
+{
+    return ListaCorpos[id]->getSize().x;
+}
+
+float GerenciadorGrafico::getDimensoesY(int id)
+{
+    return ListaCorpos[id]->getSize().y;
+}
+
+void GerenciadorGrafico::setPosicao(int id, float x, float y)
+{
+    ListaCorpos[id]->setPosition(sf::Vector2f(x, y));
+}
+
+float GerenciadorGrafico::getPosicaoX(int id)
+{
+    return ListaCorpos[id]->getPosition().x;
+}
+
+float GerenciadorGrafico::getPosicaoY(int id)
+{
+    return ListaCorpos[id]->getPosition().y;
+}
+
 
 void GerenciadorGrafico::desenhar(Entidade* pentidade)
 {
-	if (pentidade != NULL)
-		Janela.draw(pentidade->getCorpo());
+    if (pentidade != NULL) 
+    {
+        //cout << "id: " << pentidade->getId() << endl;
+        //if (ListaCorpos[pentidade->getId()] != NULL)
+        //   Janela.draw(*ListaCorpos[pentidade->getId()]);
+       // else
+           Janela.draw(pentidade->getCorpo());
+    }
+
 	else
 	{
 		cout << "Erro - entidade nula." << endl;
@@ -97,6 +163,23 @@ void GerenciadorGrafico::desenhar(sf::Text texto)
 void GerenciadorGrafico::fechar()
 {
 	Janela.close();
+}
+
+void GerenciadorGrafico::movimenta(Entidade* pentidade, sf::Vector2f movimento)
+{
+    if (pentidade != NULL)
+    {
+       // if (ListaCorpos[pentidade->getId()] != NULL)
+        //    ListaCorpos[pentidade->getId()]->move(movimento);
+        pentidade->getCorpo().move(movimento);
+
+    }
+
+    else
+    {
+        cout << "Erro - entidade nula." << endl;
+        exit(1);
+    }
 }
 
 void GerenciadorGrafico::display()

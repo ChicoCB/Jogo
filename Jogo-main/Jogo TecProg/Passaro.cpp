@@ -7,20 +7,19 @@ Passaro::Passaro():
 	limiteXEsq(0.0f)
 {
 	CooldownAtaqueMax = 2.f;
+	this->setVida(3);
+	this->setVelocidade(200.f);
 }
 
 Passaro::~Passaro()
 {
 }
 
-void Passaro::setLimiteXEsq(float limesq)
+void Passaro::setLimites(float limesq, float limdir)
 {
 	limiteXEsq = limesq;
-}
-
-void Passaro::setLimiteXDir(float limdir)
-{
 	limiteXDir = limdir;
+
 }
 
 void Passaro::colidir(Personagem* personagem)

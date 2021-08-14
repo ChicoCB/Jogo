@@ -11,8 +11,8 @@ public:
 	Fantasma();
 	~Fantasma();
 
-	void setLimiteXEsq(float limesq);
-	void setLimiteXDir(float limdir);
+	void setLimitesX(float limesq, float limdir);
+
 	void setLimiteYCima(float limiteycima);
 	void setLimiteYBaixo(float limiteybaixo);
 

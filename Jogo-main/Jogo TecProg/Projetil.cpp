@@ -35,8 +35,10 @@ void Projetil::colidir(Personagem* personagem)
 			personagem->setDesalocavel(true);
 			if (!personagem->getAmigavel())
 			{
-				faseAtual->getFazendeira()->incrementaPontuacao();
-				cout << faseAtual->getFazendeira()->getPontuacao() << endl;
+				if (faseAtual != NULL) {
+					faseAtual->getFazendeira()->incrementaPontuacao();
+					cout << faseAtual->getFazendeira()->getPontuacao() << endl;
+				}
 			}
 		}
 		this->setDesalocavel(true);
@@ -61,10 +63,6 @@ void Projetil::atualiza(float deltaTempo)
 	}
 }
 
-void Projetil::movimenta(sf::Vector2f movimento)
-{
-	Corpo.move(movimento);
-}
 
 void Projetil::setVelocidade(sf::Vector2f velocidade)
 {

@@ -20,6 +20,60 @@ Jogo::~Jogo()
 {
 }
 
+void Jogo::Executar()
+{
+    Inicializa();
+    LoopJogo();
+}
+
+void Jogo::Inicializa()
+{
+    menuPrincipal.setGerenciadorGrafico(&gerenciadorGrafico);
+    menuJogadores.setGerenciadorGrafico(&gerenciadorGrafico);
+    menuFases.setGerenciadorGrafico(&gerenciadorGrafico);
+    menuPause.setGerenciadorGrafico(&gerenciadorGrafico);
+    menuColocacao.setGerenciadorGrafico(&gerenciadorGrafico);
+    creditos.setGerenciadorGrafico(&gerenciadorGrafico);
+
+    menuColocacao.Recupera();
+
+}
+
+void Jogo::LoopJogo()
+{
+    gerenciadorGrafico.LoopJogo(this, Estado);
+}
+
+void Jogo::MenusJogo(int estado, char tecla)
+{
+    switch (estado)
+    {
+    case 0: //Menu Principal
+        menuPrincipal.LoopMenu(tecla);
+        break;
+    case 1: //Menu Jogadores
+        cout << "Entrou aqui" << endl;
+        menuJogadores.LoopMenu(tecla);
+        break;
+
+    case 2: //Menu Fases
+        menuFases.LoopMenu(tecla);
+        break;
+
+    case 3: //Menu Colocações
+        menuColocacao.LoopMenu(tecla);
+        break;
+
+    case 6:
+        menuPause.LoopMenu(tecla);
+        break;
+
+    case 7: //Tela creditos
+        creditos.LoopMenu(tecla);
+        break;
+    }
+}
+
 void Jogo::setEstado(int estado)
 {
     Estado = estado;
@@ -108,23 +162,6 @@ void Jogo::Atualiza(float deltaTempo)
     }
 }
 
-void Jogo::Inicializa()
-{
-    gerenciadorGrafico.getJanela().setView(gerenciadorGrafico.getView());
-
-    menuPrincipal.setGerenciadorGrafico(&gerenciadorGrafico);
-    menuJogadores.setGerenciadorGrafico(&gerenciadorGrafico);
-    menuFases.setGerenciadorGrafico(&gerenciadorGrafico);
-    menuPause.setGerenciadorGrafico(&gerenciadorGrafico);
-    menuColocacao.setGerenciadorGrafico(&gerenciadorGrafico);
-
-    menuColocacao.Recupera();
-   
-    creditos.setGerenciadorGrafico(&gerenciadorGrafico);
-
-
-}
-
 void Jogo::InicializaFases()
 {
     if (!Multiplayer)
@@ -161,6 +198,7 @@ void Jogo::InicializaQuarto()
 void Jogo::InicializaJogadores()
 {
     Fazendeira = new Jogador();
+
     Fazendeira->setGerenciadorGrafico(&gerenciadorGrafico);
     Fazendeira->setDimensoes(sf::Vector2f(COMPRIMENTO_JOGADOR, ALTURA_JOGADOR));
     Fazendeira->setPosicao(sf::Vector2f(640.f, 320.f));
@@ -168,6 +206,8 @@ void Jogo::InicializaJogadores()
     Fazendeira->setTeclas('D', 'A', 'W', ' ');
     Fazendeira->setVelocidade(400.f);
     Fazendeira->setAlturaPulo(250.f);
+   // gerenciadorGrafico.criaCorpo(Fazendeira, 0, 0, 0, 0, "");
+    //gerenciadorGrafico.criaCorpo(Fazendeira, COMPRIMENTO_JOGADOR, ALTURA_JOGADOR, 340.f, 320.f, "textures/Fazendeira.png");
 
     if (Multiplayer)
     {
@@ -179,85 +219,12 @@ void Jogo::InicializaJogadores()
         Bruxo->setTeclas('R', 'L','U', 'E');
         Bruxo->setVelocidade(400.f);
         Bruxo->setAlturaPulo(250.f);
+        //gerenciadorGrafico.criaCorpo(Bruxo, COMPRIMENTO_JOGADOR, ALTURA_JOGADOR, 140.f, 320.f, "textures/Bruxo.png");
+
     }
 }
 
-void Jogo::Executar()
-{
-    Inicializa();
-    LoopJogo();
-}
 
-void Jogo::LoopJogo()
-{
-    gerenciadorGrafico.LoopJogo(this, Estado);
-    /*
-     sf::Clock Tempo;
-
-    while (gerenciadorGrafico.isOpen())
-    {
-        sf::Event evento;
-        while (gerenciadorGrafico.getJanela().pollEvent(evento))
-        {
-            if (evento.type == sf::Event::TextEntered) {
-                if (evento.text.unicode == 27)
-                {
-                    menuPause.setEstadoAtual(Estado);
-                    Estado = 6;
-                    //jogo->setEstado(6);
-                }
-                cout << evento.text.unicode << endl;
-                MenusJogo(Estado, evento.text.unicode);
-            }
-            if (evento.type == sf::Event::Closed)
-                gerenciadorGrafico.getJanela().close();
-        }
-
-    
-        gerenciadorGrafico.clear();
-        float DeltaTempo = Tempo.restart().asSeconds();
-        if (DeltaTempo > 1.f / 20.f)
-            DeltaTempo = 1.f / 20.f;
-
-        Atualiza(DeltaTempo);
-        
-        gerenciadorGrafico.updateView();
-
-        gerenciadorGrafico.display();
-    }
-    */
-   
-}
-
-void Jogo::MenusJogo(int estado, char tecla)
-{
-    switch (estado)
-    {
-    case 0: //Menu Principal
-        menuPrincipal.LoopMenu(tecla);
-        break;
-        case 1: //Menu Jogadores
-            cout << "Entrou aqui" << endl;
-        menuJogadores.LoopMenu(tecla);
-        break;
-       
-    case 2: //Menu Fases
-        menuFases.LoopMenu(tecla);
-        break;
-
-    case 3: //Menu Colocações
-        menuColocacao.LoopMenu(tecla);
-        break;
-      
-    case 6:
-        menuPause.LoopMenu(tecla);
-        break;
-       
-    case 7: //Tela salvamento
-        creditos.LoopMenu(tecla);
-        break;
-    }      
-}
 
 
 void Jogo::Salvar()

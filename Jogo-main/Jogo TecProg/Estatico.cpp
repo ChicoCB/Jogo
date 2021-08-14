@@ -6,6 +6,8 @@ Estatico::Estatico():
 	CooldownInvencibilidade(0.0f)
 {
 	CooldownAtaqueMax = 1.0f;
+	this->setVida(4);
+	this->setVelocidade(100.f);
 }
 
 Estatico::~Estatico()

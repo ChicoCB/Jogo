@@ -9,19 +9,18 @@ Fantasma::Fantasma():
 	limiteYBaixo(ALTURA_RESOLUCAO - (ALTURA_PLATAFORMA + ALTURA_FANTASMA / 2))
 {
 	CooldownAtaqueMax = 0.5f;
+	this->setColidePlataforma(false);
+	this->setVelocidade(200.f);
+	this->setVida(2);
 }
 
 Fantasma::~Fantasma()
 {
 }
 
-void Fantasma::setLimiteXEsq(float limesq)
+void Fantasma::setLimitesX(float limesq, float limdir)
 {
 	limiteXEsq = limesq;
-}
-
-void Fantasma::setLimiteXDir(float limdir)
-{
 	limiteXDir = limdir;
 }
 

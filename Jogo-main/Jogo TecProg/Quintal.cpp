@@ -14,7 +14,6 @@ Quintal::~Quintal()
 
 void Quintal::inicializa()
 {
-	//pView->setCenter(sf::Vector2f(COMPRIMENTO_RESOLUCAO/2, ALTURA_RESOLUCAO/2));
 	pGerenciadorGrafico->atualizaView(sf::Vector2f(COMPRIMENTO_RESOLUCAO / 2, ALTURA_RESOLUCAO / 2));
 
 	srand(time(NULL));
@@ -22,36 +21,48 @@ void Quintal::inicializa()
 	gerenciadorColisoes.setListaEntidades(&listaEntidades);
 	gerenciadorColisoes.setListaPersonagens(&listaPersonagens);
 
-	listaEntidades.inclua(static_cast <Entidade*> (&Cenario));
-	Cenario.setTextura("textures/Background.png");
-	Cenario.setDimensoes(sf::Vector2f(COMPRIMENTO_CENARIO, ALTURA_RESOLUCAO));
-	Cenario.setPosicao(sf::Vector2f(COMPRIMENTO_RESOLUCAO, ALTURA_RESOLUCAO/2));
-	Cenario.setGerenciadorGrafico(pGerenciadorGrafico);
+	listaEntidades.inclua(static_cast <Entidade*> (&Background));
+	Background.setTextura("textures/Background.png");
+	Background.setDimensoes(sf::Vector2f(COMPRIMENTO_CENARIO, ALTURA_RESOLUCAO));
+	Background.setPosicao(sf::Vector2f(COMPRIMENTO_RESOLUCAO, ALTURA_RESOLUCAO/2));
+	Background.setGerenciadorGrafico(pGerenciadorGrafico);
 
 	criaPlataformas();
 
 	for (int i = 0; i < rand() % 6 + 3; i++)
 	{
-		criaEspinho(sf::Vector2f(rand() % (static_cast<int>(COMPRIMENTO_CENARIO-400)) + 200,
-			ALTURA_RESOLUCAO - (ALTURA_PLATAFORMA + ALTURA_ESPINHO/2)));
+		Espinho* espinho = new Espinho();
+		criaObstaculo(static_cast <Entidade*>(espinho), sf::Vector2f(COMPRIMENTO_ESPINHO,ALTURA_ESPINHO),
+			sf::Vector2f(rand() % (static_cast<int>(COMPRIMENTO_CENARIO - 400)) + 200, 
+				ALTURA_RESOLUCAO - (ALTURA_PLATAFORMA + ALTURA_ESPINHO / 2)), "");
 	}
 
 	for (int i = 0; i < rand() % 6 + 3; i++)
 	{
-		criaTeia(sf::Vector2f(rand() % (static_cast<int>(COMPRIMENTO_CENARIO - 400)) + 200,
-			ALTURA_RESOLUCAO - (ALTURA_PLATAFORMA + ALTURA_TEIA / 2)));
+		Teia* teia = new Teia();
+		criaObstaculo(static_cast <Entidade*>(teia), sf::Vector2f(COMPRIMENTO_TEIA, ALTURA_TEIA),
+			sf::Vector2f(rand() % (static_cast<int>(COMPRIMENTO_CENARIO - 400)) + 200,
+				ALTURA_RESOLUCAO - (ALTURA_PLATAFORMA + ALTURA_TEIA / 2)), "");
 	}
 
 	for (int i = 0; i < rand() % 4 + 3; i++)
 	{
-		criaPassaro(sf::Vector2f(rand() % (static_cast<int>(COMPRIMENTO_CENARIO - 400)) + 200,
-			rand() % static_cast<int>(ALTURA_RESOLUCAO / 2) + ALTURA_FANTASMA / 2));
+		Passaro* passaro = new Passaro();
+		passaro->setFaseAtual(this);
+		criaInimigo(static_cast<Personagem*>(passaro), sf::Vector2f(COMPRIMENTO_PASSARO, ALTURA_PASSARO),
+			sf::Vector2f(rand() % (static_cast<int>(COMPRIMENTO_CENARIO - 400)) + 200,
+				rand() % static_cast<int>(ALTURA_RESOLUCAO / 2) + ALTURA_PASSARO / 2),
+			"textures/Passaro_direita.png");
+		passaro->setLimites(passaro->getPosicao().x, passaro->getPosicao().x + 300.f);
+	
 	}
 
 	for (int i = 0; i < rand() % 4 + 3; i++)
 	{
-		criaEstatico(sf::Vector2f(rand() % (static_cast<int>(COMPRIMENTO_CENARIO - 400)) + 200,
-			rand() % static_cast<int>(ALTURA_RESOLUCAO) - (ALTURA_PLATAFORMA + ALTURA_ESTATICO/2)),
+		Estatico* estatico = new Estatico();
+		criaInimigo(static_cast<Personagem*>(estatico), sf::Vector2f(COMPRIMENTO_ESTATICO, ALTURA_ESTATICO),
+			sf::Vector2f(rand() % (static_cast<int>(COMPRIMENTO_CENARIO - 400)) + 200,
+				rand() % static_cast<int>(ALTURA_RESOLUCAO) - (ALTURA_PLATAFORMA + ALTURA_ESTATICO / 2)),
 			"textures/Estatico_vulneravel.png");
 	}
 
@@ -99,53 +110,52 @@ void Quintal::limparTudo()
 	pJogo = NULL;
 }
 
-void Quintal::criaPassaro(sf::Vector2f posicao)
-{
-	Passaro* novo = NULL;
-	novo = new Passaro();
-
-	novo->setFaseAtual(this);
-	novo->setPosicao(posicao);
-	novo->setDimensoes(sf::Vector2f(COMPRIMENTO_ESPINHO, ALTURA_ESPINHO));
-	novo->setVida(3);
-	novo->setVelocidade(200.f);
-	novo->setTextura("textures/Passaro_direita.png");
-	novo->setLimiteXEsq(posicao.x);
-	novo->setLimiteXDir(posicao.x + 300.0f);
-	novo->setGerenciadorGrafico(pGerenciadorGrafico);
-
-	listaEntidades.inclua(static_cast <Entidade*> (novo));
-	listaPersonagens.inclua(static_cast <Personagem*> (novo));
-}
-
 
 void Quintal::criaPlataformas()
 {
 	criaBordas();
-
 	//Plataformas específicas
-	for (int i = 0; i < 10; i++){
-
-		criaPlataforma(sf::Vector2f(900.f + COMPRIMENTO_PLATAFORMA * i, 337.5f));
-		criaPlataforma(sf::Vector2f(1500.f + COMPRIMENTO_PLATAFORMA*i, 337.5f));
-		criaPlataforma(sf::Vector2f(500.f + COMPRIMENTO_PLATAFORMA*i, 517.5f));
-		criaPlataforma(sf::Vector2f(1800.f + COMPRIMENTO_PLATAFORMA*i, 157.5f));
+	for (int i = 0; i < 10; i++) {
+		Plataforma* plataforma = new Plataforma();
+		criaObstaculo(plataforma, sf::Vector2f(COMPRIMENTO_PLATAFORMA, ALTURA_PLATAFORMA),
+			sf::Vector2f(900.f + COMPRIMENTO_PLATAFORMA * i, 337.5f),
+			"textures/Plataforma_meio.png");
 	}
-	for (int i = 0; i < 5; i++)
-		criaPlataforma(sf::Vector2f(2000.f + COMPRIMENTO_PLATAFORMA*i, 517.5f));
-
-	criaPlataforma(sf::Vector2f(-COMPRIMENTO_PLATAFORMA/2, ALTURA_RESOLUCAO/2), "", sf::Vector2f(COMPRIMENTO_PLATAFORMA,ALTURA_RESOLUCAO));
-	criaPlataforma(sf::Vector2f(COMPRIMENTO_CENARIO+COMPRIMENTO_PLATAFORMA / 2, ALTURA_RESOLUCAO / 2), "", sf::Vector2f(COMPRIMENTO_PLATAFORMA, ALTURA_RESOLUCAO));
+	for (int i = 0; i < 10; i++) {
+		Plataforma* plataforma = new Plataforma();
+		criaObstaculo(plataforma, sf::Vector2f(COMPRIMENTO_PLATAFORMA, ALTURA_PLATAFORMA),
+			sf::Vector2f(1500.f + COMPRIMENTO_PLATAFORMA * i, 337.5f),
+			"textures/Plataforma_meio.png");
+	}
+	for (int i = 0; i < 10; i++) {
+		Plataforma* plataforma = new Plataforma();
+		criaObstaculo(plataforma, sf::Vector2f(COMPRIMENTO_PLATAFORMA, ALTURA_PLATAFORMA),
+			sf::Vector2f(500.f + COMPRIMENTO_PLATAFORMA * i, 517.5f),
+			"textures/Plataforma_meio.png");
+	}
+	for (int i = 0; i < 10; i++) {
+		Plataforma* plataforma = new Plataforma();
+		criaObstaculo(plataforma, sf::Vector2f(COMPRIMENTO_PLATAFORMA, ALTURA_PLATAFORMA),
+			sf::Vector2f(1800.f + COMPRIMENTO_PLATAFORMA * i, 157.5f),
+			"textures/Plataforma_meio.png");
+	}
+	
+	for (int i = 0; i < 5; i++) {
+		Plataforma* plataforma = new Plataforma();
+		criaObstaculo(plataforma, sf::Vector2f(COMPRIMENTO_PLATAFORMA, ALTURA_PLATAFORMA),
+			sf::Vector2f(2000.f + COMPRIMENTO_PLATAFORMA * i, 517.5f),
+			"textures/Plataforma_meio.png");
+	}
 }
 
 void Quintal::recuperar()
 {	
-	listaEntidades.inclua(static_cast<Entidade*> (&Cenario));
+	listaEntidades.inclua(static_cast<Entidade*> (&Background));
 	criaPlataformas();
-	Cenario.setTextura("textures/Background.png");
-	Cenario.setDimensoes(sf::Vector2f(COMPRIMENTO_CENARIO, ALTURA_RESOLUCAO));
-	Cenario.setPosicao(sf::Vector2f(COMPRIMENTO_RESOLUCAO, ALTURA_RESOLUCAO / 2));
-	Cenario.setGerenciadorGrafico(pGerenciadorGrafico);
+	Background.setTextura("textures/Background.png");
+	Background.setDimensoes(sf::Vector2f(COMPRIMENTO_CENARIO, ALTURA_RESOLUCAO));
+	Background.setPosicao(sf::Vector2f(COMPRIMENTO_RESOLUCAO, ALTURA_RESOLUCAO / 2));
+	Background.setGerenciadorGrafico(pGerenciadorGrafico);
 	porta.setJogo(pJogo);
 	porta.setGerenciadorGrafico(pGerenciadorGrafico);
 	listaEntidades.inclua(static_cast<Entidade*> (&porta));
@@ -155,7 +165,7 @@ void Quintal::recuperar()
 	
 	pJogo->InicializaQuarto();
 
-	recuperarProjeteis();
+	recuperarProjeteis(this);
 	recuperarEspinhos();
 	recuperarEstaticos();
 	recuperarPassaros();
@@ -191,18 +201,12 @@ void Quintal::recuperarPassaros()
 
 		novo = new Passaro();
 		novo->setVida(vida);
-		novo->setPosicao(sf::Vector2f(posx, posy));
-		novo->setLimiteXDir(limxdir);
-		novo->setLimiteXEsq(limxesq);
+		novo->setLimites(limxesq, limxdir);
 		novo->setCooldownAtaque(cooldown);
-		novo->setVelocidade(200.f);
-		novo->setGerenciadorGrafico(pGerenciadorGrafico);
-		novo->setTextura("textures/Passaro_direita.png");
-		novo->setDimensoes(sf::Vector2f(COMPRIMENTO_ESPINHO, ALTURA_ESPINHO));
 		novo->setFaseAtual(this);
 
-		listaEntidades.inclua(static_cast<Entidade*>(novo));
-		listaPersonagens.inclua(static_cast <Personagem*> (novo));
+		criaInimigo(static_cast <Personagem*> (novo), sf::Vector2f(COMPRIMENTO_PASSARO, ALTURA_PASSARO),
+			sf::Vector2f(posx, posy), "textures/Passaro_direita.png");
 	}
 
 	recuperadorPassaros.close();

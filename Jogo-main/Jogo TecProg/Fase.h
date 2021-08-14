@@ -9,6 +9,7 @@
 #include "ListaEntidades.h"
 #include "ListaPersonagens.h"
 #include "Projetil.h"
+#include "Cenario.h"
 
 class Jogo;
 class Jogador;
@@ -16,7 +17,8 @@ class Jogador;
 class Fase : public Ente
 {
 protected:
-	Entidade Cenario;
+	Cenario Background;
+	//Entidade Cenario;
 	Jogador* pFazendeira;
 	Jogador* pBruxo;
 	Jogo* pJogo;
@@ -35,23 +37,20 @@ public:
 	void setFazendeira(Jogador* pfazendeira);
 	Jogador* getFazendeira();
 	void setBruxo(Jogador* pbruxo);
-	// setView(sf::View* pview);
+
+	void criaObstaculo(Entidade* pentidade, sf::Vector2f dimensao, sf::Vector2f posicao, const string textura);
+	void criaInimigo(Personagem* ppersonagem, sf::Vector2f dimensao, sf::Vector2f posicao, const string textura);
+	void criaBordas();
 
 	//Cria objetos que estão em ambas as fases
-	void criaPlataforma(sf::Vector2f posicao, const string textura = "textures/Plataforma_meio.png");
-	void criaPlataforma(sf::Vector2f posicao, const string textura, sf::Vector2f tamanho);
-	void criaBordas();
-	void criaEstatico(sf::Vector2f posicao, const string textura = "");
-	void criaEspinho(sf::Vector2f posicao, const string textura = "");
-	void criaTeia(sf::Vector2f posicao, const string textura = "");
 
 	void atualizaView();
 	void incluaProjetil(Projetil* projetil);
 	void salvar();
 
-	void recuperarProjeteis();
-	void recuperarEstaticos();
-	void recuperarEspinhos();
+	void recuperarProjeteis(Fase* fase, const string textura = "");
+	void recuperarEstaticos(const string textura = "");
+	void recuperarEspinhos(const string textura = "");
 	void recuperarTeias();
 	
 	virtual void setChefaoMorreu(bool chefaomorreu);

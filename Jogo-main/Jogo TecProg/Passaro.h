@@ -13,9 +13,8 @@ private:
 public:
 	Passaro();
 	~Passaro();
-	
-	void setLimiteXEsq(float limesq);
-	void setLimiteXDir(float limdir);
+
+	void setLimites(float limesq, float limdir);
 
 	void colidir(Personagem* personagem);
 	void atualiza(float deltaTempo);
