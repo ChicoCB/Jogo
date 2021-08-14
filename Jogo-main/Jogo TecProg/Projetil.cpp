@@ -38,8 +38,8 @@ void Projetil::colidir(Personagem* personagem)
 			if (!personagem->getAmigavel())
 			{
 				if (faseAtual != NULL) {
-					faseAtual->getFazendeira()->incrementaPontuacao();
-					cout << faseAtual->getFazendeira()->getPontuacao() << endl;
+					faseAtual->getJogador1()->incrementaPontuacao();
+					cout << faseAtual->getJogador1()->getPontuacao() << endl;
 				}
 			}
 		}

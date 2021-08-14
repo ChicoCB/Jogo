@@ -40,9 +40,9 @@ void MenuFases::LoopMenu(char tecla)
 			case 0:
 				jogo->InicializaJogadores();
 				jogo->InicializaFases();
-				jogo->getFazendeira()->setFaseAtual(&jogo->getQuintal());
+				jogo->getJogador1()->setFaseAtual(&jogo->getQuintal());
 				if (jogo->getMultiplayer())
-					jogo->getBruxo()->setFaseAtual(&jogo->getQuintal());
+					jogo->getJogador2()->setFaseAtual(&jogo->getQuintal());
 				jogo->setEstado(4);
 				break;
 			case 1:
@@ -50,8 +50,8 @@ void MenuFases::LoopMenu(char tecla)
 				cout << "Apareceu?" << endl;
 
 				if (jogo->getMultiplayer())
-					jogo->getBruxo()->setFaseAtual(&jogo->getQuarto());
-				jogo->getFazendeira()->setFaseAtual(&jogo->getQuarto());
+					jogo->getJogador2()->setFaseAtual(&jogo->getQuarto());
+				jogo->getJogador1()->setFaseAtual(&jogo->getQuarto());
 				jogo->InicializaQuarto();
 				jogo->setEstado(5);
 				break;

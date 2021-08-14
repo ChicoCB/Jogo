@@ -18,11 +18,9 @@ class Fase : public Ente
 {
 protected:
 	Cenario Background;
-	//Entidade Cenario;
-	Jogador* pFazendeira;
-	Jogador* pBruxo;
+	Jogador* pJogador1;
+	Jogador* pJogador2;
 	Jogo* pJogo;
-	//sf::View* pView; //pGerenciadorGrafico
 
 	GerenciadorColisoes gerenciadorColisoes;
 	ListaEntidades listaEntidades;
@@ -34,15 +32,14 @@ public:
 
 	void setJogo(Jogo* pjogo);
 	Jogo* getJogo();
-	void setFazendeira(Jogador* pfazendeira);
-	Jogador* getFazendeira();
-	void setBruxo(Jogador* pbruxo);
+	void setJogador1(Jogador* pJogador1);
+	Jogador* getJogador1();
+	void setJogador2(Jogador* pJogador2);
 
 	void criaObstaculo(Entidade* pentidade, float dimx, float dimy, float posx, float posy, const string textura);
 	void criaInimigo(Personagem* ppersonagem, float dimx, float dimy, float posx, float posy, const string textura);
 	void criaBordas();
 
-	//Cria objetos que estão em ambas as fases
 
 	void atualizaView();
 	void incluaProjetil(Projetil* projetil);

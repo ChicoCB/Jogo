@@ -7,11 +7,14 @@ int Jogador::Pontuacao = 0;
 Jogador::Jogador():
 	Personagem(),
 	podePular(true),
-	alturaPulo(150.f)
+	alturaPulo(250.f)
+	//Velocidade(400.f)
 {
 	Amigavel = true;
 	Vida = 1000;
 	CooldownAtaqueMax = 0.5f;
+	this->setVelocidade(400.f);
+	this->setColidePlataforma(true);
 }
 
 Jogador::~Jogador()

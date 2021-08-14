@@ -80,11 +80,6 @@ void GerenciadorGrafico::atualizaView(float x, float y)
 
 void GerenciadorGrafico::criaCorpo(Entidade* pentidade, float dimx, float dimy, float posx, float posy, string text)
 {
-    //int i = 0;
-
-    //for (i = 0; i < 50; i++) {
-    //    Texturas[i]. == text;
-    //}
     sf::Texture* Textura = new sf::Texture();
 
     sf::RectangleShape* Corpo = new sf::RectangleShape();
@@ -93,8 +88,6 @@ void GerenciadorGrafico::criaCorpo(Entidade* pentidade, float dimx, float dimy, 
     Corpo->setPosition(sf::Vector2f(posx, posy));
     Corpo->setOrigin(dimx/2, dimy/2);
     
-
-
     if (text == "" || !Textura->loadFromFile(text)) {
         cerr << "Erro. Nao foi possivel carregar a textura de uma Entidade." << endl;
         Corpo->setFillColor(sf::Color::White);
@@ -107,8 +100,6 @@ void GerenciadorGrafico::criaCorpo(Entidade* pentidade, float dimx, float dimy, 
         pentidade->setId(pentidade->getIdAtual());
 
     pentidade->incrementaIdAtual();
-
-    //IdAtual++;
 }
 
 void GerenciadorGrafico::setDimensoes(int id, float x, float y)
@@ -117,8 +108,11 @@ void GerenciadorGrafico::setDimensoes(int id, float x, float y)
         cout << "Erro 1 get set Posicao" << endl;
     else if (id <= 0 || id >= ListaCorpos.size())
         cout << "Erro 2 get set Posicao" << endl;
-    else
+    else {
         ListaCorpos[id]->setSize(sf::Vector2f(x, y));
+        ListaCorpos[id]->setOrigin( x / 2,  y / 2);
+
+    }
 }
 
 float GerenciadorGrafico::getDimensoesX(int id)

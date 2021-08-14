@@ -17,8 +17,8 @@ private:
 	GerenciadorGrafico gerenciadorGrafico;
 	Quintal Fase_Quintal;
 	Quarto Fase_Quarto;
-	Jogador* Fazendeira;
-	Jogador* Bruxo;
+	Jogador* Jogador1;
+	Jogador* Jogador2;
 	//Jogador* Lixo;
 	int Estado;
 	bool Multiplayer;
@@ -43,8 +43,8 @@ public:
 
 	MenuColocacao& getMenuColocacao();
 	
-	Jogador* getBruxo();
-	Jogador* getFazendeira();
+	Jogador* getJogador2();
+	Jogador* getJogador1();
 
 	void Atualiza(float deltaTempo);
 	void Inicializa();

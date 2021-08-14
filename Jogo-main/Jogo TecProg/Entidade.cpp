@@ -9,10 +9,6 @@ Entidade::Entidade():
 	Desalocavel(false),
 	MovimentoX(0),
 	MovimentoY(0),
-	PosicaoX(0),
-	PosicaoY(0),
-	DimensaoX(0),
-	DimensaoY(0),
 	IdCorpo(0)
 {
 }
@@ -21,12 +17,9 @@ Entidade::~Entidade()
 {
 }
  
-
 void Entidade::setDimensoes(float x, float y)
 {
 	pGerenciadorGrafico->setDimensoes(IdCorpo, x, y);
-	DimensaoX = x;
-	DimensaoY = y;
 }
 
 
@@ -40,17 +33,10 @@ float Entidade::getDimensoesY()
 	return pGerenciadorGrafico->getDimensoesY(IdCorpo);
 }
 
-
-
 void Entidade::setPosicao(float x, float y)
 {
-
 	pGerenciadorGrafico->setPosicao(IdCorpo, x, y);
-	PosicaoX = x;
-	PosicaoY = y;
 }
-
-
 
 float Entidade::getPosicaoX()
 {
@@ -63,6 +49,12 @@ float Entidade::getPosicaoY()
 }
 
 
+void Entidade::setMovimento(float x, float y)
+{
+	MovimentoX = x;
+	MovimentoY = y;
+}
+
 float Entidade::getMovimentoX()
 {
 	return MovimentoX;
@@ -73,7 +65,6 @@ float Entidade::getMovimentoY()
 	return MovimentoY;
 }
 
-
 void Entidade::setDesalocavel(bool desalocavel)
 {
 	Desalocavel = desalocavel;
@@ -82,19 +73,6 @@ void Entidade::setDesalocavel(bool desalocavel)
 bool Entidade::getDesalocavel()
 {
 	return Desalocavel;
-}
-
-void Entidade::setTextura(const string textura)
-{
-	/*
-		if (!Textura.loadFromFile(textura))
-        cerr << "Erro. Nao foi possivel carregar a textura de uma Entidade." << endl;
-	*/
-	//pGerenciadorGrafico->
-
-	//Corpo.setTexture(&Textura);
-	Textura = textura;
-
 }
 
 void Entidade::incrementaIdAtual()

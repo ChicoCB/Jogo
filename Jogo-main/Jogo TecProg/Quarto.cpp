@@ -13,27 +13,19 @@ Quarto::~Quarto()
 
 void Quarto::inicializa()
 {
-	//pView->setCenter(sf::Vector2f(COMPRIMENTO_RESOLUCAO/2, ALTURA_RESOLUCAO/2));
-	pGerenciadorGrafico->atualizaView( COMPRIMENTO_RESOLUCAO / 2, ALTURA_RESOLUCAO / 2 );
-
 	srand(time(NULL));
+
+	pGerenciadorGrafico->atualizaView( COMPRIMENTO_RESOLUCAO / 2, ALTURA_RESOLUCAO / 2 );
 
 	gerenciadorColisoes.setListaEntidades(&listaEntidades);
 	gerenciadorColisoes.setListaPersonagens(&listaPersonagens);
 
-	listaEntidades.inclua(static_cast <Entidade*> (&Background));
-
-	criaPlataformas();
-
 	Background.setGerenciadorGrafico(pGerenciadorGrafico);
 	pGerenciadorGrafico->criaCorpo(&Background, COMPRIMENTO_CENARIO, ALTURA_RESOLUCAO,
 		COMPRIMENTO_RESOLUCAO, ALTURA_RESOLUCAO / 2, "textures/Background_quarto.jpg");
-	Background.setTextura("textures/Background_quarto.jpg");
-	Background.setDimensoes( COMPRIMENTO_CENARIO, ALTURA_RESOLUCAO) ;
-	Background.setPosicao( COMPRIMENTO_RESOLUCAO, ALTURA_RESOLUCAO / 2 );
+	listaEntidades.inclua(static_cast <Entidade*> (&Background));
 
-
-
+	criaPlataformas();
 
 	for (int i = 0; i < rand() % 4 + 3; i++)
 	{
@@ -70,26 +62,22 @@ void Quarto::inicializa()
 				ALTURA_RESOLUCAO - (ALTURA_PLATAFORMA + ALTURA_ESPINHO / 2) , "");
 	}
 	
-	//criaChefao(sf::Vector2f(2000.f,600.f));
-
 	Chefao* chefao = NULL;
 	chefao = new Chefao();
 	chefao->setFaseAtual(this);
 	criaInimigo(static_cast <Personagem*>(chefao),  COMPRIMENTO_CHEFAO, ALTURA_CHEFAO ,
 				 2000.f, 600.f , "");
 
-
-	if (pFazendeira == NULL)
+	if (pJogador1 == NULL)
 		cout << "Eh null" << endl;
 
-	listaEntidades.inclua(static_cast <Entidade*> (pFazendeira));
-	listaPersonagens.inclua(static_cast <Personagem*> (pFazendeira));
+	listaEntidades.inclua(static_cast <Entidade*> (pJogador1));
+	listaPersonagens.inclua(static_cast <Personagem*> (pJogador1));
 	if (pJogo->getMultiplayer())
 	{
-		listaEntidades.inclua(static_cast <Entidade*> (pBruxo));
-		listaPersonagens.inclua(static_cast <Personagem*> (pBruxo));
+		listaEntidades.inclua(static_cast <Entidade*> (pJogador2));
+		listaPersonagens.inclua(static_cast <Personagem*> (pJogador2));
 	}
-
 }
 
 void Quarto::desenhar()
@@ -113,17 +101,10 @@ void Quarto::atualiza(float deltaTempo)
 		cout << "Sumonando porta." << endl;
 		ChefaoMorreu = false;
 		Porta* cabideiro = new Porta();
-
 		cabideiro->setGerenciadorGrafico(pGerenciadorGrafico);
 		pGerenciadorGrafico->criaCorpo(cabideiro, 50.f, 100.f, COMPRIMENTO_CENARIO - 150.f,
 			ALTURA_RESOLUCAO - (ALTURA_PLATAFORMA + 50.f), "");
-		cabideiro->setPosicao(COMPRIMENTO_CENARIO - 150.f, ALTURA_RESOLUCAO - (ALTURA_PLATAFORMA + 50.f));
-		cabideiro->setDimensoes(50.f, 100.f);
-		cabideiro->setTextura("");
 		cabideiro->setJogo(pJogo);
-		listaEntidades.inclua(static_cast<Entidade*> (cabideiro));
-
-		
 		listaEntidades.inclua(static_cast<Entidade*> (cabideiro));
 	}
 
@@ -134,26 +115,24 @@ void Quarto::limparTudo()
 {
 	listaPersonagens.limparTudo();
 	listaEntidades.limparTudo();
-	//pView = NULL;
-	pFazendeira = NULL;
-	pBruxo = NULL;
+	pJogador1 = NULL;
+	pJogador2 = NULL;
 	pJogo = NULL;
 }
 
 void Quarto::recuperar()
 {
-	listaEntidades.inclua(static_cast<Entidade*> (&Background));
 
-	listaEntidades.inclua(static_cast <Entidade*> (&Background));
 	Background.setGerenciadorGrafico(pGerenciadorGrafico);
 	pGerenciadorGrafico->criaCorpo(&Background, COMPRIMENTO_CENARIO, ALTURA_RESOLUCAO,
 		COMPRIMENTO_RESOLUCAO, ALTURA_RESOLUCAO / 2, "textures/Background_quarto.jpg");
-	Background.setTextura("textures/Background_quarto.jpg");
-	Background.setDimensoes(COMPRIMENTO_CENARIO, ALTURA_RESOLUCAO);
-	Background.setPosicao(COMPRIMENTO_RESOLUCAO, ALTURA_RESOLUCAO / 2);
+	listaEntidades.inclua(static_cast<Entidade*> (&Background));
+
+	criaPlataformas();
 
 	gerenciadorColisoes.setListaEntidades(&listaEntidades);
 	gerenciadorColisoes.setListaPersonagens(&listaPersonagens);
+
 	recuperarProjeteis(this);
 	recuperarEstaticos();
 	recuperarFantasmas();
@@ -161,20 +140,18 @@ void Quarto::recuperar()
 	recuperarEspinhos();
 	recuperarChefao();
 
-	criaPlataformas();
-
-	pFazendeira->setFaseAtual(this);
-	listaEntidades.inclua(static_cast<Entidade*>(pFazendeira));
-	listaPersonagens.inclua(static_cast <Personagem*> (pFazendeira));
+	pJogador1->setFaseAtual(this);
+	listaEntidades.inclua(static_cast<Entidade*>(pJogador1));
+	listaPersonagens.inclua(static_cast <Personagem*> (pJogador1));
 
 	if (pJogo->getMultiplayer()) {
-		pBruxo->setFaseAtual(this);
-		listaEntidades.inclua(static_cast<Entidade*>(pBruxo));
-		listaPersonagens.inclua(static_cast <Personagem*> (pBruxo));
+		pJogador2->setFaseAtual(this);
+		listaEntidades.inclua(static_cast<Entidade*>(pJogador2));
+		listaPersonagens.inclua(static_cast <Personagem*> (pJogador2));
 	}
 	else
 	{
-		pBruxo = NULL;
+		pJogador2 = NULL;
 	}
 
 }
@@ -232,7 +209,6 @@ void Quarto::recuperarChefao()
 
 		criaInimigo(static_cast <Personagem*> (novo),  COMPRIMENTO_CHEFAO, ALTURA_CHEFAO ,
 			 posx, posy, "") ;
-
 	}
 
 }
@@ -252,7 +228,6 @@ void Quarto::criaPlataforma(float posx, float posy)
 void Quarto::criaPlataformas()
 {
 	criaBordas();
-	//Plataformas específicas
 	for (int i = 0; i < 10; i++) {
 		criaPlataforma(900.f + COMPRIMENTO_PLATAFORMA * i, 337.5f);
 	}

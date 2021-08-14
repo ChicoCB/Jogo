@@ -14,24 +14,17 @@ Quintal::~Quintal()
 
 void Quintal::inicializa()
 {
-	pGerenciadorGrafico->atualizaView( COMPRIMENTO_RESOLUCAO / 2, ALTURA_RESOLUCAO / 2 );
-
 	srand(time(NULL));
+
+	pGerenciadorGrafico->atualizaView( COMPRIMENTO_RESOLUCAO / 2, ALTURA_RESOLUCAO / 2 );
 
 	gerenciadorColisoes.setListaEntidades(&listaEntidades);
 	gerenciadorColisoes.setListaPersonagens(&listaPersonagens);
 
-	listaEntidades.inclua(static_cast <Entidade*> (&Background));
-
-
 	Background.setGerenciadorGrafico(pGerenciadorGrafico);
 	pGerenciadorGrafico->criaCorpo(&Background, COMPRIMENTO_CENARIO, ALTURA_RESOLUCAO,
 		COMPRIMENTO_RESOLUCAO, ALTURA_RESOLUCAO / 2, "textures/Background.png");
-	Background.setTextura("textures/Background.png");
-	Background.setDimensoes( COMPRIMENTO_CENARIO, ALTURA_RESOLUCAO );
-	Background.setPosicao( COMPRIMENTO_RESOLUCAO, ALTURA_RESOLUCAO/2 );
-
-	cout << Background.getId() << " " << Background.getIdAtual() << endl;
+	listaEntidades.inclua(static_cast <Entidade*> (&Background));
 
 	criaPlataformas();
 
@@ -76,33 +69,26 @@ void Quintal::inicializa()
 	porta.setGerenciadorGrafico(pGerenciadorGrafico);
 	pGerenciadorGrafico->criaCorpo(&porta, 50.f, 100.f, COMPRIMENTO_CENARIO - 150.f,
 		ALTURA_RESOLUCAO - (ALTURA_PLATAFORMA + 50.f), "");
-	porta.setPosicao(COMPRIMENTO_CENARIO - 150.f, ALTURA_RESOLUCAO - (ALTURA_PLATAFORMA + 50.f));
-	porta.setDimensoes(50.f, 100.f);
-	porta.setTextura("");
 	porta.setJogo(pJogo);
 	listaEntidades.inclua(static_cast<Entidade*> (&porta));
 
-
-	listaEntidades.inclua(static_cast <Entidade*> (pFazendeira));
-	listaPersonagens.inclua(static_cast <Personagem*> (pFazendeira));
+	listaEntidades.inclua(static_cast <Entidade*> (pJogador1));
+	listaPersonagens.inclua(static_cast <Personagem*> (pJogador1));
 
 	if (pJogo->getMultiplayer())
 	{
-		listaEntidades.inclua(static_cast <Entidade*> (pBruxo));
-		listaPersonagens.inclua(static_cast <Personagem*> (pBruxo));
+		listaEntidades.inclua(static_cast <Entidade*> (pJogador2));
+		listaPersonagens.inclua(static_cast <Personagem*> (pJogador2));
 	}
 }
 
 void Quintal::atualiza(float deltaTempo)
 {
-	if (getFazendeira()->getDesalocavel())
-		cout << "Fazendeira desalocavel true" << endl;
-
 	listaPersonagens.limpar();
 	listaEntidades.limpar();
 
-	if (getFazendeira() == NULL)
-		cout << "Fazendeira nula" << endl;
+	if (getJogador1() == NULL)
+		cout << "Jogador1 nula" << endl;
 
 	atualizaView();
 
@@ -117,9 +103,8 @@ void Quintal::limparTudo()
 {
 	listaPersonagens.limparTudo();
 	listaEntidades.limparTudo();
-	//pView = NULL;
-	pFazendeira = NULL;
-	pBruxo = NULL;
+	pJogador1 = NULL;
+	pJogador2 = NULL;
 	pJogo = NULL;
 }
 void Quintal::criaPlataforma(float posx, float posy)
@@ -153,22 +138,16 @@ void Quintal::criaPlataformas()
 
 void Quintal::recuperar()
 {	
-	listaEntidades.inclua(static_cast <Entidade*> (&Background));
 	Background.setGerenciadorGrafico(pGerenciadorGrafico);
 	pGerenciadorGrafico->criaCorpo(&Background, COMPRIMENTO_CENARIO, ALTURA_RESOLUCAO,
 		COMPRIMENTO_RESOLUCAO, ALTURA_RESOLUCAO / 2, "textures/Background.png");
-	Background.setTextura("textures/Background.png");
-	Background.setDimensoes(COMPRIMENTO_CENARIO, ALTURA_RESOLUCAO);
-	Background.setPosicao(COMPRIMENTO_RESOLUCAO, ALTURA_RESOLUCAO / 2);
+	listaEntidades.inclua(static_cast <Entidade*> (&Background));
 
 	criaPlataformas();
 
 	porta.setGerenciadorGrafico(pGerenciadorGrafico);
 	pGerenciadorGrafico->criaCorpo(&porta, 50.f, 100.f, COMPRIMENTO_CENARIO - 150.f,
 		ALTURA_RESOLUCAO - (ALTURA_PLATAFORMA + 50.f), "");
-	porta.setPosicao(COMPRIMENTO_CENARIO - 150.f, ALTURA_RESOLUCAO - (ALTURA_PLATAFORMA + 50.f));
-	porta.setDimensoes(50.f, 100.f);
-	porta.setTextura("");
 	porta.setJogo(pJogo);
 	listaEntidades.inclua(static_cast<Entidade*> (&porta));
 
@@ -183,17 +162,17 @@ void Quintal::recuperar()
 	recuperarPassaros();
 	recuperarTeias();
 
-	pFazendeira->setFaseAtual(this);
-	listaEntidades.inclua(static_cast<Entidade*>(pFazendeira));
-	listaPersonagens.inclua(static_cast <Personagem*> (pFazendeira));
+	pJogador1->setFaseAtual(this);
+	listaEntidades.inclua(static_cast<Entidade*>(pJogador1));
+	listaPersonagens.inclua(static_cast <Personagem*> (pJogador1));
 
 	if (pJogo->getMultiplayer()) {
-		pBruxo->setFaseAtual(this);
-		listaEntidades.inclua(static_cast<Entidade*>(pBruxo));
-		listaPersonagens.inclua(static_cast <Personagem*> (pBruxo));
+		pJogador2->setFaseAtual(this);
+		listaEntidades.inclua(static_cast<Entidade*>(pJogador2));
+		listaPersonagens.inclua(static_cast <Personagem*> (pJogador2));
 	}
 	else
-		pBruxo = NULL;
+		pJogador2 = NULL;
 }
 
 void Quintal::recuperarPassaros()

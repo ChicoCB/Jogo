@@ -31,8 +31,7 @@ void Chefao::atualiza(float deltaTempo)
 	MovimentoX = 0.f;
 	MovimentoY = 0.f;
 
-	cout << "aqui" << endl;
-	float deltax = faseAtual->getFazendeira()->getPosicaoX()  - this->getPosicaoX() ;
+	float deltax = faseAtual->getJogador1()->getPosicaoX()  - this->getPosicaoX() ;
 	float modulo = sqrt(deltax*deltax);
 
 	if (modulo != 0.f)

@@ -54,8 +54,8 @@ void Atirador::atiraProjetilHorizontal(Personagem* personagem, float altura)
 
 void Atirador::atiraProjetilDirecionado(Personagem* personagem, float dimensao)
 {
-	float deltax = faseAtual->getFazendeira()->getPosicaoX()  - personagem->getPosicaoX() ;
-	float deltay = faseAtual->getFazendeira()->getPosicaoY()  - personagem->getPosicaoY() ;
+	float deltax = faseAtual->getJogador1()->getPosicaoX()  - personagem->getPosicaoX() ;
+	float deltay = faseAtual->getJogador1()->getPosicaoY()  - personagem->getPosicaoY() ;
 	float modulo = sqrt(deltax * deltax + deltay * deltay);
 
 	try

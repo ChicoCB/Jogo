@@ -39,7 +39,7 @@ void MenuColocacao::LoopMenu(char tecla)
 					Nome.insert(Nome.getSize(), tecla);
 				}
 
-				ss << jogo->getFazendeira()->getPontuacao();
+				ss << jogo->getJogador1()->getPontuacao();
 
 				saux = ss.str() + " - " + Nome;
 				cout << ss.str() << endl;
