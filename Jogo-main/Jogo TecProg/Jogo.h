@@ -19,6 +19,7 @@ private:
 	Quarto Fase_Quarto;
 	Jogador* Fazendeira;
 	Jogador* Bruxo;
+	//Jogador* Lixo;
 	int Estado;
 	bool Multiplayer;
 	MenuPrincipal menuPrincipal;

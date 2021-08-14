@@ -27,12 +27,12 @@ bool Estatico::podeMorrer()
 void Estatico::atualiza(float deltaTempo)
 {
 	if (podeMorrer()) 
-		this->setDimensoes(sf::Vector2f(COMPRIMENTO_ESTATICO + 20.f, ALTURA_ESTATICO + 2 * 6.3f));
+		this->setDimensoes(COMPRIMENTO_ESTATICO + 20.f, ALTURA_ESTATICO + 2*6.3);
 	else 
-		this->setDimensoes(sf::Vector2f(COMPRIMENTO_ESTATICO, ALTURA_ESTATICO));
+		this->setDimensoes(COMPRIMENTO_ESTATICO, ALTURA_ESTATICO);
 
-	Movimento.y += 981.f * deltaTempo;
-	this->movimenta(Movimento * deltaTempo);
+	MovimentoY += 981.f * deltaTempo;
+	this->movimenta(MovimentoX * deltaTempo, MovimentoY* deltaTempo);
 
 	CooldownAtaque += deltaTempo;
 	CooldownInvencibilidade += deltaTempo;
@@ -49,11 +49,13 @@ void Estatico::colidir(Personagem* personagem)
 			personagem->setDesalocavel(true);
 	}
 }
-
+/*
 void Estatico::movimenta(sf::Vector2f movimento)
 {
 	Corpo.move(movimento);
 }
+*/
+
 
 void Estatico::salvar()
 {
@@ -65,8 +67,8 @@ void Estatico::salvar()
 			cout << "Erro." << endl;
 
 		gravadorEstatico << this->getVida() << ' '
-			<< this->getPosicao().x << ' '
-			<< this->getPosicao().y << ' '
+			<< this->getPosicaoX() << ' '
+			<< this->getPosicaoY() << ' '
 			<< this->CooldownAtaque << endl;
 
 		gravadorEstatico.close();

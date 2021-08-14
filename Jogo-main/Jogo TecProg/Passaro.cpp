@@ -35,19 +35,22 @@ void Passaro::colidir(Personagem* personagem)
 
 void Passaro::atualiza(float deltaTempo)
 {
-	Movimento = sf::Vector2f(0.f, 0.f);
-	sf::Vector2f posicao = getPosicao();
+	MovimentoX = 0.f;
+	MovimentoY = 0.f;
+	//Movimento = sf::Vector2f(0.f, 0.f);
+	float posicaox = getPosicaoX(), posicaoy = getPosicaoY();
+	//sf::Vector2f posicao = getPosicao();
 
-	if (posicao.x <= limiteXEsq)
+	if (posicaox <= limiteXEsq)
 		olharDireita = true;
-	else if (posicao.x >= limiteXDir)
+	else if (posicaox >= limiteXDir)
 		olharDireita = false;
-	if (olharDireita && posicao.x < limiteXDir)
-		Movimento.x += Velocidade;
-	else if (!olharDireita && posicao.x > limiteXEsq)
-		Movimento.x -= Velocidade;
+	if (olharDireita && posicaox < limiteXDir)
+		MovimentoX += Velocidade;
+	else if (!olharDireita && posicaox > limiteXEsq)
+		MovimentoX -= Velocidade;
 
-	this->movimenta(Movimento * deltaTempo);
+	this->movimenta(MovimentoX * deltaTempo, MovimentoY * deltaTempo);
 	srand(time(NULL));
 
 	CooldownAtaque += deltaTempo;
@@ -69,8 +72,8 @@ void Passaro::salvar()
 			cout << "Erro Gravar Passaro." << endl;
 
 		gravadorPassaro << this->getVida() << ' '
-			<< this->getPosicao().x << ' '
-			<< this->getPosicao().y << ' '
+			<< this->getPosicaoY() << ' '
+			<< this->getPosicaoX() << ' '
 			<< this->limiteXDir << ' '
 			<< this->limiteXEsq << ' '
 			<< this-> CooldownAtaque << endl;

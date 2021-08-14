@@ -13,7 +13,7 @@ public:
     bool podeMorrer();
     void atualiza(float deltaTempo);
     void colidir(Personagem* personagem);
-    void movimenta(sf::Vector2f movimento);
+    //void movimenta(sf::Vector2f movimento);
     void salvar();
 };
 

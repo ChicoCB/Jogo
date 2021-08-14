@@ -39,10 +39,10 @@ void GerenciadorColisoes::checaColisoes()
 
 void GerenciadorColisoes::checaColisao(Personagem* personagem, Entidade* entidade)
 {
-	float deltaX = entidade->getPosicao().x - personagem->getPosicao().x;
-	float deltaY = entidade->getPosicao().y - personagem->getPosicao().y;
-	float intersecaoX = abs(deltaX) - (personagem->getDimensoes().x / 2 + entidade->getDimensoes().x / 2);
-	float intersecaoY = abs(deltaY) - (personagem->getDimensoes().y / 2 + entidade->getDimensoes().y / 2);
+	float deltaX = entidade->getPosicaoX()  - personagem->getPosicaoX() ;
+	float deltaY = entidade->getPosicaoY()  - personagem->getPosicaoY() ;
+	float intersecaoX = abs(deltaX) - (personagem->getDimensoesX()  / 2 + entidade->getDimensoesX()  / 2);
+	float intersecaoY = abs(deltaY) - (personagem->getDimensoesY()  / 2 + entidade->getDimensoesY()  / 2);
 
 	if (intersecaoX < 0.f && intersecaoY < 0.f)
 	{

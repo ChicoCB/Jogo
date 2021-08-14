@@ -28,17 +28,18 @@ void Chefao::atualiza(float deltaTempo)
 	if (Desalocavel)
 		faseAtual->setChefaoMorreu(true);
 
-	Movimento = sf::Vector2f(0.f, 0.f);
+	MovimentoX = 0.f;
+	MovimentoY = 0.f;
 
 	cout << "aqui" << endl;
-	float deltax = faseAtual->getFazendeira()->getPosicao().x - this->getPosicao().x;
+	float deltax = faseAtual->getFazendeira()->getPosicaoX()  - this->getPosicaoX() ;
 	float modulo = sqrt(deltax*deltax);
 
 	if (modulo != 0.f)
-		Movimento.x += Velocidade * deltax / modulo;
+		MovimentoX += Velocidade * deltax / modulo;
 	//Movimento.y += 981.f * deltaTempo;
 	
-	if (Movimento.x > 0)
+	if (MovimentoX > 0)
 		olharDireita = true;
 	else
 		olharDireita = false;
@@ -51,14 +52,14 @@ void Chefao::atualiza(float deltaTempo)
 		CooldownAtaque = 0;
 	}
 
-	this->movimenta(Movimento * deltaTempo);
+	this->movimenta(MovimentoX * deltaTempo, MovimentoY * deltaTempo);
 }
 
 void Chefao::atiraProjeteis()
 {
-	atiraProjetilHorizontal(this, getPosicao().y);
-	atiraProjetilHorizontal(this, getPosicao().y +  getDimensoes().y/2);
-	atiraProjetilHorizontal(this, getPosicao().y - getDimensoes().y/2);
+	atiraProjetilHorizontal(this, getPosicaoY() );
+	atiraProjetilHorizontal(this, getPosicaoY()  +  getDimensoesY() /2);
+	atiraProjetilHorizontal(this, getPosicaoY()  - getDimensoesY() /2);
 	atiraProjetilDirecionado(this, 20.0f);
 }
 
@@ -72,8 +73,8 @@ void Chefao::salvar()
 			cout << "Erro Gravar Chefao." << endl;
 
 		gravadorChefao << this->getVida() << ' '
-			<< this->getPosicao().x << ' '
-			<< this->getPosicao().y << ' '
+			<< this->getPosicaoX() << ' '
+			<< this->getPosicaoY()  << ' '
 			<< this->CooldownAtaque << endl;
 
 		gravadorChefao.close();

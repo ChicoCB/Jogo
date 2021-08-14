@@ -2,44 +2,34 @@
 #include "Personagem.h"
 #include "GerenciadorGrafico.h"
 
+int Entidade::IdAtual = 0;
 
 Entidade::Entidade():
 	Ente(),
-	Desalocavel(false)
+	Desalocavel(false),
+	MovimentoX(0),
+	MovimentoY(0),
+	PosicaoX(0),
+	PosicaoY(0),
+	DimensaoX(0),
+	DimensaoY(0),
+	IdCorpo(0)
 {
 }
 
 Entidade::~Entidade()
 {
 }
+ 
 
-sf::RectangleShape& Entidade::getCorpo()
-{
-	return Corpo;
-	//return gerenciadorGrafico.
-}
-
-void Entidade::setDimensoes(sf::Vector2f dimensoes)
-{
-	DimensoesCorpo = dimensoes;
-	Corpo.setSize(DimensoesCorpo);
-	Corpo.setOrigin(DimensoesCorpo.x / 2, DimensoesCorpo.y / 2);
-}
-
-/*
 void Entidade::setDimensoes(float x, float y)
 {
 	pGerenciadorGrafico->setDimensoes(IdCorpo, x, y);
-}
-*/
-
-
-sf::Vector2f Entidade::getDimensoes()
-{
-	return DimensoesCorpo;
+	DimensaoX = x;
+	DimensaoY = y;
 }
 
-/*
+
 float Entidade::getDimensoesX()
 {
 	return pGerenciadorGrafico->getDimensoesX(IdCorpo);
@@ -49,29 +39,19 @@ float Entidade::getDimensoesY()
 {
 	return pGerenciadorGrafico->getDimensoesY(IdCorpo);
 }
-*/
 
 
-void Entidade::setPosicao(sf::Vector2f posicao)
-{
-	Posicao = posicao;
-	Corpo.setPosition(Posicao);
-}
-/*
+
 void Entidade::setPosicao(float x, float y)
 {
+
 	pGerenciadorGrafico->setPosicao(IdCorpo, x, y);
-}
-*/
-
-
-sf::Vector2f Entidade::getPosicao()
-{
-	Posicao = Corpo.getPosition();
-	return Posicao;
+	PosicaoX = x;
+	PosicaoY = y;
 }
 
-/*
+
+
 float Entidade::getPosicaoX()
 {
 	return pGerenciadorGrafico->getPosicaoX(IdCorpo);
@@ -81,14 +61,8 @@ float Entidade::getPosicaoY()
 {
 	return pGerenciadorGrafico->getPosicaoY(IdCorpo);
 }
-*/
 
 
-sf::Vector2f Entidade::getMovimento()
-{
-	return Movimento;
-}
-/*
 float Entidade::getMovimentoX()
 {
 	return MovimentoX;
@@ -98,7 +72,6 @@ float Entidade::getMovimentoY()
 {
 	return MovimentoY;
 }
-*/
 
 
 void Entidade::setDesalocavel(bool desalocavel)
@@ -113,15 +86,30 @@ bool Entidade::getDesalocavel()
 
 void Entidade::setTextura(const string textura)
 {
-	if (!Textura.loadFromFile(textura))
+	/*
+		if (!Textura.loadFromFile(textura))
         cerr << "Erro. Nao foi possivel carregar a textura de uma Entidade." << endl;
+	*/
+	//pGerenciadorGrafico->
 
-	Corpo.setTexture(&Textura);
+	//Corpo.setTexture(&Textura);
+	Textura = textura;
+
+}
+
+void Entidade::incrementaIdAtual()
+{
+	IdAtual++;
 }
 
 void Entidade::setId(int id)
 {
 	IdCorpo = id;
+}
+
+int Entidade::getIdAtual()
+{
+	return IdAtual;
 }
 
 int Entidade::getId()
@@ -132,19 +120,11 @@ int Entidade::getId()
 void Entidade::colidir(Personagem* personagem)
 {
 }
-/*
+
 void Entidade::movimenta(float movimentox, float movimentoy)
 {
-	pGerenciadorGrafico->movimenta(this, movimentox, movimentoy);
+	pGerenciadorGrafico->movimenta(IdCorpo, movimentox, movimentoy);
 
-}
-*/
-
-
-void Entidade::movimenta(sf::Vector2f movimento)
-{
-	pGerenciadorGrafico->movimenta(this, movimento);
-	//Corpo.move(movimento);
 }
 
 void Entidade::atualiza(float deltaTempo)
@@ -153,7 +133,7 @@ void Entidade::atualiza(float deltaTempo)
 
 void Entidade::desenhar()
 {
-	pGerenciadorGrafico->desenhar(this);
+	pGerenciadorGrafico->desenhar(IdCorpo, Desalocavel);
 }
 
 void Entidade::salvar()

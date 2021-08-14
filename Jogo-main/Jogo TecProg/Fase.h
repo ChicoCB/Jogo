@@ -38,8 +38,8 @@ public:
 	Jogador* getFazendeira();
 	void setBruxo(Jogador* pbruxo);
 
-	void criaObstaculo(Entidade* pentidade, sf::Vector2f dimensao, sf::Vector2f posicao, const string textura);
-	void criaInimigo(Personagem* ppersonagem, sf::Vector2f dimensao, sf::Vector2f posicao, const string textura);
+	void criaObstaculo(Entidade* pentidade, float dimx, float dimy, float posx, float posy, const string textura);
+	void criaInimigo(Personagem* ppersonagem, float dimx, float dimy, float posx, float posy, const string textura);
 	void criaBordas();
 
 	//Cria objetos que estão em ambas as fases

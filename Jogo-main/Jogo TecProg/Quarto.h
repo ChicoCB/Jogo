@@ -28,6 +28,7 @@ public:
 
 	void setChefaoMorreu(bool chefaomorreu);
 
+	void criaPlataforma( float posx, float posy);
 	void criaPlataformas();
 };
 

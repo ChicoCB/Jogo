@@ -8,8 +8,10 @@ class GerenciadorGrafico
 {
 private:
 
-	int IdAtual;
+	//int IdAtual;
 	vector<sf::RectangleShape*> ListaCorpos;
+
+	sf::Texture Texturas[50];
 
 	sf::RenderWindow Janela;
 	sf::View View;
@@ -25,7 +27,7 @@ public:
 	sf::View& getView();
 	void updateView();
 	void resetaView();
-	void atualizaView(sf::Vector2f posicao);
+	void atualizaView(float x, float y);
 
 	//vector<sf::RectangleShape*>& getListaCorpos();
 
@@ -39,14 +41,12 @@ public:
 	float getPosicaoX(int id);
 	float getPosicaoY(int id);
 
-	//float getMovimentoX(int id);
-	//float getMovimentoY(int id);
 
-	void desenhar(Entidade* pentidade);
+	void desenhar(int id, bool desalocavel);
 	void desenhar(sf::Text texto);
 	void fechar();
 
-	void movimenta(Entidade* pentidade, sf::Vector2f movimento);
+	void movimenta(int id, float x, float y);
 
 	void display();
 	void clear();

@@ -13,6 +13,7 @@ Jogo::Jogo() :
     Bruxo(NULL),
     Multiplayer(false)
 {
+
 	Executar();
 }
 
@@ -28,13 +29,13 @@ void Jogo::Executar()
 
 void Jogo::Inicializa()
 {
+
     menuPrincipal.setGerenciadorGrafico(&gerenciadorGrafico);
     menuJogadores.setGerenciadorGrafico(&gerenciadorGrafico);
     menuFases.setGerenciadorGrafico(&gerenciadorGrafico);
     menuPause.setGerenciadorGrafico(&gerenciadorGrafico);
     menuColocacao.setGerenciadorGrafico(&gerenciadorGrafico);
     creditos.setGerenciadorGrafico(&gerenciadorGrafico);
-
     menuColocacao.Recupera();
 
 }
@@ -52,7 +53,6 @@ void Jogo::MenusJogo(int estado, char tecla)
         menuPrincipal.LoopMenu(tecla);
         break;
     case 1: //Menu Jogadores
-        cout << "Entrou aqui" << endl;
         menuJogadores.LoopMenu(tecla);
         break;
 
@@ -185,43 +185,52 @@ void Jogo::InicializaQuintal()
 
 void Jogo::InicializaQuarto()
 {
+    cout << "Apareceu?" << endl;
+
     if (!Multiplayer)
         Bruxo = NULL;
+
     Fase_Quarto.setGerenciadorGrafico(&gerenciadorGrafico);
+
     Fase_Quarto.setFazendeira(Fazendeira);
     Fase_Quarto.setBruxo(Bruxo);
     //Fase_Quarto.setView(&gerenciadorGrafico.getView());
     Fase_Quarto.setJogo(this);
+
     Fase_Quarto.inicializa();
 }
 
 void Jogo::InicializaJogadores()
 {
+   // Jogador* lixo = new Jogador();
+   // gerenciadorGrafico.criaCorpo(lixo, 0, 0, 0, 0, "");
+
     Fazendeira = new Jogador();
 
     Fazendeira->setGerenciadorGrafico(&gerenciadorGrafico);
-    Fazendeira->setDimensoes(sf::Vector2f(COMPRIMENTO_JOGADOR, ALTURA_JOGADOR));
-    Fazendeira->setPosicao(sf::Vector2f(640.f, 320.f));
+    gerenciadorGrafico.criaCorpo(Fazendeira, COMPRIMENTO_JOGADOR, ALTURA_JOGADOR, 640.f, 320.f, "textures/Fazendeira.png");
+    
+    Fazendeira->setDimensoes( COMPRIMENTO_JOGADOR, ALTURA_JOGADOR );
+    Fazendeira->setPosicao( 800.f, 220.f );
     Fazendeira->setTextura("textures/Fazendeira.png");
     Fazendeira->setTeclas('D', 'A', 'W', ' ');
     Fazendeira->setVelocidade(400.f);
     Fazendeira->setAlturaPulo(250.f);
-   // gerenciadorGrafico.criaCorpo(Fazendeira, 0, 0, 0, 0, "");
-    //gerenciadorGrafico.criaCorpo(Fazendeira, COMPRIMENTO_JOGADOR, ALTURA_JOGADOR, 340.f, 320.f, "textures/Fazendeira.png");
 
     if (Multiplayer)
     {
         Bruxo = new Jogador();
         Bruxo->setGerenciadorGrafico(&gerenciadorGrafico);
-        Bruxo->setDimensoes(sf::Vector2f(COMPRIMENTO_JOGADOR, ALTURA_JOGADOR));
-        Bruxo->setPosicao(sf::Vector2f(640.f, 320.f));
+        gerenciadorGrafico.criaCorpo(Bruxo, COMPRIMENTO_JOGADOR, ALTURA_JOGADOR, 640.f, 320.f, "textures/Bruxo.png");
+        Bruxo->setDimensoes( COMPRIMENTO_JOGADOR, ALTURA_JOGADOR  );
+        Bruxo->setPosicao( 640.f, 320.f );
         Bruxo->setTextura("textures/Bruxo.png");
         Bruxo->setTeclas('R', 'L','U', 'E');
         Bruxo->setVelocidade(400.f);
         Bruxo->setAlturaPulo(250.f);
-        //gerenciadorGrafico.criaCorpo(Bruxo, COMPRIMENTO_JOGADOR, ALTURA_JOGADOR, 140.f, 320.f, "textures/Bruxo.png");
-
     }
+
+
 }
 
 
@@ -259,6 +268,7 @@ void Jogo::Recuperar()
 
     //menuColocacao.Recupera();
 
+    //gerenciadorGrafico.criaCorpo(Lixo, 0, 0, 0, 0, "");
     RecuperarJogadores();
 
     Fase_Quintal.setFazendeira(Fazendeira);
@@ -334,8 +344,11 @@ void Jogo::RecuperarJogadores()
     recuperadorJogadores >> vida >> posx >> posy >> movx >> movy >> cooldown;
 
     Fazendeira = new Jogador();
+    Fazendeira->setGerenciadorGrafico(&getGerenciadorGrafico());
+    gerenciadorGrafico.criaCorpo(Fazendeira, COMPRIMENTO_JOGADOR, ALTURA_JOGADOR, 640.f, 320.f, "textures/Fazendeira.png");
+
     Fazendeira->setVida(vida);
-    Fazendeira->setPosicao(sf::Vector2f(posx, posy));
+    Fazendeira->setPosicao( posx, posy );
     Fazendeira->setTextura("textures/Fazendeira.png");
     Fazendeira->setTeclas('D', 'A', 'W', ' ');
     Fazendeira->setMovimentoX(movx);
@@ -343,9 +356,9 @@ void Jogo::RecuperarJogadores()
     Fazendeira->setCooldownAtaque(cooldown);
     Fazendeira->setVelocidade(400.f);
     Fazendeira->setAlturaPulo(250.f);
-    Fazendeira->setGerenciadorGrafico(&getGerenciadorGrafico());
     Fazendeira->setColidePlataforma(true);
-    Fazendeira->setDimensoes(sf::Vector2f(COMPRIMENTO_JOGADOR, ALTURA_JOGADOR));
+    Fazendeira->setDimensoes( COMPRIMENTO_JOGADOR, ALTURA_JOGADOR );
+
 
     if (getMultiplayer())
     {
@@ -354,18 +367,19 @@ void Jogo::RecuperarJogadores()
         recuperadorJogadores >> vida >> posx >> posy >> movx >> movy >> cooldown;
 
         Bruxo->setTextura("textures/Bruxo.png");
-
+        Fazendeira->setGerenciadorGrafico(&getGerenciadorGrafico());
+        gerenciadorGrafico.criaCorpo(Bruxo, COMPRIMENTO_JOGADOR, ALTURA_JOGADOR, 640.f, 320.f, "textures/Bruxo.png");
         Bruxo->setVida(vida);
-        Bruxo->setPosicao(sf::Vector2f(posx, posy));
+        Bruxo->setPosicao( posx, posy );
         Bruxo->setTeclas('R', 'L', 'U', 'E');
         Bruxo->setMovimentoX(movx);
         Bruxo->setMovimentoY(movy);
         Bruxo->setCooldownAtaque(cooldown);
         Bruxo->setVelocidade(400.f);
         Bruxo->setAlturaPulo(250.f);
-        Fazendeira->setGerenciadorGrafico(&getGerenciadorGrafico());
         Bruxo->setColidePlataforma(true);
-        Bruxo->setDimensoes(sf::Vector2f(COMPRIMENTO_JOGADOR, ALTURA_JOGADOR));
+        Bruxo->setDimensoes( COMPRIMENTO_JOGADOR, ALTURA_JOGADOR );
+
     }
 
     recuperadorJogadores.close();

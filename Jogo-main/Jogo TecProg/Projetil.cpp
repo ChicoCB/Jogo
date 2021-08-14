@@ -9,10 +9,13 @@ Projetil::~Projetil()
 {
 }
 
+/*
 void Projetil::setMovimento(sf::Vector2f movimento)
 {
 	Movimento = movimento;
 }
+*/
+
 
 void Projetil::setAmigavel(bool amigavel)
 {
@@ -28,7 +31,6 @@ void Projetil::colidir(Personagem* personagem)
 {
 	if (personagem->getAmigavel() != Amigavel && personagem->podeMorrer())
 	{
-		cout << "Personagem colidiu com projetil" << endl;
 		personagem->setVida(personagem->getVida() - 1);
 		if (personagem->getVida() <= 0)
 		{
@@ -47,32 +49,44 @@ void Projetil::colidir(Personagem* personagem)
 
 void Projetil::atualiza(float deltaTempo)
 {
-	Movimento = sf::Vector2f(0.f, 0.f);
+	MovimentoX = 0;
+	MovimentoY = 0;
 
-	Movimento.x += Velocidade.x;
-	Movimento.y += Velocidade.y;
+	MovimentoX += VelocidadeX;
+	MovimentoY += VelocidadeY;
 
-	this->movimenta(Movimento * deltaTempo);
+	this->movimenta(MovimentoX * deltaTempo, MovimentoY * deltaTempo);
 
-	if (this->getPosicao().x <= -this->getDimensoes().x / 2 ||
-		this->getPosicao().x >= COMPRIMENTO_CENARIO + this->getDimensoes().x / 2 ||
-		this->getPosicao().y <= -this->getDimensoes().y / 2 ||
-		this->getPosicao().y >= ALTURA_RESOLUCAO + this->getDimensoes().y / 2) 
+	if (this->getPosicaoX() <= -this->getDimensoesX() / 2 ||
+		this->getPosicaoX()>= COMPRIMENTO_CENARIO + this->getDimensoesX() / 2 ||
+		this->getPosicaoY() <= -this->getDimensoesY() / 2 ||
+		this->getPosicaoY() >= ALTURA_RESOLUCAO + this->getDimensoesY() / 2) 
 	{
 		this->setDesalocavel(true);
 	}
 }
 
 
-void Projetil::setVelocidade(sf::Vector2f velocidade)
+void Projetil::setVelocidade(float velx, float vely)
 {
-	Velocidade = velocidade;
+	VelocidadeX = velx;
+	VelocidadeY = vely;
+}
+float Projetil::getVelocidadeX()
+{
+	return VelocidadeX;
 }
 
+float Projetil::getVelocidadeY()
+{
+	return VelocidadeY;
+}
+/*
 sf::Vector2f Projetil::getVelocidade()
 {
 	return Velocidade;
 }
+*/
 
 
 void Projetil::setFaseAtual(Fase* faseatual)
@@ -89,10 +103,10 @@ void Projetil::salvar()
 		if (!gravadorProjetil)
 			cout << "Erro." << endl;
 
-		gravadorProjetil << this->getPosicao().x << ' '
-			<< this->getPosicao().y << ' '
-			<< this->getVelocidade().x << ' '
-			<< this->getVelocidade().y << ' '
+		gravadorProjetil << this->getPosicaoX() << ' '
+			<< this->getPosicaoY() << ' '
+			<< this->getVelocidadeX() << ' '
+			<< this->getVelocidadeY() << ' '
 			<< this->getAmigavel() << endl;
 
 		gravadorProjetil.close();

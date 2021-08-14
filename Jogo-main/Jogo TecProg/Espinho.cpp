@@ -42,8 +42,8 @@ void Espinho::salvar()
 	if (!gravadorEspinho)
 		cout << "Erro." << endl;
 
-	gravadorEspinho << this->getPosicao().x << ' '
-		<< this->getPosicao().y << ' ' <<  endl;
+	gravadorEspinho << this->getPosicaoX()  << ' '
+		<< this->getPosicaoY()  << ' ' <<  endl;
 
 	gravadorEspinho.close();
 }

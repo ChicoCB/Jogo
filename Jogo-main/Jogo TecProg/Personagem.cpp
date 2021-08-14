@@ -80,12 +80,12 @@ bool Personagem::podeAtacar()
 
 void Personagem::setMovimentoX(float movimentox)
 {
-	Movimento.x = movimentox;
+	MovimentoX  = movimentox;
 }
 
 void Personagem::setMovimentoY(float movimentoy)
 {
-	Movimento.y = movimentoy;
+	MovimentoY  = movimentoy;
 }
 
 void Personagem::setVelocidade(float velocidade)

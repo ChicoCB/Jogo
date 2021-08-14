@@ -47,6 +47,8 @@ void MenuFases::LoopMenu(char tecla)
 				break;
 			case 1:
 				jogo->InicializaJogadores();
+				cout << "Apareceu?" << endl;
+
 				if (jogo->getMultiplayer())
 					jogo->getBruxo()->setFaseAtual(&jogo->getQuarto());
 				jogo->getFazendeira()->setFaseAtual(&jogo->getQuarto());

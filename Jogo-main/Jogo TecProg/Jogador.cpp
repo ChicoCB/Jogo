@@ -46,7 +46,7 @@ void Jogador::atualiza(float deltaTempo)
 		faseAtual->getJogo()->setEstado(7);
 	}
 
-	Movimento.x = 0.f;
+	MovimentoX = 0.f;
 
 	if (podePular)
 		Velocidade = 400.f;
@@ -57,30 +57,30 @@ void Jogador::atualiza(float deltaTempo)
 
 	if (TeclaDireita == Direita || TeclaDireita == '>')
 	{
-		Movimento.x += Velocidade;
+		MovimentoX += Velocidade;
 		olharDireita = true;
 	}
 	if (TeclaEsquerda == Esquerda || TeclaEsquerda == '<')
 	{
-		Movimento.x -= Velocidade;
+		MovimentoX -= Velocidade;
 		olharDireita = false;
 	}
 	if (podePular && (TeclaPulo == Pulo || TeclaPulo == 'J'))
 	{
 		podePular = false;
-		Movimento.y = -sqrt(2 * 981.f * alturaPulo);
+		MovimentoY = -sqrt(2 * 981.f * alturaPulo);
 	}
 	if ((TeclaAtira == Atira || TeclaAtira == 'S') && this->podeAtacar())
 	{
-		this->atiraProjetilHorizontal(this, getPosicao().y);
+		this->atiraProjetilHorizontal(this, getPosicaoY() );
 		CooldownAtaque = 0;
 	}
 
 
-	Movimento.y += 981.f * deltaTempo;
+	MovimentoY += 981.f * deltaTempo;
 	CooldownAtaque += deltaTempo;
 
-	this->movimenta(Movimento * deltaTempo);
+	this->movimenta(MovimentoX * deltaTempo, MovimentoY * deltaTempo);
 }
 
 void Jogador::setTeclas(char direita, char esquerda, char pulo, char atira)
@@ -99,10 +99,10 @@ void Jogador::salvar()
 		cout << "Erro Gravar Jogadores." << endl;
 
 	gravadorJogador << this->getVida() << ' '
-		<< this->getPosicao().x << ' '
-		<< this->getPosicao().y << ' '
-		<< this->getMovimento().x << ' '
-		<< this->getMovimento().y << ' '
+		<< this->getPosicaoX()  << ' '
+		<< this->getPosicaoY()  << ' '
+		<< this->getMovimentoX()  << ' '
+		<< this->getMovimentoY()  << ' '
 		<< this->CooldownAtaque << endl;
 
 	gravadorJogador.close();

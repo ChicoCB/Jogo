@@ -4,7 +4,7 @@
 class Fase;
 class Personagem;
 class Jogo;
-
+//
 class Atirador
 {
 protected:

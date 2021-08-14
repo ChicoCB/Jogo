@@ -14,7 +14,7 @@ Quintal::~Quintal()
 
 void Quintal::inicializa()
 {
-	pGerenciadorGrafico->atualizaView(sf::Vector2f(COMPRIMENTO_RESOLUCAO / 2, ALTURA_RESOLUCAO / 2));
+	pGerenciadorGrafico->atualizaView( COMPRIMENTO_RESOLUCAO / 2, ALTURA_RESOLUCAO / 2 );
 
 	srand(time(NULL));
 
@@ -22,53 +22,66 @@ void Quintal::inicializa()
 	gerenciadorColisoes.setListaPersonagens(&listaPersonagens);
 
 	listaEntidades.inclua(static_cast <Entidade*> (&Background));
-	Background.setTextura("textures/Background.png");
-	Background.setDimensoes(sf::Vector2f(COMPRIMENTO_CENARIO, ALTURA_RESOLUCAO));
-	Background.setPosicao(sf::Vector2f(COMPRIMENTO_RESOLUCAO, ALTURA_RESOLUCAO/2));
+
+
 	Background.setGerenciadorGrafico(pGerenciadorGrafico);
+	pGerenciadorGrafico->criaCorpo(&Background, COMPRIMENTO_CENARIO, ALTURA_RESOLUCAO,
+		COMPRIMENTO_RESOLUCAO, ALTURA_RESOLUCAO / 2, "textures/Background.png");
+	Background.setTextura("textures/Background.png");
+	Background.setDimensoes( COMPRIMENTO_CENARIO, ALTURA_RESOLUCAO );
+	Background.setPosicao( COMPRIMENTO_RESOLUCAO, ALTURA_RESOLUCAO/2 );
+
+	cout << Background.getId() << " " << Background.getIdAtual() << endl;
 
 	criaPlataformas();
 
 	for (int i = 0; i < rand() % 6 + 3; i++)
 	{
 		Espinho* espinho = new Espinho();
-		criaObstaculo(static_cast <Entidade*>(espinho), sf::Vector2f(COMPRIMENTO_ESPINHO,ALTURA_ESPINHO),
-			sf::Vector2f(rand() % (static_cast<int>(COMPRIMENTO_CENARIO - 400)) + 200, 
-				ALTURA_RESOLUCAO - (ALTURA_PLATAFORMA + ALTURA_ESPINHO / 2)), "");
+		criaObstaculo(static_cast <Entidade*>(espinho),  COMPRIMENTO_ESPINHO,ALTURA_ESPINHO ,
+			 rand() % (static_cast<int>(COMPRIMENTO_CENARIO - 400)) + 200, 
+				ALTURA_RESOLUCAO - (ALTURA_PLATAFORMA + ALTURA_ESPINHO / 2) , "");
 	}
 
 	for (int i = 0; i < rand() % 6 + 3; i++)
 	{
 		Teia* teia = new Teia();
-		criaObstaculo(static_cast <Entidade*>(teia), sf::Vector2f(COMPRIMENTO_TEIA, ALTURA_TEIA),
-			sf::Vector2f(rand() % (static_cast<int>(COMPRIMENTO_CENARIO - 400)) + 200,
-				ALTURA_RESOLUCAO - (ALTURA_PLATAFORMA + ALTURA_TEIA / 2)), "");
+		criaObstaculo(static_cast <Entidade*>(teia),  COMPRIMENTO_TEIA, ALTURA_TEIA ,
+			 rand() % (static_cast<int>(COMPRIMENTO_CENARIO - 400)) + 200,
+				ALTURA_RESOLUCAO - (ALTURA_PLATAFORMA + ALTURA_TEIA / 2 ), "");
 	}
 
 	for (int i = 0; i < rand() % 4 + 3; i++)
 	{
 		Passaro* passaro = new Passaro();
 		passaro->setFaseAtual(this);
-		criaInimigo(static_cast<Personagem*>(passaro), sf::Vector2f(COMPRIMENTO_PASSARO, ALTURA_PASSARO),
-			sf::Vector2f(rand() % (static_cast<int>(COMPRIMENTO_CENARIO - 400)) + 200,
-				rand() % static_cast<int>(ALTURA_RESOLUCAO / 2) + ALTURA_PASSARO / 2),
+		criaInimigo(static_cast<Personagem*>(passaro),  COMPRIMENTO_PASSARO, ALTURA_PASSARO ,
+			 rand() % (static_cast<int>(COMPRIMENTO_CENARIO - 400)) + 200,
+				rand() % static_cast<int>(ALTURA_RESOLUCAO / 2) + ALTURA_PASSARO / 2 ,
 			"textures/Passaro_direita.png");
-		passaro->setLimites(passaro->getPosicao().x, passaro->getPosicao().x + 300.f);
+		passaro->setLimites(passaro->getPosicaoX() , passaro->getPosicaoX() + 300.f);
 	
 	}
 
 	for (int i = 0; i < rand() % 4 + 3; i++)
 	{
 		Estatico* estatico = new Estatico();
-		criaInimigo(static_cast<Personagem*>(estatico), sf::Vector2f(COMPRIMENTO_ESTATICO, ALTURA_ESTATICO),
-			sf::Vector2f(rand() % (static_cast<int>(COMPRIMENTO_CENARIO - 400)) + 200,
-				rand() % static_cast<int>(ALTURA_RESOLUCAO) - (ALTURA_PLATAFORMA + ALTURA_ESTATICO / 2)),
+		criaInimigo(static_cast<Personagem*>(estatico),  COMPRIMENTO_ESTATICO, ALTURA_ESTATICO ,
+			 rand() % (static_cast<int>(COMPRIMENTO_CENARIO - 400)) + 200,
+				rand() % static_cast<int>(ALTURA_RESOLUCAO) - (ALTURA_PLATAFORMA + ALTURA_ESTATICO / 2  ),
 			"textures/Estatico_vulneravel.png");
 	}
 
-	porta.setJogo(pJogo);
+	
 	porta.setGerenciadorGrafico(pGerenciadorGrafico);
+	pGerenciadorGrafico->criaCorpo(&porta, 50.f, 100.f, COMPRIMENTO_CENARIO - 150.f,
+		ALTURA_RESOLUCAO - (ALTURA_PLATAFORMA + 50.f), "");
+	porta.setPosicao(COMPRIMENTO_CENARIO - 150.f, ALTURA_RESOLUCAO - (ALTURA_PLATAFORMA + 50.f));
+	porta.setDimensoes(50.f, 100.f);
+	porta.setTextura("");
+	porta.setJogo(pJogo);
 	listaEntidades.inclua(static_cast<Entidade*> (&porta));
+
 
 	listaEntidades.inclua(static_cast <Entidade*> (pFazendeira));
 	listaPersonagens.inclua(static_cast <Personagem*> (pFazendeira));
@@ -109,55 +122,54 @@ void Quintal::limparTudo()
 	pBruxo = NULL;
 	pJogo = NULL;
 }
-
+void Quintal::criaPlataforma(float posx, float posy)
+{
+	Plataforma* plataforma = new Plataforma();
+	criaObstaculo(plataforma, COMPRIMENTO_PLATAFORMA, ALTURA_PLATAFORMA,
+		posx, posy, "textures/Plataforma_meio.png");
+}
 
 void Quintal::criaPlataformas()
 {
 	criaBordas();
 	//Plataformas específicas
 	for (int i = 0; i < 10; i++) {
-		Plataforma* plataforma = new Plataforma();
-		criaObstaculo(plataforma, sf::Vector2f(COMPRIMENTO_PLATAFORMA, ALTURA_PLATAFORMA),
-			sf::Vector2f(900.f + COMPRIMENTO_PLATAFORMA * i, 337.5f),
-			"textures/Plataforma_meio.png");
+		criaPlataforma(900.f + COMPRIMENTO_PLATAFORMA * i, 337.5f);
 	}
 	for (int i = 0; i < 10; i++) {
-		Plataforma* plataforma = new Plataforma();
-		criaObstaculo(plataforma, sf::Vector2f(COMPRIMENTO_PLATAFORMA, ALTURA_PLATAFORMA),
-			sf::Vector2f(1500.f + COMPRIMENTO_PLATAFORMA * i, 337.5f),
-			"textures/Plataforma_meio.png");
+		criaPlataforma(1500.f + COMPRIMENTO_PLATAFORMA * i, 337.5f);
 	}
 	for (int i = 0; i < 10; i++) {
-		Plataforma* plataforma = new Plataforma();
-		criaObstaculo(plataforma, sf::Vector2f(COMPRIMENTO_PLATAFORMA, ALTURA_PLATAFORMA),
-			sf::Vector2f(500.f + COMPRIMENTO_PLATAFORMA * i, 517.5f),
-			"textures/Plataforma_meio.png");
+		criaPlataforma(500.f + COMPRIMENTO_PLATAFORMA * i, 517.5f);
 	}
 	for (int i = 0; i < 10; i++) {
-		Plataforma* plataforma = new Plataforma();
-		criaObstaculo(plataforma, sf::Vector2f(COMPRIMENTO_PLATAFORMA, ALTURA_PLATAFORMA),
-			sf::Vector2f(1800.f + COMPRIMENTO_PLATAFORMA * i, 157.5f),
-			"textures/Plataforma_meio.png");
+		criaPlataforma(1800.f + COMPRIMENTO_PLATAFORMA * i, 157.5f);
 	}
-	
+
 	for (int i = 0; i < 5; i++) {
-		Plataforma* plataforma = new Plataforma();
-		criaObstaculo(plataforma, sf::Vector2f(COMPRIMENTO_PLATAFORMA, ALTURA_PLATAFORMA),
-			sf::Vector2f(2000.f + COMPRIMENTO_PLATAFORMA * i, 517.5f),
-			"textures/Plataforma_meio.png");
+		criaPlataforma(2000.f + COMPRIMENTO_PLATAFORMA * i, 517.5f);
 	}
 }
 
 void Quintal::recuperar()
 {	
-	listaEntidades.inclua(static_cast<Entidade*> (&Background));
-	criaPlataformas();
-	Background.setTextura("textures/Background.png");
-	Background.setDimensoes(sf::Vector2f(COMPRIMENTO_CENARIO, ALTURA_RESOLUCAO));
-	Background.setPosicao(sf::Vector2f(COMPRIMENTO_RESOLUCAO, ALTURA_RESOLUCAO / 2));
+	listaEntidades.inclua(static_cast <Entidade*> (&Background));
 	Background.setGerenciadorGrafico(pGerenciadorGrafico);
-	porta.setJogo(pJogo);
+	pGerenciadorGrafico->criaCorpo(&Background, COMPRIMENTO_CENARIO, ALTURA_RESOLUCAO,
+		COMPRIMENTO_RESOLUCAO, ALTURA_RESOLUCAO / 2, "textures/Background.png");
+	Background.setTextura("textures/Background.png");
+	Background.setDimensoes(COMPRIMENTO_CENARIO, ALTURA_RESOLUCAO);
+	Background.setPosicao(COMPRIMENTO_RESOLUCAO, ALTURA_RESOLUCAO / 2);
+
+	criaPlataformas();
+
 	porta.setGerenciadorGrafico(pGerenciadorGrafico);
+	pGerenciadorGrafico->criaCorpo(&porta, 50.f, 100.f, COMPRIMENTO_CENARIO - 150.f,
+		ALTURA_RESOLUCAO - (ALTURA_PLATAFORMA + 50.f), "");
+	porta.setPosicao(COMPRIMENTO_CENARIO - 150.f, ALTURA_RESOLUCAO - (ALTURA_PLATAFORMA + 50.f));
+	porta.setDimensoes(50.f, 100.f);
+	porta.setTextura("");
+	porta.setJogo(pJogo);
 	listaEntidades.inclua(static_cast<Entidade*> (&porta));
 
 	gerenciadorColisoes.setListaEntidades(&listaEntidades);
@@ -205,8 +217,8 @@ void Quintal::recuperarPassaros()
 		novo->setCooldownAtaque(cooldown);
 		novo->setFaseAtual(this);
 
-		criaInimigo(static_cast <Personagem*> (novo), sf::Vector2f(COMPRIMENTO_PASSARO, ALTURA_PASSARO),
-			sf::Vector2f(posx, posy), "textures/Passaro_direita.png");
+		criaInimigo(static_cast <Personagem*> (novo),  COMPRIMENTO_PASSARO, ALTURA_PASSARO ,
+			 posx, posy , "textures/Passaro_direita.png");
 	}
 
 	recuperadorPassaros.close();
