@@ -14,14 +14,16 @@ MenuColocacao::~MenuColocacao()
 
 void MenuColocacao::LoopMenu(char tecla)
 {
-	menu[Indice].setFillColor(sf::Color::Red);
+	//menu[Indice].setFillColor(sf::Color::Red);
+	cout << "Indice: " << Indice << endl;
+	Textos[Indice].setCor("Vermelho");
 
 	if (Digitando)
 	{
 			if (tecla == 13)
 			{
-				menu[Indice].setFillColor(sf::Color::Green);
-				menu[5].setFillColor(sf::Color::Red);
+				Textos[Indice].setCor("Verde");
+				Textos[5].setCor("Vermelho");
 				Indice = 5;
 				Digitando = false;
 				Nome.clear();
@@ -32,18 +34,19 @@ void MenuColocacao::LoopMenu(char tecla)
 				stringstream ss;
 
 				if (tecla == '\b') {
-					if (Nome.getSize() != 0)
-						Nome.erase(Nome.getSize() - 1);
+					if (Nome.size() != 0)
+						Nome.erase(Nome.size() - 1);
 				}
 				else if (tecla > 31 && tecla < 128) {
-					Nome.insert(Nome.getSize(), tecla);
+					Nome = Nome + tecla;
+					//Nome.insert(Nome.size(), tecla);
 				}
 
 				ss << jogo->getJogador1()->getPontuacao();
 
 				saux = ss.str() + " - " + Nome;
 				cout << ss.str() << endl;
-				menu[Indice].setString(saux);
+				Textos[Indice].setMensagem(saux);
 			}
 	}
 	 
@@ -58,7 +61,7 @@ void MenuColocacao::LoopMenu(char tecla)
 		{
 			if (Indice < 5) {
 				Digitando = true;
-				menu[Indice].setString("0 - ");
+				Textos[Indice].setMensagem("0 - ");
 			}
 			else
 				switch (Indice)
@@ -73,7 +76,7 @@ void MenuColocacao::LoopMenu(char tecla)
 						cout << "Erro Gravar Colocacao." << endl;
 
 					for (int i = 1; i <= 4; i++) {
-						string saux = menu[i].getString();
+						string saux = Textos[i].getMensagem();
 						while (saux.back() == ' ')
 							saux.pop_back();
 
@@ -85,13 +88,11 @@ void MenuColocacao::LoopMenu(char tecla)
 				}
 				break;
 				case 6:
-					menu[1].setString("0 - Vazio");
-					menu[2].setString("0 - Vazio");
-					menu[3].setString("0 - Vazio");
-					menu[4].setString("0 - Vazio");
+					for (int i = 1; i <= 4; i++)
+						Textos[i].setMensagem("0 - Vazio");
 					break;
 				case 7:
-					menu[Indice].setFillColor(sf::Color::Green);
+					Textos[Indice].setCor("Verde");
 					jogo->setEstado(EstadoAnterior);
 					break;
 				}
@@ -115,7 +116,7 @@ void MenuColocacao::Recupera()
 		string += aux + " ";
 		aux = "";
 		if (recuperadorColocacao.get() == '\n') {
-			menu[i].setString(string);
+			Textos[i].setMensagem(string);
 			i++;
 			string = "";
 		}
@@ -130,47 +131,55 @@ void MenuColocacao::Inicializa()
 	
 	Digitando = false;
 
-	menu = new sf::Text[Tamanho];
-	menu[0].setFillColor(sf::Color::Green);
-	menu[0].setCharacterSize(24);
-	menu[0].setString("Pontuacao:");
-	menu[0].setPosition(sf::Vector2f(COMPRIMENTO_RESOLUCAO / 4, 150));
-	menu[0].setFont(Fonte);
-	menu[1].setFillColor(sf::Color::Green);
-	menu[1].setCharacterSize(24);
-	menu[1].setString("0 - Vazio");
-	menu[1].setPosition(sf::Vector2f(COMPRIMENTO_RESOLUCAO / 4, 200));
-	menu[1].setFont(Fonte);
-	menu[2].setFillColor(sf::Color::Green);
-	menu[2].setCharacterSize(24);
-	menu[2].setString("0 - Vazio");
-	menu[2].setPosition(sf::Vector2f(COMPRIMENTO_RESOLUCAO / 4, 250));
-	menu[2].setFont(Fonte);
-	menu[3].setFillColor(sf::Color::Green);
-	menu[3].setCharacterSize(24);
-	menu[3].setString("0 - Vazio");
-	menu[3].setPosition(sf::Vector2f(COMPRIMENTO_RESOLUCAO / 4, 300));
-	menu[3].setFont(Fonte);
-	menu[4].setFillColor(sf::Color::Green);
-	menu[4].setCharacterSize(24);
-	menu[4].setString("0 - Vazio");
-	menu[4].setPosition(sf::Vector2f(COMPRIMENTO_RESOLUCAO / 4, 350));
-	menu[4].setFont(Fonte);
-	menu[5].setFillColor(sf::Color::Green);
-	menu[5].setCharacterSize(24);
-	menu[5].setString("Salvar Pontuação");
-	menu[5].setPosition(sf::Vector2f(COMPRIMENTO_RESOLUCAO / 4, 500));
-	menu[5].setFont(Fonte);
-	menu[6].setFillColor(sf::Color::Green);
-	menu[6].setCharacterSize(24);
-	menu[6].setString("Apagar Tudo");
-	menu[6].setPosition(sf::Vector2f(COMPRIMENTO_RESOLUCAO / 4, 550));
-	menu[6].setFont(Fonte);
-	menu[7].setFillColor(sf::Color::Green);
-	menu[7].setCharacterSize(24);
-	menu[7].setString("Voltar");
-	menu[7].setPosition(sf::Vector2f(COMPRIMENTO_RESOLUCAO / 4, 600));
-	menu[7].setFont(Fonte);
+	Textos = new Texto[Tamanho];
+	Textos[0].setCor("Verde");
+	Textos[0].setDimensao(24);
+	Textos[0].setMensagem("Pontuacao:");
+	Textos[0].setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 150);
+	Textos[0].setFonte("Arial");
+
+	Textos[1].setCor("Verde");
+	Textos[1].setDimensao(24);
+	Textos[1].setMensagem("0 - Vazio");
+	Textos[1].setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 200);
+	Textos[1].setFonte("Arial");
+
+	Textos[2].setCor("Verde");
+	Textos[2].setDimensao(24);
+	Textos[2].setMensagem("0 - Vazio");
+	Textos[2].setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 250);
+	Textos[2].setFonte("Arial");
+
+	Textos[3].setCor("Verde");
+	Textos[3].setDimensao(24);
+	Textos[3].setMensagem("0 - Vazio");
+	Textos[3].setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 300);
+	Textos[3].setFonte("Arial");
+
+	Textos[4].setCor("Verde");
+	Textos[4].setDimensao(24);
+	Textos[4].setMensagem("0 - Vazio");
+	Textos[4].setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 350);
+	Textos[4].setFonte("Arial");
+
+	Textos[5].setCor("Verde");
+	Textos[5].setDimensao(24);
+	Textos[5].setMensagem("Vermelho");
+	Textos[5].setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 500);
+	Textos[5].setFonte("Arial");
+
+	Textos[6].setCor("Verde");
+	Textos[6 ].setDimensao(24);
+	Textos[6].setMensagem("Apagar Tudo");
+	Textos[6].setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 550);
+	Textos[6].setFonte("Arial");
+
+	Textos[7].setCor("Verde");
+	Textos[7 ].setDimensao(24);
+	Textos[7].setMensagem("Voltar");
+	Textos[7].setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 600);
+	Textos[7].setFonte("Arial");
+
 
 }
 

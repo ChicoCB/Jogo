@@ -2,29 +2,22 @@
 #include "Ente.h"
 #include "stdafx.h" 
 #include "Cenario.h"
+#include "Texto.h"
 
 class Jogo;
 
 class Menu : public Ente
 {
 protected:
-	int Indice, Tamanho, IdTexto;
-	static int IdTextoAtual;
+	int Indice, Tamanho;
 
-	Cenario PlanoFundo;
+	Texto* Textos;
 	Jogo* jogo;
-
-	sf::Text* menu;
-	sf::Font Fonte;
+	Cenario PlanoFundo;
 
 public:
 	Menu(int tamanho, Jogo* jg);
 	~Menu();
-
-	void incrementaIdTextoAtual();
-	void setId(int id);
-	int getIdTextoAtual();
-	int getId();
 
 	void moverCima();
 	void moverBaixo();

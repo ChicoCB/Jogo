@@ -55,41 +55,36 @@ void MenuPause::LoopMenu(char tecla)
 
 void MenuPause::Inicializa()
 {
+	Textos = new Texto[Tamanho];
+	Textos[0].setCor("Vermelho");
+	Textos[0].setDimensao(24);
+	Textos[0].setMensagem("Retomar");
+	Textos[0].setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 150);
+	Textos[0].setFonte("Arial");
 
-	cout << IdTextoAtual << endl;
-	cout << "Bugou" << endl;
+	Textos[1].setCor("Verde");
+	Textos[1].setDimensao(24);
+	Textos[1 ].setMensagem("Salvar jogo");
+	Textos[1].setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 250);
+	Textos[1].setFonte("Arial");
 
-	menu = new sf::Text[Tamanho];
-	menu[0].setFillColor(sf::Color::Red);
-	menu[0].setCharacterSize(24);
-	menu[0].setString("Retomar");
-	menu[0].setPosition(sf::Vector2f(COMPRIMENTO_RESOLUCAO / 4, 150));
-	menu[0].setFont(Fonte);
+	Textos[2].setCor("Verde");
+	Textos[2].setDimensao(24);
+	Textos[2].setMensagem("Salvar pontuação");
+	Textos[2].setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 350);
+	Textos[2].setFonte("Arial");
+
+	Textos[3].setCor("Verde");
+	Textos[3].setDimensao(24);
+	Textos[3].setMensagem("Voltar ao Menu Principal");
+	Textos[3].setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 450);
+	Textos[3].setFonte("Arial");
+
+	Textos[4].setCor("Verde");
+	Textos[4].setDimensao(24);
+	Textos[4].setMensagem("Sair do jogo");
+	Textos[4].setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 550);
+	Textos[4].setFonte("Arial");
 	
-	
-	menu[1].setFillColor(sf::Color::Green);
-	menu[1].setCharacterSize(24);
-	menu[1].setString("Salvar jogo");
-	menu[1].setPosition(sf::Vector2f(COMPRIMENTO_RESOLUCAO / 4, 250));
-	menu[1].setFont(Fonte);
-	
-	menu[2].setFillColor(sf::Color::Green);
-	menu[2].setCharacterSize(24);
-	menu[2].setString("Salvar pontuação");
-	menu[2].setPosition(sf::Vector2f(COMPRIMENTO_RESOLUCAO / 4, 350));
-	menu[2].setFont(Fonte);
-
-	menu[3].setFillColor(sf::Color::Green);
-	menu[3].setCharacterSize(24);
-	menu[3].setString("Voltar ao Menu Principal");
-	menu[3].setPosition(sf::Vector2f(COMPRIMENTO_RESOLUCAO / 4, 450));
-	menu[3].setFont(Fonte);	
-
-	menu[4].setFillColor(sf::Color::Green);
-	menu[4].setCharacterSize(24);
-	menu[4].setString("Sair do Jogo");
-	menu[4].setPosition(sf::Vector2f(COMPRIMENTO_RESOLUCAO / 4, 550));
-	menu[4].setFont(Fonte);
-
 
 }

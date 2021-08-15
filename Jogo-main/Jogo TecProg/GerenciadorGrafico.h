@@ -1,6 +1,7 @@
 #pragma once
 #include "stdafx.h"
 #include "Entidade.h"
+#include "Texto.h"
 
 class Jogo;
 
@@ -10,7 +11,7 @@ private:
 
 	vector<sf::RectangleShape*> ListaCorpos;
 
-	map<int, sf::Text> Textos;
+	//map<int, sf::Text> Textos;
 
 	map<string, sf::Texture> Texturas;
 	map<string, sf::Font> Fontes;
@@ -29,8 +30,8 @@ public:
 	void atualizaView(float x, float y);
 	void fechar();
 
-	void criaTexto(int id, float dim, float posx, float posy, string texto, string cor, string fonte);
-	void desenhar(int id);
+	//void criaTexto(int id, float dim, float posx, float posy, string texto, string cor, string fonte);
+	void desenhar(Texto texto);
 	void desenhar(sf::Text texto);
 
 	void criaCorpo(Entidade* pentidade, float dimx, float dimy, float posx, float posy, string textura);

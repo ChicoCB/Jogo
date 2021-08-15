@@ -9,7 +9,7 @@ class MenuColocacao : public Menu
 {
 private:
 	bool Digitando;
-	sf::String Nome;
+	string Nome;
 	int Limite;
 	int EstadoAnterior;
 

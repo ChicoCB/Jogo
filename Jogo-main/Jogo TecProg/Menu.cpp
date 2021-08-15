@@ -1,13 +1,12 @@
 #include "Menu.h"
 #include "Jogo.h"
 
-int Menu::IdTextoAtual = 0;
 
-Menu::Menu( int tamanho, Jogo* jg): IdTexto(0), PlanoFundo()
+
+Menu::Menu( int tamanho, Jogo* jg): PlanoFundo()
 {
-	if (!Fonte.loadFromFile("arial.ttf"))
-		cout << "Erro ao carregar fonte." << endl;
-
+	// (!Fonte.loadFromFile("arial.ttf"))
+	//	cout << "Erro ao carregar fonte." << endl;
 	jogo = jg;
 	Indice = 0;
 	Tamanho = tamanho;
@@ -17,25 +16,6 @@ Menu::~Menu()
 {
 }
 
-void Menu::incrementaIdTextoAtual()
-{
-	IdTextoAtual++;
-}
-
-void Menu::setId(int id)
-{
-	IdTexto = id;
-}
-
-int Menu::getIdTextoAtual()
-{
-	return IdTextoAtual;
-}
-
-int Menu::getId()
-{
-	return IdTexto;
-}
 
 void Menu::moverCima()
 {
@@ -44,9 +24,9 @@ void Menu::moverCima()
 		Indice = 0;
 	else
 	{
-		menu[Indice].setFillColor(sf::Color::Green);
+		Textos[Indice].setCor("Verde");
 		Indice--;
-		menu[Indice].setFillColor(sf::Color::Red);
+		Textos[Indice].setCor("Vermelho");
 	}
 
 }
@@ -57,15 +37,18 @@ void Menu::moverBaixo()
 		Indice = Tamanho - 1;
 	else
 	{
-		menu[Indice].setFillColor(sf::Color::Green);
+		Textos[Indice].setCor("Verde");
 		Indice++;
-		menu[Indice].setFillColor(sf::Color::Red);
+		Textos[Indice].setCor("Vermelho");
 	}
 }
 
 void Menu::desenhar()
 {
 	for (int i = 0; i < Tamanho; i++) {
-		pGerenciadorGrafico->desenhar(menu[i]);
+		//pGerenciadorGrafico->desenhar(menu[i]);
+
+		if (Textos != NULL)
+			pGerenciadorGrafico->desenhar(Textos[i]);
 	}
 }

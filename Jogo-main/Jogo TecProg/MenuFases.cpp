@@ -4,22 +4,24 @@
 MenuFases::MenuFases(  int tamanho, Jogo* jg):
 	Menu( tamanho, jg)
 {
-	menu = new sf::Text[Tamanho];
-	menu[0].setFillColor(sf::Color::Red);
-	menu[0].setCharacterSize(24);
-	menu[0].setString("Fase 1");
-	menu[0].setPosition(sf::Vector2f(COMPRIMENTO_RESOLUCAO / 4, 250));
-	menu[0].setFont(Fonte);
-	menu[1].setFillColor(sf::Color::Green);
-	menu[1].setCharacterSize(24);
-	menu[1].setString("Fase 2");
-	menu[1].setPosition(sf::Vector2f(COMPRIMENTO_RESOLUCAO / 4, 350));
-	menu[1].setFont(Fonte);
-	menu[2].setFillColor(sf::Color::Green);
-	menu[2].setCharacterSize(24);
-	menu[2].setString("Voltar");
-	menu[2].setPosition(sf::Vector2f(COMPRIMENTO_RESOLUCAO / 4, 450));
-	menu[2].setFont(Fonte);
+	Textos = new Texto[Tamanho];
+	Textos[0].setCor("Vermelho");
+	Textos[0].setDimensao(24);
+	Textos[0].setMensagem("Fase 1");
+	Textos[0].setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 250);
+	Textos[0].setFonte("Arial");
+
+	Textos[1].setCor("Verde");
+	Textos[1].setDimensao(24);
+	Textos[1].setMensagem("Fase 2");
+	Textos[1].setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 350);
+	Textos[1].setFonte("Arial");
+
+	Textos[2].setCor("Verde");
+	Textos[2].setDimensao(24);
+	Textos[2].setMensagem("Voltar");
+	Textos[2].setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 450);
+	Textos[2].setFonte("Arial");
 }
 
 MenuFases::~MenuFases()
@@ -47,7 +49,6 @@ void MenuFases::LoopMenu(char tecla)
 				break;
 			case 1:
 				jogo->InicializaJogadores();
-				cout << "Apareceu?" << endl;
 
 				if (jogo->getMultiplayer())
 					jogo->getJogador2()->setFaseAtual(&jogo->getQuarto());

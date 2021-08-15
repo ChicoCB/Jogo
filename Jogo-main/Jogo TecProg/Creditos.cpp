@@ -4,23 +4,19 @@
 Creditos::Creditos(  int tamanho, Jogo* jg) :
 	Menu( tamanho, jg)
 {
+	Textos = new Texto[Tamanho];
+	Textos[0].setCor("Vermelho");
+	Textos[0].setDimensao(24);
+	Textos[0].setMensagem("Salvar Pontuação");
+	Textos[0].setPosicoes(COMPRIMENTO_RESOLUCAO * 3 / 4, 500);
+	Textos[0].setFonte("Arial");
 
-	//setDimensoes(sf::Vector2f(COMPRIMENTO_JOGADOR, ALTURA_JOGADOR));
-    //setOrigem();
-    //setPosicao(sf::Vector2f(COMPRIMENTO_RESOLUCAO/2, ALTURA_RESOLUCAO));
-    //setTextura("");
-	
-	menu = new sf::Text[Tamanho];
-	menu[0].setFillColor(sf::Color::Red);
-	menu[0].setCharacterSize(24);
-	menu[0].setString("Salvar Pontuação");
-	menu[0].setPosition(sf::Vector2f(COMPRIMENTO_RESOLUCAO*3/4, 500));
-	menu[0].setFont(Fonte);
-	menu[1].setFillColor(sf::Color::Green);
-	menu[1].setCharacterSize(24);
-	menu[1].setString("Voltar ao Menu Principal");
-	menu[1].setPosition(sf::Vector2f(COMPRIMENTO_RESOLUCAO * 3/4, 550));
-	menu[1].setFont(Fonte);
+	Textos[1].setCor("Verde");
+	Textos[1].setDimensao(24);
+	Textos[1 ].setMensagem("Voltar ao Menu Principal");
+	Textos[1].setPosicoes(COMPRIMENTO_RESOLUCAO * 3 / 4, 550);
+	Textos[1].setFonte("Arial");
+
 }
 
 Creditos::~Creditos()

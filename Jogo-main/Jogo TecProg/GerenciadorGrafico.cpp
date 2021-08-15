@@ -86,23 +86,18 @@ void GerenciadorGrafico::criaCorpo(Entidade* pentidade, float dimx, float dimy, 
     pentidade->incrementaIdCorpoAtual();
 }
 
-void GerenciadorGrafico::criaTexto(int id, float dim, float posx, float posy, string texto, string cor, string fonte)
+
+void GerenciadorGrafico::desenhar(Texto texto)
 {
-    sf::Font Fonte;
-    Fonte.loadFromFile("arial.ttf");
+    sf::Text taux;
 
-    ListaTextos[id].setFillColor(Cores[cor]);
-    ListaTextos[id].setCharacterSize(dim);
-    ListaTextos[id].setString(texto);
-    ListaTextos[id].setPosition(posx, posy);
-    ListaTextos[id].setFont(Fontes[fonte]);
+    taux.setFillColor(Cores[texto.getCor()]);
+    taux.setCharacterSize(texto.getDimensao());
+    taux.setString(texto.getMensagem());
+    taux.setPosition(sf::Vector2f(texto.getPosicaoX(), texto.getPosicaoY()));
+    taux.setFont(Fontes[texto.getFonte()]);
 
-    cout << "Bugou" << endl;
-}
-
-void GerenciadorGrafico::desenhar(int id)
-{
-    Janela.draw(ListaTextos[id]);
+    Janela.draw(taux);
 }
 
 void GerenciadorGrafico::desenhar(sf::Text texto)
