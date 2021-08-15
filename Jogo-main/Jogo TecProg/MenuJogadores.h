@@ -8,7 +8,7 @@ class MenuJogadores : public Menu
 private:
 
 public:
-	MenuJogadores(unsigned int comprimento, unsigned int altura, int tamanho, Jogo* jg);
+	MenuJogadores( int tamanho, Jogo* jg);
 	~MenuJogadores();
 
 	void LoopMenu(char tecla);

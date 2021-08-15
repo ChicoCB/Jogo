@@ -1,8 +1,8 @@
 #include "MenuPause.h"
 #include "Jogo.h"
 
-MenuPause::MenuPause(unsigned int comprimento, unsigned int altura, int tamanho, Jogo* jg):
-	Menu(comprimento, altura, tamanho, jg)
+MenuPause::MenuPause( int tamanho, Jogo* jg):
+	Menu( tamanho, jg)
 {
 	Inicializa();
 }
@@ -55,19 +55,24 @@ void MenuPause::LoopMenu(char tecla)
 
 void MenuPause::Inicializa()
 {
+
+	cout << IdTextoAtual << endl;
+	cout << "Bugou" << endl;
+
 	menu = new sf::Text[Tamanho];
 	menu[0].setFillColor(sf::Color::Red);
 	menu[0].setCharacterSize(24);
 	menu[0].setString("Retomar");
 	menu[0].setPosition(sf::Vector2f(COMPRIMENTO_RESOLUCAO / 4, 150));
 	menu[0].setFont(Fonte);
-
+	
+	
 	menu[1].setFillColor(sf::Color::Green);
 	menu[1].setCharacterSize(24);
 	menu[1].setString("Salvar jogo");
 	menu[1].setPosition(sf::Vector2f(COMPRIMENTO_RESOLUCAO / 4, 250));
 	menu[1].setFont(Fonte);
-
+	
 	menu[2].setFillColor(sf::Color::Green);
 	menu[2].setCharacterSize(24);
 	menu[2].setString("Salvar pontuação");

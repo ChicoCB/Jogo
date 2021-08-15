@@ -8,7 +8,7 @@ class MenuPrincipal : public Menu
 private:
 
 public:
-	MenuPrincipal(unsigned int comprimento, unsigned int altura, int tamanho, Jogo* jg);
+	MenuPrincipal( int tamanho, Jogo* jg);
 	~MenuPrincipal();
 
 	void LoopMenu(char tecla);

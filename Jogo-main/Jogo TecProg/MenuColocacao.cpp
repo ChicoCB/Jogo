@@ -1,8 +1,8 @@
 #include "MenuColocacao.h"
 #include "Jogo.h"
 
-MenuColocacao::MenuColocacao(unsigned int comprimento, unsigned int altura, int tamanho, Jogo* jg):
-	Menu(comprimento, altura, tamanho, jg),
+MenuColocacao::MenuColocacao(  int tamanho, Jogo* jg):
+	Menu( tamanho, jg),
 	EstadoAnterior(0)
 {	
 	Inicializa();

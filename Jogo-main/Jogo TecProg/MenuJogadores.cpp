@@ -1,8 +1,8 @@
 #include "MenuJogadores.h"
 #include "Jogo.h"
 
-MenuJogadores::MenuJogadores(unsigned int comprimento, unsigned int altura, int tamanho, Jogo* jg):
-	Menu(comprimento, altura, tamanho, jg)
+MenuJogadores::MenuJogadores(  int tamanho, Jogo* jg):
+	Menu(  tamanho, jg)
 {
 
 	menu = new sf::Text[Tamanho];

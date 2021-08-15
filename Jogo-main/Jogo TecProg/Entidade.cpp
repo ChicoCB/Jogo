@@ -2,7 +2,7 @@
 #include "Personagem.h"
 #include "GerenciadorGrafico.h"
 
-int Entidade::IdAtual = 0;
+int Entidade::IdCorpoAtual = 0;
 
 Entidade::Entidade():
 	Ente(),
@@ -75,9 +75,9 @@ bool Entidade::getDesalocavel()
 	return Desalocavel;
 }
 
-void Entidade::incrementaIdAtual()
+void Entidade::incrementaIdCorpoAtual()
 {
-	IdAtual++;
+	IdCorpoAtual++;
 }
 
 void Entidade::setId(int id)
@@ -85,9 +85,9 @@ void Entidade::setId(int id)
 	IdCorpo = id;
 }
 
-int Entidade::getIdAtual()
+int Entidade::getIdCorpoAtual()
 {
-	return IdAtual;
+	return IdCorpoAtual;
 }
 
 int Entidade::getId()

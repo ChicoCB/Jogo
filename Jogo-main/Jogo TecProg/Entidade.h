@@ -13,7 +13,7 @@ protected:
 	bool Desalocavel;
 
 	int IdCorpo;
-	static int IdAtual;
+	static int IdCorpoAtual;
 	
 public:
 	Entidade();
@@ -34,9 +34,9 @@ public:
 	void setDesalocavel(bool desalocavel);
 	bool getDesalocavel();
 
-	void incrementaIdAtual();
+	void incrementaIdCorpoAtual();
 	void setId(int id);
-	int getIdAtual();
+	int getIdCorpoAtual();
 	int getId();
 
 	void movimenta(float movimentox, float movimentoy);

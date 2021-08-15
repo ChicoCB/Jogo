@@ -1,8 +1,8 @@
 #include "Creditos.h"
 #include "Jogo.h"
 
-Creditos::Creditos(unsigned int comprimento, unsigned int altura, int tamanho, Jogo* jg) :
-	Menu(comprimento, altura, tamanho, jg)
+Creditos::Creditos(  int tamanho, Jogo* jg) :
+	Menu( tamanho, jg)
 {
 
 	//setDimensoes(sf::Vector2f(COMPRIMENTO_JOGADOR, ALTURA_JOGADOR));

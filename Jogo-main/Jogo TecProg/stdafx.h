@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <map>
 #include <stdlib.h>
 #include <time.h>
 #include <stdio.h>

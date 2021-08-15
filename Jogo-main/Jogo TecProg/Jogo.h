@@ -19,8 +19,7 @@ private:
 	Quarto Fase_Quarto;
 	Jogador* Jogador1;
 	Jogador* Jogador2;
-	//Jogador* Lixo;
-	int Estado;
+ 	int Estado;
 	bool Multiplayer;
 	MenuPrincipal menuPrincipal;
 	MenuJogadores menuJogadores;

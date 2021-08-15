@@ -8,7 +8,7 @@ class MenuFases : public Menu
 private:
 
 public:
-	MenuFases(unsigned int comprimento, unsigned int altura, int tamanho, Jogo* jg);
+	MenuFases( int tamanho, Jogo* jg);
 	~MenuFases();
 
 	void LoopMenu(char tecla);

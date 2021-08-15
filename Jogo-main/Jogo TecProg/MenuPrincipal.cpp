@@ -1,8 +1,8 @@
 #include "MenuPrincipal.h"
 #include "Jogo.h"
 
-MenuPrincipal::MenuPrincipal(unsigned int comprimento, unsigned int altura, int tamanho, Jogo* jg):
-Menu(comprimento, altura, tamanho, jg)
+MenuPrincipal::MenuPrincipal( int tamanho, Jogo* jg):
+Menu(  tamanho, jg)
 {
 	menu = new sf::Text[Tamanho];
 	menu[0].setFillColor(sf::Color::Red);
@@ -58,7 +58,7 @@ void MenuPrincipal::LoopMenu(char tecla)
 				jogo->setEstado(3);
 				break;
 			case 3:
-				pGerenciadorGrafico->getJanela().close();
+				pGerenciadorGrafico->fechar();
 				break;
 			}
 		}

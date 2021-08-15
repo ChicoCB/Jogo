@@ -14,7 +14,7 @@ private:
 	int EstadoAnterior;
 
 public:
-	MenuColocacao(unsigned int comprimento, unsigned int altura, int tamanho, Jogo* jg);
+	MenuColocacao(  int tamanho, Jogo* jg);
 	~MenuColocacao();
 
 	//void setEditavel(bool editavel);

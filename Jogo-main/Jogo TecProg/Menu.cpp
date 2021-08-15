@@ -1,7 +1,9 @@
 #include "Menu.h"
 #include "Jogo.h"
 
-Menu::Menu(unsigned int comprimento, unsigned int altura, int tamanho, Jogo* jg)
+int Menu::IdTextoAtual = 0;
+
+Menu::Menu( int tamanho, Jogo* jg): IdTexto(0), PlanoFundo()
 {
 	if (!Fonte.loadFromFile("arial.ttf"))
 		cout << "Erro ao carregar fonte." << endl;
@@ -13,6 +15,26 @@ Menu::Menu(unsigned int comprimento, unsigned int altura, int tamanho, Jogo* jg)
 
 Menu::~Menu()
 {
+}
+
+void Menu::incrementaIdTextoAtual()
+{
+	IdTextoAtual++;
+}
+
+void Menu::setId(int id)
+{
+	IdTexto = id;
+}
+
+int Menu::getIdTextoAtual()
+{
+	return IdTextoAtual;
+}
+
+int Menu::getId()
+{
+	return IdTexto;
 }
 
 void Menu::moverCima()
@@ -43,6 +65,7 @@ void Menu::moverBaixo()
 
 void Menu::desenhar()
 {
-	for (int i = 0; i < Tamanho; i++)
+	for (int i = 0; i < Tamanho; i++) {
 		pGerenciadorGrafico->desenhar(menu[i]);
+	}
 }

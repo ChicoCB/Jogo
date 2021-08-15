@@ -9,7 +9,7 @@ class Creditos:
 private:
 
 public:
-    Creditos(unsigned int comprimento, unsigned int altura, int tamanho, Jogo* jg);
+    Creditos( int tamanho, Jogo* jg);
     ~Creditos();
 
     void LoopMenu(char tecla);

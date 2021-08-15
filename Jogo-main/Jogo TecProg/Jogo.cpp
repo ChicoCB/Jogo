@@ -2,12 +2,12 @@
 
 Jogo::Jogo() :
     gerenciadorGrafico(),
-    menuPrincipal(COMPRIMENTO_RESOLUCAO, ALTURA_RESOLUCAO, 4, this),
-    menuJogadores(COMPRIMENTO_RESOLUCAO, ALTURA_RESOLUCAO, 3, this),
-    menuFases(COMPRIMENTO_RESOLUCAO, ALTURA_RESOLUCAO, 3, this),
-    menuPause(COMPRIMENTO_RESOLUCAO, ALTURA_RESOLUCAO, 5, this),
-    menuColocacao(COMPRIMENTO_RESOLUCAO, ALTURA_RESOLUCAO, 8, this),
-    creditos(COMPRIMENTO_RESOLUCAO, ALTURA_RESOLUCAO, 2, this),
+    menuPrincipal( 4, this),
+    menuJogadores(  3, this),
+    menuFases(  3, this),
+    menuPause(  5, this),
+    menuColocacao(  8, this),
+    creditos( 2, this),
     Estado(0),
     Jogador1(NULL),
     Jogador2(NULL),
@@ -28,6 +28,8 @@ void Jogo::Executar()
 
 void Jogo::Inicializa()
 {
+
+
     menuPrincipal.setGerenciadorGrafico(&gerenciadorGrafico);
     menuJogadores.setGerenciadorGrafico(&gerenciadorGrafico);
     menuFases.setGerenciadorGrafico(&gerenciadorGrafico);
@@ -35,6 +37,9 @@ void Jogo::Inicializa()
     menuColocacao.setGerenciadorGrafico(&gerenciadorGrafico);
     creditos.setGerenciadorGrafico(&gerenciadorGrafico);
     menuColocacao.Recupera();
+
+
+
 }
 
 void Jogo::LoopJogo()

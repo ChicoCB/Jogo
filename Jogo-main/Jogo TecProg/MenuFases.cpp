@@ -1,8 +1,8 @@
 #include "MenuFases.h"
 #include "Jogo.h"
 
-MenuFases::MenuFases(unsigned int comprimento, unsigned int altura, int tamanho, Jogo* jg):
-	Menu(comprimento, altura, tamanho, jg)
+MenuFases::MenuFases(  int tamanho, Jogo* jg):
+	Menu( tamanho, jg)
 {
 	menu = new sf::Text[Tamanho];
 	menu[0].setFillColor(sf::Color::Red);

@@ -21,6 +21,8 @@ void Quintal::inicializa()
 	gerenciadorColisoes.setListaEntidades(&listaEntidades);
 	gerenciadorColisoes.setListaPersonagens(&listaPersonagens);
 
+
+
 	Background.setGerenciadorGrafico(pGerenciadorGrafico);
 	pGerenciadorGrafico->criaCorpo(&Background, COMPRIMENTO_CENARIO, ALTURA_RESOLUCAO,
 		COMPRIMENTO_RESOLUCAO, ALTURA_RESOLUCAO / 2, "textures/Background.png");

@@ -1,15 +1,19 @@
 #include "GerenciadorGrafico.h"
 #include "Jogo.h"
 
-//int GerenciadorGrafico::IdAtual = 0;
-
 GerenciadorGrafico::GerenciadorGrafico() :
     Janela(sf::VideoMode(static_cast <unsigned int>(COMPRIMENTO_RESOLUCAO), static_cast <unsigned int>(ALTURA_RESOLUCAO)),
         "Jogo"/*, sf::Style::Fullscreen*/),
     View(sf::Vector2f(COMPRIMENTO_RESOLUCAO / 2, ALTURA_RESOLUCAO / 2), sf::Vector2f(COMPRIMENTO_RESOLUCAO, ALTURA_RESOLUCAO))
-    //IdAtual(0)
+    //IdCorpoAtual(0)
 {
     Janela.setView(View);
+
+    cout << "Antes de bugar";
+
+    InicializaTexturas();
+    InicializaFontes();
+    InicializaCores();
 }
 
 void GerenciadorGrafico::LoopJogo(Jogo* jogo, int estado)
@@ -17,10 +21,10 @@ void GerenciadorGrafico::LoopJogo(Jogo* jogo, int estado)
     sf::Clock Tempo;
     int Estado = estado;
 
-    while (isOpen())
+    while (Janela.isOpen())
     {
         sf::Event evento;
-        while (getJanela().pollEvent(evento))
+        while (Janela.pollEvent(evento))
         {
             if (evento.type == sf::Event::TextEntered) {
                 if (evento.text.unicode == 27)
@@ -32,10 +36,10 @@ void GerenciadorGrafico::LoopJogo(Jogo* jogo, int estado)
                 jogo->MenusJogo(Estado, evento.text.unicode);
             }
             if (evento.type == sf::Event::Closed)
-                getJanela().close();
+                Janela.close();
         }
 
-        clear();
+        Janela.clear();
         float DeltaTempo = Tempo.restart().asSeconds();
         if (DeltaTempo > 1.f / 20.f)
             DeltaTempo = 1.f / 20.f;
@@ -43,29 +47,15 @@ void GerenciadorGrafico::LoopJogo(Jogo* jogo, int estado)
         jogo->Atualiza(DeltaTempo);
         Estado = jogo->getEstado();
 
-        updateView();
+        Janela.setView(View);
 
-        display();
+        Janela.display();
+        //display();
     }
 }
 
 GerenciadorGrafico::~GerenciadorGrafico()
 {
-}
-
-sf::RenderWindow& GerenciadorGrafico::getJanela()
-{
-	return Janela;
-}
-
-sf::View& GerenciadorGrafico::getView()
-{
-	return View;
-}
-
-void GerenciadorGrafico::updateView()
-{
-	Janela.setView(View);
 }
 
 void GerenciadorGrafico::resetaView()
@@ -87,19 +77,37 @@ void GerenciadorGrafico::criaCorpo(Entidade* pentidade, float dimx, float dimy, 
     Corpo->setSize(sf::Vector2f(dimx, dimy));
     Corpo->setPosition(sf::Vector2f(posx, posy));
     Corpo->setOrigin(dimx/2, dimy/2);
-    
-    if (text == "" || !Textura->loadFromFile(text)) {
-        cerr << "Erro. Nao foi possivel carregar a textura de uma Entidade." << endl;
-        Corpo->setFillColor(sf::Color::White);
-    }
-   // Corpo->setTextureRect(sf::IntRect(150, 300, 300, 300));
-    Corpo->setTexture(Textura);
+    Corpo->setTexture(&Texturas[text]);
     ListaCorpos.push_back(Corpo);
 
     if (pentidade != NULL)
-        pentidade->setId(pentidade->getIdAtual());
+        pentidade->setId(pentidade->getIdCorpoAtual());
 
-    pentidade->incrementaIdAtual();
+    pentidade->incrementaIdCorpoAtual();
+}
+
+void GerenciadorGrafico::criaTexto(int id, float dim, float posx, float posy, string texto, string cor, string fonte)
+{
+    sf::Font Fonte;
+    Fonte.loadFromFile("arial.ttf");
+
+    ListaTextos[id].setFillColor(Cores[cor]);
+    ListaTextos[id].setCharacterSize(dim);
+    ListaTextos[id].setString(texto);
+    ListaTextos[id].setPosition(posx, posy);
+    ListaTextos[id].setFont(Fontes[fonte]);
+
+    cout << "Bugou" << endl;
+}
+
+void GerenciadorGrafico::desenhar(int id)
+{
+    Janela.draw(ListaTextos[id]);
+}
+
+void GerenciadorGrafico::desenhar(sf::Text texto)
+{
+    Janela.draw(texto);
 }
 
 void GerenciadorGrafico::setDimensoes(int id, float x, float y)
@@ -139,8 +147,7 @@ float GerenciadorGrafico::getDimensoesY(int id)
 
 void GerenciadorGrafico::setPosicao(int id, float x, float y)
 {
-    //if (ListaCorpos[id] == NULL)
-   //      cout << "ErrogetsetPosicao" << endl;
+
     if (id == NULL)
         cout << "Erro setPosicao" << endl;
     else if (id < 0 || id >= ListaCorpos.size())
@@ -172,14 +179,9 @@ void GerenciadorGrafico::desenhar(int id, bool desalocavel)
         delete (ListaCorpos[id]);
 }
 
-void GerenciadorGrafico::desenhar(sf::Text texto)
-{
-	Janela.draw(texto);
-}
-
 void GerenciadorGrafico::fechar()
 {
-	Janela.close();
+    Janela.close();
 }
 
 void GerenciadorGrafico::movimenta(int id, float x, float y)
@@ -187,21 +189,6 @@ void GerenciadorGrafico::movimenta(int id, float x, float y)
 
      if (ListaCorpos[id] != NULL)
          ListaCorpos[id]->move(sf::Vector2f(x, y));
-}
-
-void GerenciadorGrafico::display()
-{
-	Janela.display();
-}
-
-void GerenciadorGrafico::clear()
-{
-	Janela.clear();
-}
-
-bool GerenciadorGrafico::isOpen()
-{
-	return Janela.isOpen();
 }
 
 void GerenciadorGrafico::TeclaApertada(char* direita, char* esquerda, char* pulo, char* atira)
@@ -243,4 +230,58 @@ void GerenciadorGrafico::TeclaApertada(char* direita, char* esquerda, char* pulo
             *atira = 'E';
     }
 }
+
+void GerenciadorGrafico::CarregaTextura(string textura)
+{
+    sf::Texture Textura;
+    if (!Textura.loadFromFile(textura))
+        cerr << "Erro. Nao foi possivel carregar a textura de uma Entidade." << endl;
+    Texturas[textura] = Textura;
+}
+
+void GerenciadorGrafico::InicializaTexturas()
+{
+    CarregaTextura("");
+    CarregaTextura("textures/Fazendeira.png");
+    CarregaTextura("textures/Bruxo.png");
+    CarregaTextura("textures/Background.png");
+    CarregaTextura("textures/Background_quarto.jpg");
+    CarregaTextura("textures/Estante_meio.png");
+    CarregaTextura("textures/Estatico_vulneravel.png");
+    CarregaTextura("textures/Estatico_vulneravel_quarto.png");
+    CarregaTextura("textures/Fantasma_direita.png");
+    CarregaTextura("textures/Passaro_direita.png");
+    CarregaTextura("textures/Plataforma_meio.png");
+    CarregaTextura("textures/Pseudo_Invisivel.png");
+    // CarregaTextura("textures/Fazendeira.png");
+   //  CarregaTextura("textures/Fazendeira.png");
+
+}
+
+
+void GerenciadorGrafico::InicializaFontes()
+{
+    sf::Font Fonte;
+    if (!Fonte.loadFromFile("arial.ttf"))
+        cout << "Erro ao carregar fonte." << endl;
+    Fontes["Arial"] = Fonte;
+
+}
+
+
+
+
+void GerenciadorGrafico::InicializaCores()
+{
+    Cores["Vermelho"] = sf::Color::Red;
+    Cores["Verde"] = sf::Color::Green;
+    Cores["Azul"] = sf::Color::Blue;
+
+}
+
+
+
+
+
+
 
