@@ -160,7 +160,7 @@ void Quintal::recuperar()
 
 	recuperarProjeteis(this);
 	recuperarEspinhos();
-	recuperarEstaticos();
+	recuperarEstaticos("textures/Estatico_vulneravel.png");
 	recuperarPassaros();
 	recuperarTeias();
 

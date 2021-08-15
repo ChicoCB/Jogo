@@ -95,6 +95,11 @@ int Entidade::getId()
 	return IdCorpo;
 }
 
+void Entidade::mudaAnimacao(string frame)
+{
+	pGerenciadorGrafico->mudaAnimacao(IdCorpo, frame);
+}
+
 void Entidade::colidir(Personagem* personagem)
 {
 }

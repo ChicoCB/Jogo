@@ -28,6 +28,8 @@ private:
 	MenuColocacao menuColocacao;
 	Creditos creditos;
 
+	bool Jogador1Fazendeira; //se for falso, é bruxo, se for verdadeiro é fazendeira
+
 public:
 	Jogo();
 	~Jogo();
@@ -56,6 +58,9 @@ public:
 	void Salvar();
 	void Recuperar();
 	void LimparArquivos();
+
+	void setJogador1Fazendeira(bool fazendeira);
+	bool getJogador1Fazendeira();
 
 	void setEstadoAtual(int estado);
 

@@ -12,6 +12,8 @@ protected:
 	float CooldownAtaque, CooldownAtaqueMax;
 	int Neutralizavel;
 
+	float CooldownAnimacao, CooldownAnimacaoMax;
+
 public:
 	Personagem();
 	~Personagem();

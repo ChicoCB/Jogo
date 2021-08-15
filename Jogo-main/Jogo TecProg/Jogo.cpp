@@ -3,7 +3,7 @@
 Jogo::Jogo() :
     gerenciadorGrafico(),
     menuPrincipal( 4, this),
-    menuJogadores(  3, this),
+    menuJogadores(  7, this),
     menuFases(  3, this),
     menuPause(  5, this),
     menuColocacao(  8, this),
@@ -11,7 +11,8 @@ Jogo::Jogo() :
     Estado(0),
     Jogador1(NULL),
     Jogador2(NULL),
-    Multiplayer(false)
+    Multiplayer(false),
+    Jogador1Fazendeira(true)
 {
 	Executar();
 }
@@ -28,8 +29,6 @@ void Jogo::Executar()
 
 void Jogo::Inicializa()
 {
-
-
     menuPrincipal.setGerenciadorGrafico(&gerenciadorGrafico);
     menuJogadores.setGerenciadorGrafico(&gerenciadorGrafico);
     menuFases.setGerenciadorGrafico(&gerenciadorGrafico);
@@ -37,8 +36,6 @@ void Jogo::Inicializa()
     menuColocacao.setGerenciadorGrafico(&gerenciadorGrafico);
     creditos.setGerenciadorGrafico(&gerenciadorGrafico);
     menuColocacao.Recupera();
-
-
 
 }
 
@@ -204,14 +201,18 @@ void Jogo::InicializaJogadores()
 {
     Jogador1 = new Jogador();
     Jogador1->setGerenciadorGrafico(&gerenciadorGrafico);
-    gerenciadorGrafico.criaCorpo(Jogador1, COMPRIMENTO_JOGADOR, ALTURA_JOGADOR, 640.f, 320.f, "textures/Fazendeira.png");
+    Jogador1->setTexturas(Jogador1Fazendeira);
+    gerenciadorGrafico.criaCorpo(Jogador1, COMPRIMENTO_JOGADOR, ALTURA_JOGADOR, 640.f, 320.f, 
+        Jogador1->getTextura());
     Jogador1->setTeclas('D', 'A', 'W', ' ');
 
     if (Multiplayer)
     {
         Jogador2 = new Jogador();
         Jogador2->setGerenciadorGrafico(&gerenciadorGrafico);
-        gerenciadorGrafico.criaCorpo(Jogador2, COMPRIMENTO_JOGADOR, ALTURA_JOGADOR, 640.f, 320.f, "textures/Bruxo.png");
+        Jogador2->setTexturas(!Jogador1Fazendeira);
+        gerenciadorGrafico.criaCorpo(Jogador2, COMPRIMENTO_JOGADOR, ALTURA_JOGADOR, 640.f, 320.f, 
+            Jogador2->getTextura());
         Jogador2->setTeclas('R', 'L','U', 'E');
     }
 }
@@ -233,7 +234,8 @@ void Jogo::Salvar()
         cout << "Erro Estado." << endl;
     gravadorEstado << menuPause.getEstadoAtual() << ' ' 
          << Multiplayer << ' '
-         << Jogador1->getPontuacao() << endl;
+         << Jogador1->getPontuacao() << ' ' 
+         << Jogador1Fazendeira << endl;
     gravadorEstado.close();
 }
 
@@ -247,7 +249,7 @@ void Jogo::Recuperar()
     int estado, pontos;
 
     while (!recuperadorEstado.eof())
-        recuperadorEstado >> estado >> Multiplayer >> pontos;
+        recuperadorEstado >> estado >> Multiplayer >> pontos >> Jogador1Fazendeira;
 
     RecuperarJogadores();
 
@@ -275,6 +277,16 @@ void Jogo::Recuperar()
     }
 
     recuperadorEstado.close();
+}
+
+void Jogo::setJogador1Fazendeira(bool fazendeira)
+{
+    Jogador1Fazendeira = fazendeira;
+}
+
+bool Jogo::getJogador1Fazendeira()
+{
+    return Jogador1Fazendeira;
 }
 
 void Jogo::LimparArquivos() 
@@ -316,12 +328,15 @@ void Jogo::RecuperarJogadores()
 
     int vida;
     float posx, posy, movx, movy, cooldown;
+    bool jogador1fazendeira;
 
     recuperadorJogadores >> vida >> posx >> posy >> movx >> movy >> cooldown;
 
     Jogador1 = new Jogador();
     Jogador1->setGerenciadorGrafico(&getGerenciadorGrafico());
-    gerenciadorGrafico.criaCorpo(Jogador1, COMPRIMENTO_JOGADOR, ALTURA_JOGADOR, 640.f, 320.f, "textures/Fazendeira.png");
+    Jogador1->setTexturas(Jogador1Fazendeira);
+    gerenciadorGrafico.criaCorpo(Jogador1, COMPRIMENTO_JOGADOR, ALTURA_JOGADOR, 640.f, 320.f, 
+        Jogador1->getTextura());
     Jogador1->setTeclas('D', 'A', 'W', ' ');
     Jogador1->setVida(vida);
     Jogador1->setPosicao( posx, posy );
@@ -336,7 +351,9 @@ void Jogo::RecuperarJogadores()
         recuperadorJogadores >> vida >> posx >> posy >> movx >> movy >> cooldown;
 
         Jogador2->setGerenciadorGrafico(&getGerenciadorGrafico());
-        gerenciadorGrafico.criaCorpo(Jogador2, COMPRIMENTO_JOGADOR, ALTURA_JOGADOR, 640.f, 320.f, "textures/Bruxo.png");
+        Jogador2->setTexturas(!Jogador1Fazendeira);
+        gerenciadorGrafico.criaCorpo(Jogador2, COMPRIMENTO_JOGADOR, ALTURA_JOGADOR, 640.f, 320.f, 
+            Jogador2->getTextura());
         Jogador2->setTeclas('R', 'L', 'U', 'E');
         Jogador2->setVida(vida);
         Jogador2->setPosicao( posx, posy );

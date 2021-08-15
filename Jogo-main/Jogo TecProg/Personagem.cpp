@@ -5,6 +5,8 @@ Personagem::Personagem():
 	Neutralizavel(true),
 	Amigavel(false),
 	colidePlataforma(true),
+	CooldownAnimacao(0.f),
+	CooldownAnimacaoMax(0.3f),
 	CooldownAtaque(0.f),
 	CooldownAtaqueMax(1.f),
 	olharDireita(true),

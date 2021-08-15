@@ -37,9 +37,7 @@ void Passaro::atualiza(float deltaTempo)
 {
 	MovimentoX = 0.f;
 	MovimentoY = 0.f;
-	//Movimento = sf::Vector2f(0.f, 0.f);
 	float posicaox = getPosicaoX(), posicaoy = getPosicaoY();
-	//sf::Vector2f posicao = getPosicao();
 
 	if (posicaox <= limiteXEsq)
 		olharDireita = true;
@@ -72,8 +70,8 @@ void Passaro::salvar()
 			cout << "Erro Gravar Passaro." << endl;
 
 		gravadorPassaro << this->getVida() << ' '
-			<< this->getPosicaoY() << ' '
 			<< this->getPosicaoX() << ' '
+			<< this->getPosicaoY() << ' '
 			<< this->limiteXDir << ' '
 			<< this->limiteXEsq << ' '
 			<< this-> CooldownAtaque << endl;

@@ -39,6 +39,8 @@ public:
 	int getIdCorpoAtual();
 	int getId();
 
+	void mudaAnimacao(string frame);
+
 	void movimenta(float movimentox, float movimentoy);
 	void desenhar();
 

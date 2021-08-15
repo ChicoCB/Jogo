@@ -14,7 +14,6 @@ MenuColocacao::~MenuColocacao()
 
 void MenuColocacao::LoopMenu(char tecla)
 {
-	//menu[Indice].setFillColor(sf::Color::Red);
 	cout << "Indice: " << Indice << endl;
 	Textos[Indice].setCor("Vermelho");
 

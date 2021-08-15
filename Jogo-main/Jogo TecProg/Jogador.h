@@ -15,6 +15,8 @@ private:
 	float alturaPulo;
 	static int Pontuacao;
 
+	string Textura, SubTextura[12];
+
 public:
 	Jogador();
 	~Jogador();
@@ -25,6 +27,9 @@ public:
 
 	void incrementaPontuacao();
 	static int getPontuacao();
+
+	void setTexturas(bool fazendeira);
+	string getTextura();
 
 	void atualiza(float deltaTempo);
 	void salvar();

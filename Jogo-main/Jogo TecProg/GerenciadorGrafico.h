@@ -11,9 +11,8 @@ private:
 
 	vector<sf::RectangleShape*> ListaCorpos;
 
-	//map<int, sf::Text> Textos;
-
 	map<string, sf::Texture> Texturas;
+	map<string, sf::IntRect> SubTexturas;
 	map<string, sf::Font> Fontes;
 	map<string, sf::Color> Cores;
 
@@ -46,11 +45,13 @@ public:
 	float getPosicaoX(int id);
 	float getPosicaoY(int id);
 
+	void mudaAnimacao(int id, string frame);
+
 	void TeclaApertada(char* direita, char* esquerda, char *pulo, char *atira);
 
 	void CarregaTextura(string textura);
 	void InicializaTexturas();
-
+	void InicializaSubstexturas();
 	void InicializaFontes();
 	void InicializaCores();
 };

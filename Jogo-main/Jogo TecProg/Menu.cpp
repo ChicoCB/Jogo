@@ -5,8 +5,7 @@
 
 Menu::Menu( int tamanho, Jogo* jg): PlanoFundo()
 {
-	// (!Fonte.loadFromFile("arial.ttf"))
-	//	cout << "Erro ao carregar fonte." << endl;
+
 	jogo = jg;
 	Indice = 0;
 	Tamanho = tamanho;

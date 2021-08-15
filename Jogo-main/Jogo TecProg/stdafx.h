@@ -16,7 +16,7 @@
 
 #define COMPRIMENTO_CENARIO 2560.f
 
-#define COMPRIMENTO_JOGADOR 64.f
+#define COMPRIMENTO_JOGADOR 55.f
 #define ALTURA_JOGADOR 75.f
 
 #define COMPRIMENTO_PASSARO 50.f
@@ -40,6 +40,8 @@
 
 #define COMPRIMENTO_PLATAFORMA 45.f
 #define ALTURA_PLATAFORMA 45.f
+
+#define LADO_PROJETIL 10.f
 
 using namespace std;
 

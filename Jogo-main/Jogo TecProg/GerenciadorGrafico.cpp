@@ -12,6 +12,7 @@ GerenciadorGrafico::GerenciadorGrafico() :
     cout << "Antes de bugar";
 
     InicializaTexturas();
+    InicializaSubstexturas();
     InicializaFontes();
     InicializaCores();
 }
@@ -78,6 +79,9 @@ void GerenciadorGrafico::criaCorpo(Entidade* pentidade, float dimx, float dimy, 
     Corpo->setPosition(sf::Vector2f(posx, posy));
     Corpo->setOrigin(dimx/2, dimy/2);
     Corpo->setTexture(&Texturas[text]);
+
+    if (text == "textures/Fazendeira.png")
+        Corpo->setTextureRect(SubTexturas["Fazendeira_4"]);
     ListaCorpos.push_back(Corpo);
 
     if (pentidade != NULL)
@@ -107,15 +111,8 @@ void GerenciadorGrafico::desenhar(sf::Text texto)
 
 void GerenciadorGrafico::setDimensoes(int id, float x, float y)
 {
-    if (id == NULL)
-        cout << "Erro 1 get set Posicao" << endl;
-    else if (id <= 0 || id >= ListaCorpos.size())
-        cout << "Erro 2 get set Posicao" << endl;
-    else {
-        ListaCorpos[id]->setSize(sf::Vector2f(x, y));
-        ListaCorpos[id]->setOrigin( x / 2,  y / 2);
-
-    }
+    ListaCorpos[id]->setSize(sf::Vector2f(x, y));
+    ListaCorpos[id]->setOrigin( x / 2,  y / 2);
 }
 
 float GerenciadorGrafico::getDimensoesX(int id)
@@ -162,6 +159,11 @@ float GerenciadorGrafico::getPosicaoX(int id)
 float GerenciadorGrafico::getPosicaoY(int id)
 {
     return ListaCorpos[id]->getPosition().y;
+}
+
+void GerenciadorGrafico::mudaAnimacao(int id, string frame)
+{
+    ListaCorpos[id]->setTextureRect(SubTexturas[frame]);
 }
 
 
@@ -238,6 +240,7 @@ void GerenciadorGrafico::InicializaTexturas()
 {
     CarregaTextura("");
     CarregaTextura("textures/Fazendeira.png");
+    CarregaTextura("textures/Fazendeira_fila.png");
     CarregaTextura("textures/Bruxo.png");
     CarregaTextura("textures/Background.png");
     CarregaTextura("textures/Background_quarto.jpg");
@@ -263,15 +266,26 @@ void GerenciadorGrafico::InicializaFontes()
 
 }
 
-
-
-
 void GerenciadorGrafico::InicializaCores()
 {
     Cores["Vermelho"] = sf::Color::Red;
     Cores["Verde"] = sf::Color::Green;
     Cores["Azul"] = sf::Color::Blue;
+    Cores["Transparente"] = sf::Color::Transparent;
 
+}
+
+void GerenciadorGrafico::InicializaSubstexturas()
+{
+    SubTexturas["textures/Fazendeira.png"] = sf::IntRect(285, 0, 660, 820); SubTexturas["Fazendeira_2"] = sf::IntRect(1045, 0, 660, 820); SubTexturas["Fazendeira_3"] = sf::IntRect(1800, 0, 630, 820);
+    SubTexturas["Fazendeira_4"] = sf::IntRect(2540, 0, 640, 820); SubTexturas["Fazendeira_5"] = sf::IntRect(3280, 0, 640, 820); SubTexturas["Fazendeira_6"] = sf::IntRect(4025, 0, 640, 820);
+    SubTexturas["Fazendeira_7"] = sf::IntRect(0, 875, 640, 820); SubTexturas["Fazendeira_8"] = sf::IntRect(745, 875, 640, 820); SubTexturas["Fazendeira_9"] = sf::IntRect(1485, 875, 900, 820);
+    SubTexturas["Fazendeira_10"] = sf::IntRect(2495, 875, 900, 820); SubTexturas["Fazendeira_11"] = sf::IntRect(3490, 820, 680, 820); SubTexturas["Fazendeira_12"] = sf::IntRect(4270, 820, 680, 820);
+
+    SubTexturas["textures/Bruxo.png"] = sf::IntRect(145, 0, 530, 820); SubTexturas["Bruxo_2"] = sf::IntRect(820, 0, 530, 820); SubTexturas["Bruxo_3"] = sf::IntRect(1495, 0, 530, 820);
+    SubTexturas["Bruxo_4"] = sf::IntRect(2130, 0, 530, 820); SubTexturas["Bruxo_5"] = sf::IntRect(2765, 0, 530, 820); SubTexturas["Bruxo_6"] = sf::IntRect(3405, 0, 530, 820);
+    SubTexturas["Bruxo_7"] = sf::IntRect(0, 930, 480, 820); SubTexturas["Bruxo_8"] = sf::IntRect(630, 930, 480, 820); SubTexturas["Bruxo_9"] = sf::IntRect(1260, 930, 700, 820);
+    SubTexturas["Bruxo_10"] = sf::IntRect(2100, 930, 700, 820); SubTexturas["Bruxo_11"] = sf::IntRect(2855, 950, 520, 820); SubTexturas["Bruxo_12"] = sf::IntRect(3460, 950, 520, 820);
 }
 
 
