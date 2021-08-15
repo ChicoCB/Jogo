@@ -9,6 +9,9 @@ Passaro::Passaro():
 	CooldownAtaqueMax = 2.f;
 	this->setVida(3);
 	this->setVelocidade(200.f);
+	this->setTexturaProjetil("Projeteis_5", "Projeteis_6");
+	CooldownAnimacaoMax = 0.25f;
+	CooldownAnimacao = 0.f;
 }
 
 Passaro::~Passaro()
@@ -39,25 +42,41 @@ void Passaro::atualiza(float deltaTempo)
 	MovimentoY = 0.f;
 	float posicaox = getPosicaoX(), posicaoy = getPosicaoY();
 
-	if (posicaox <= limiteXEsq)
+	if (posicaox <= limiteXEsq) {
 		olharDireita = true;
-	else if (posicaox >= limiteXDir)
+	}
+	else if (posicaox >= limiteXDir) {
 		olharDireita = false;
-	if (olharDireita && posicaox < limiteXDir)
+	}
+	if (olharDireita && posicaox < limiteXDir) {
 		MovimentoX += Velocidade;
-	else if (!olharDireita && posicaox > limiteXEsq)
+		setSubTextura("textures/Passaro.png");
+		if (CooldownAnimacao <= CooldownAnimacaoMax/2) {
+			setSubTextura("Passaro_2");
+		}
+	}
+	else if (!olharDireita && posicaox > limiteXEsq) {
 		MovimentoX -= Velocidade;
+		setSubTextura("Passaro_3");
+		if (CooldownAnimacao <= CooldownAnimacaoMax/2) {
+			setSubTextura("Passaro_4");
+		}
+	}
 
 	this->movimenta(MovimentoX * deltaTempo, MovimentoY * deltaTempo);
 	srand(time(NULL));
 
 	CooldownAtaque += deltaTempo;
+	CooldownAnimacao += deltaTempo;
 
 	if (this->podeAtacar())
 	{
 		CooldownAtaque = 0;
-		this->atiraProjetilDirecionado(this, 10.0f);
+		this->atiraProjetilDirecionado(this, LADO_PROJETIL);
 	}
+
+	if (CooldownAnimacao >= CooldownAnimacaoMax)
+		CooldownAnimacao = 0.f;
 }
 
 void Passaro::salvar()

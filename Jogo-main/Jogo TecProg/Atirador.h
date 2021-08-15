@@ -1,5 +1,6 @@
 #pragma once
 //#include "Entidade.h"
+#include "stdafx.h"
 
 class Fase;
 class Personagem;
@@ -9,6 +10,7 @@ class Atirador
 {
 protected:
 	Fase* faseAtual;
+	string ProjetilEsquerda, ProjetilDireita;
 	
 public:
 	Atirador();
@@ -16,6 +18,7 @@ public:
 
 	void setFaseAtual(Fase* faseatual);
 
+	void setTexturaProjetil(string textura1, string textura2);
 	void atiraProjetilHorizontal(Personagem* personagem, float altura);
 	void atiraProjetilDirecionado(Personagem* personagem, float dimensao);
 };

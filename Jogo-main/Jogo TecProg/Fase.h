@@ -35,6 +35,7 @@ public:
 	void setJogador1(Jogador* pJogador1);
 	Jogador* getJogador1();
 	void setJogador2(Jogador* pJogador2);
+	Jogador* getJogador2();
 
 	void criaObstaculo(Entidade* pentidade, float dimx, float dimy, float posx, float posy, const string textura);
 	void criaInimigo(Personagem* ppersonagem, float dimx, float dimy, float posx, float posy, const string textura);
@@ -46,7 +47,7 @@ public:
 	void salvar();
 
 	void recuperarProjeteis(Fase* fase, const string textura = "");
-	void recuperarEstaticos(const string textura = "");
+	void recuperarEstaticos(bool Quintal, const string textura = "");
 	void recuperarEspinhos(const string textura = "");
 	void recuperarTeias();
 	

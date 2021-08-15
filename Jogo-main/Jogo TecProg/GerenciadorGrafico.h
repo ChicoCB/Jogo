@@ -16,6 +16,8 @@ private:
 	map<string, sf::Font> Fontes;
 	map<string, sf::Color> Cores;
 
+	bool Carregou;
+
 	sf::RenderWindow Janela;
 	sf::View View;
 		
@@ -24,6 +26,7 @@ public:
 	~GerenciadorGrafico();
 
 	void LoopJogo(Jogo* jogo, int estado);
+	void CarregarJogo(bool carregou);
 
 	void resetaView();
 	void atualizaView(float x, float y);
@@ -45,13 +48,13 @@ public:
 	float getPosicaoX(int id);
 	float getPosicaoY(int id);
 
-	void mudaAnimacao(int id, string frame);
+	void setSubTextura(int id, string subtext);
 
 	void TeclaApertada(char* direita, char* esquerda, char *pulo, char *atira);
 
 	void CarregaTextura(string textura);
 	void InicializaTexturas();
-	void InicializaSubstexturas();
+	void InicializaSubTexturas();
 	void InicializaFontes();
 	void InicializaCores();
 };

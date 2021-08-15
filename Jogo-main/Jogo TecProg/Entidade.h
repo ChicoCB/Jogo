@@ -39,7 +39,7 @@ public:
 	int getIdCorpoAtual();
 	int getId();
 
-	void mudaAnimacao(string frame);
+	void setSubTextura(string subtext);
 
 	void movimenta(float movimentox, float movimentoy);
 	void desenhar();

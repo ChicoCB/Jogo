@@ -51,6 +51,7 @@ void Jogador::setTexturas(bool fazendeira)
 		SubTextura[3] = "Fazendeira_4";SubTextura[4] = "Fazendeira_5"; SubTextura[5] = "Fazendeira_6";
 		SubTextura[6] = "Fazendeira_7";SubTextura[7] = "Fazendeira_8"; SubTextura[8] = "Fazendeira_9";
 		SubTextura[9] = "Fazendeira_10";SubTextura[10] = "Fazendeira_11"; SubTextura[11] = "Fazendeira_12";
+		setTexturaProjetil("Projeteis_3", "Projeteis_4");
 	}
 	else {
 		Textura = "textures/Bruxo.png";
@@ -58,9 +59,10 @@ void Jogador::setTexturas(bool fazendeira)
 		SubTextura[3] = "Bruxo_4";SubTextura[4] = "Bruxo_5"; SubTextura[5] = "Bruxo_6";
 		SubTextura[6] = "Bruxo_7";SubTextura[7] = "Bruxo_8"; SubTextura[8] = "Bruxo_9";
 		SubTextura[9] = "Bruxo_10";SubTextura[10] = "Bruxo_11"; SubTextura[11] = "Bruxo_12";
+		setTexturaProjetil("textures/Projeteis.png", "Projeteis_2");
 	}
-
 }
+
 
 string Jogador::getTextura()
 {
@@ -85,29 +87,29 @@ void Jogador::atualiza(float deltaTempo)
 	pGerenciadorGrafico->TeclaApertada(&TeclaDireita, &TeclaEsquerda, &TeclaPulo, &TeclaAtira);
 
 	if (olharDireita)
-		mudaAnimacao(SubTextura[0]);
+		setSubTextura(SubTextura[0]);
 	else 
-		mudaAnimacao(SubTextura[1]);
+		setSubTextura(SubTextura[1]);
 
 	if (TeclaDireita == Direita || TeclaDireita == '>')
 	{
 		if (CooldownAnimacao <= CooldownAnimacaoMax * 1 / 3) 
-			mudaAnimacao(SubTextura[2]);
+			setSubTextura(SubTextura[2]);
 		else if (CooldownAnimacao <= CooldownAnimacaoMax*2/3) 
-			mudaAnimacao(SubTextura[3]);
+			setSubTextura(SubTextura[3]);
 		else 
-			mudaAnimacao(SubTextura[4]);
+			setSubTextura(SubTextura[4]);
 		MovimentoX += Velocidade;
 		olharDireita = true;
 	}
 	if (TeclaEsquerda == Esquerda || TeclaEsquerda == '<')
 	{
 		if (CooldownAnimacao <= CooldownAnimacaoMax * 1 / 3)
-			mudaAnimacao(SubTextura[5]);
+			setSubTextura(SubTextura[5]);
 		else if (CooldownAnimacao <= CooldownAnimacaoMax * 2 / 3)
-			mudaAnimacao(SubTextura[6]);
+			setSubTextura(SubTextura[6]);
 		else
-			mudaAnimacao(SubTextura[7]);
+			setSubTextura(SubTextura[7]);
 		MovimentoX -= Velocidade;
 		olharDireita = false;
 	}
@@ -127,17 +129,17 @@ void Jogador::atualiza(float deltaTempo)
 	if (!podePular) {
 
 		if (olharDireita) 
-			mudaAnimacao(SubTextura[10]);
+			setSubTextura(SubTextura[10]);
 		else
-			mudaAnimacao(SubTextura[11]);
+			setSubTextura(SubTextura[11]);
 	}
 	if (CooldownAtaque < CooldownAtaqueMax / 2) {
 		this->setDimensoes(COMPRIMENTO_JOGADOR + ALTURA_JOGADOR/3, ALTURA_JOGADOR);
 		if (olharDireita) {
-			mudaAnimacao(SubTextura[8]);
+			setSubTextura(SubTextura[8]);
 		}
 		else {
-			mudaAnimacao(SubTextura[9]);
+			setSubTextura(SubTextura[9]);
 		}
 	}
 	else

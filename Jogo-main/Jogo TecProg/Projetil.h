@@ -9,24 +9,27 @@ class Projetil : public Entidade
 private:
 
 	float VelocidadeX, VelocidadeY;
-	//sf::Vector2f Movimento;
+	string Textura;
 	bool Amigavel;
 	Fase* faseAtual;
+	//float Tamanho;
 
 public:
 	Projetil();
 	~Projetil();
 
-	//void setMovimento(sf::Vector2f movimento);
 	void setAmigavel(bool amigavel);
 	bool getAmigavel();
 	void colidir(Personagem* personagem);
 	void atualiza(float deltaTempo);
 	void setVelocidade(float velx, float vely);
 
+	void setTextura(string textura);
+	//void setTamanho(float lado);
+	//float getTamanho
+
 	float getVelocidadeX();
 	float getVelocidadeY();
-	//sf::Vector2f getVelocidade();
 
 	void setFaseAtual(Fase* faseatual);
 	void salvar();

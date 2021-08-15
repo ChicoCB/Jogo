@@ -4,7 +4,6 @@
 
 Fase::Fase():
 	Ente(),
-	//pView(NULL),
 	pJogador1(NULL),
 	pJogador2(NULL),
 	pJogo(NULL)
@@ -66,6 +65,11 @@ void Fase::setJogador2(Jogador* Jogador2)
 	pJogador2 = Jogador2;
 }
 
+Jogador* Fase::getJogador2()
+{
+	return pJogador2;
+}
+
 void Fase::atualizaView()
 {
 	if (pJogador1->getPosicaoX()  > COMPRIMENTO_RESOLUCAO / 2 && pJogador1->getPosicaoX()  < COMPRIMENTO_CENARIO - COMPRIMENTO_RESOLUCAO / 2)
@@ -106,20 +110,21 @@ void Fase::recuperarProjeteis(Fase* fase, const string textura)
 	while (!recuperadorProjeteis.eof())
 	{
 		Projetil* novo = NULL;
-		float posx, posy, velx, vely;
+		float posx, posy, velx, vely, lado;
 		bool amigavel;
+		string textura;
 
-		recuperadorProjeteis >> posx >> posy >> velx >> vely >> amigavel;
+		recuperadorProjeteis >> posx >> posy >> velx >> vely >> amigavel >> textura >> lado;
 
-		
 		novo = new Projetil();
 
 		novo->setGerenciadorGrafico(pGerenciadorGrafico);
-		pGerenciadorGrafico->criaCorpo(novo, 10.f, 10.f, posx, posy, "");
+		pGerenciadorGrafico->criaCorpo(novo, lado, lado, posx, posy, "textures/Projeteis.png");
+		novo->setSubTextura(textura);
 		novo->setVelocidade(velx, vely);
-		novo->setPosicao( posx, posy );
 		novo->setAmigavel(amigavel);
 		novo->setFaseAtual(fase);
+
 		incluaProjetil(novo);
 		
 	}
@@ -127,7 +132,7 @@ void Fase::recuperarProjeteis(Fase* fase, const string textura)
 	recuperadorProjeteis.close();
 }
 
-void Fase::recuperarEstaticos(const string textura)
+void Fase::recuperarEstaticos(bool Quintal, const string textura)
 {
 	ifstream recuperadorEstaticos("saves/Estaticos.dat", ios::in);
 
@@ -148,6 +153,7 @@ void Fase::recuperarEstaticos(const string textura)
 		novo->setCooldownAtaque(cooldown);
 		criaInimigo(static_cast <Personagem*> (novo), COMPRIMENTO_ESTATICO, ALTURA_ESTATICO ,
 			 posx, posy , textura);
+		novo->setTexturas(Quintal);
 	}
 
 	recuperadorEstaticos.close();
@@ -193,7 +199,7 @@ void Fase::recuperarTeias()
 		novo = new Teia();
 
 		criaObstaculo(static_cast <Entidade*>(novo),  COMPRIMENTO_TEIA, ALTURA_TEIA ,
-			 posx, posy , "");
+			 posx, posy , "textures/Teia.png");
 	}
 
 	recuperadorTeias.close();

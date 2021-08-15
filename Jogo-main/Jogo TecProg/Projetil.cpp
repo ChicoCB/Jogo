@@ -9,14 +9,6 @@ Projetil::~Projetil()
 {
 }
 
-/*
-void Projetil::setMovimento(sf::Vector2f movimento)
-{
-	Movimento = movimento;
-}
-*/
-
-
 void Projetil::setAmigavel(bool amigavel)
 {
 	this->Amigavel = amigavel;
@@ -72,6 +64,11 @@ void Projetil::setVelocidade(float velx, float vely)
 	VelocidadeX = velx;
 	VelocidadeY = vely;
 }
+void Projetil::setTextura(string textura)
+{
+	Textura = textura;
+}
+
 float Projetil::getVelocidadeX()
 {
 	return VelocidadeX;
@@ -81,12 +78,6 @@ float Projetil::getVelocidadeY()
 {
 	return VelocidadeY;
 }
-/*
-sf::Vector2f Projetil::getVelocidade()
-{
-	return Velocidade;
-}
-*/
 
 
 void Projetil::setFaseAtual(Fase* faseatual)
@@ -107,7 +98,9 @@ void Projetil::salvar()
 			<< this->getPosicaoY() << ' '
 			<< this->getVelocidadeX() << ' '
 			<< this->getVelocidadeY() << ' '
-			<< this->getAmigavel() << endl;
+			<< this->getAmigavel() << ' '
+			<< Textura << ' '
+			<< this->getDimensoesX() << endl;
 
 		gravadorProjetil.close();
 	}

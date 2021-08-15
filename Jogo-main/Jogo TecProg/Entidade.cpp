@@ -95,9 +95,9 @@ int Entidade::getId()
 	return IdCorpo;
 }
 
-void Entidade::mudaAnimacao(string frame)
+void Entidade::setSubTextura(string subtext)
 {
-	pGerenciadorGrafico->mudaAnimacao(IdCorpo, frame);
+	pGerenciadorGrafico->setSubTextura(IdCorpo, subtext);
 }
 
 void Entidade::colidir(Personagem* personagem)

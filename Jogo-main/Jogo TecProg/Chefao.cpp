@@ -1,12 +1,14 @@
 #include "Chefao.h"
 #include "Fase.h"
 
-Chefao::Chefao(): Inimigo(), Atirador()
+Chefao::Chefao(): Inimigo(), Atirador(), EstadoChefao(0)
 {
 	CooldownAtaqueMax = 1;
-	this->setVida(3);
+	this->setVida(10);
 	this->setVelocidade(50.f);
 	this->setColidePlataforma(false);
+	this->setTexturaProjetil("Projeteis_8", "Projeteis_9");
+
 }
 
 Chefao::~Chefao()
@@ -18,40 +20,26 @@ void Chefao::colidir(Personagem* personagem)
 	if (personagem->getAmigavel())
 	{
 		cout << "Colidiu chefao" << endl;
-		personagem->setVida(0);
-		personagem->setDesalocavel(true);
+		personagem->setVida(personagem->getVida()-1);
+		//personagem->setDesalocavel(true);
 	}
 }
 
 void Chefao::atualiza(float deltaTempo)
 {
-	if (Desalocavel)
-		faseAtual->setChefaoMorreu(true);
-
-	MovimentoX = 0.f;
-	MovimentoY = 0.f;
-
-	float deltax = faseAtual->getJogador1()->getPosicaoX()  - this->getPosicaoX() ;
-	float modulo = sqrt(deltax*deltax);
-
-	if (modulo != 0.f)
-		MovimentoX += Velocidade * deltax / modulo;
-	//Movimento.y += 981.f * deltaTempo;
-	
-	if (MovimentoX > 0)
-		olharDireita = true;
-	else
-		olharDireita = false;
-
-	CooldownAtaque += deltaTempo;
-
-	if (this->podeAtacar())
-	{
-		this->atiraProjeteis();
-		CooldownAtaque = 0;
+	switch (EstadoChefao){
+		case 0:
+			atualizaEstado0(deltaTempo);
+			break;
+		case 1:
+			atualizaEstado1(deltaTempo);
+			break;
+		case 2:
+			atualizaEstado2(deltaTempo);
+			if (Desalocavel)
+				faseAtual->setChefaoMorreu(true);
+			break;
 	}
-
-	this->movimenta(MovimentoX * deltaTempo, MovimentoY * deltaTempo);
 }
 
 void Chefao::atiraProjeteis()
@@ -59,7 +47,7 @@ void Chefao::atiraProjeteis()
 	atiraProjetilHorizontal(this, getPosicaoY() );
 	atiraProjetilHorizontal(this, getPosicaoY()  +  getDimensoesY() /2);
 	atiraProjetilHorizontal(this, getPosicaoY()  - getDimensoesY() /2);
-	atiraProjetilDirecionado(this, 20.0f);
+	atiraProjetilDirecionado(this, LADO_PROJETIL*2);
 }
 
 void Chefao::salvar()
@@ -74,8 +62,107 @@ void Chefao::salvar()
 		gravadorChefao << this->getVida() << ' '
 			<< this->getPosicaoX() << ' '
 			<< this->getPosicaoY()  << ' '
-			<< this->CooldownAtaque << endl;
+			<< this->CooldownAtaque << ' '
+			<< EstadoChefao << endl;
 
 		gravadorChefao.close();
 	}
+}
+
+void Chefao::setEstado(int estado)
+{
+	EstadoChefao = estado;
+}
+
+void Chefao::atualizaEstado0(float deltaTempo)
+{
+
+	if (faseAtual->getJogador1()->getPosicaoX() >= COMPRIMENTO_CENARIO * 7 / 8
+		|| faseAtual->getJogador1()->getPosicaoX() >= COMPRIMENTO_CENARIO * 7 / 8) {
+		EstadoChefao = 1;
+		this->setDimensoes(COMPRIMENTO_CHEFAO, ALTURA_CHEFAO);
+		this->setSubTextura("textures/Bicho_Papao.png");
+		this->setPosicao(COMPRIMENTO_CENARIO - 200.f, ALTURA_RESOLUCAO - ALTURA_CHEFAO/2 - ALTURA_PLATAFORMA);
+	}
+}
+
+void Chefao::atualizaEstado1(float deltaTempo)
+{
+
+	MovimentoX = 0.f;
+	MovimentoY = 0.f;;
+	float modulo, deltax;
+
+	float deltax1 = faseAtual->getJogador1()->getPosicaoX() - this->getPosicaoX();
+
+	if (faseAtual->getJogador2() != NULL) {
+		float deltax2 = faseAtual->getJogador2()->getPosicaoX() - this->getPosicaoX();
+		if (deltax1 < deltax2) {
+			modulo = sqrt(deltax1 * deltax1);
+			deltax = deltax1;
+		}
+		else {
+			modulo = sqrt(deltax2 * deltax2);
+			deltax = deltax2;
+		}
+	}
+	else {
+		modulo = sqrt(deltax1 * deltax1);
+		deltax = deltax1;
+	}
+
+	
+	if (modulo != 0.f)
+		MovimentoX += Velocidade * deltax / modulo;
+	if (MovimentoX > 0) {
+		olharDireita = true;
+		if (CooldownAtaque >= CooldownAtaqueMax / 4)
+			("Bicho_Papao_4");
+	}
+	else {
+		olharDireita = false;
+		if (CooldownAtaque >= CooldownAtaqueMax / 2)
+			setSubTextura("textures/Bicho_Papao.png");
+	}
+
+	CooldownAtaque += deltaTempo;
+	if (this->podeAtacar())
+	{
+		 if(olharDireita)
+			setSubTextura("Bicho_Papao_5");
+		else
+			setSubTextura("Bicho_Papao_2");
+		this->atiraProjeteis();
+		CooldownAtaque = 0;
+	}
+	this->movimenta(MovimentoX * deltaTempo, MovimentoY * deltaTempo);
+
+	if (getVida() <= 5) {
+		EstadoChefao = 2;
+		CooldownAtaqueMax /= 2.f;
+		setPosicao(COMPRIMENTO_CENARIO / 2, ALTURA_CHEFAO);
+	}
+}
+
+void Chefao::atualizaEstado2(float deltaTempo)
+{
+	float deltax = faseAtual->getJogador1()->getPosicaoX() - this->getPosicaoX();
+	
+	if (this->podeAtacar())
+	{
+		this->atiraProjetilDirecionado(this, LADO_PROJETIL * 4);
+
+		CooldownAtaque = 0;
+	}
+
+	if (deltax >= 0) {
+		olharDireita = true;
+		setSubTextura("Bicho_Papao_6");
+	}
+	else {
+		olharDireita = false;
+		setSubTextura("Bicho_Papao_3");
+	}
+
+	CooldownAtaque += deltaTempo;
 }

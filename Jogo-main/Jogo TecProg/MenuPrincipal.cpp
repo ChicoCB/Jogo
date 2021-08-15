@@ -13,7 +13,7 @@ Menu(  tamanho, jg)
 
 	Textos[1].setCor("Verde");
 	Textos[1].setDimensao(24);
-	Textos[1].setMensagem("Carregar Jogo");
+	Textos[1].setMensagem("Recuperar Jogo Salvo");
 	Textos[1].setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 350);
 	Textos[1].setFonte("Arial");
 
@@ -28,7 +28,6 @@ Menu(  tamanho, jg)
 	Textos[3].setMensagem("Sair");
 	Textos[3].setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 550);
 	Textos[3].setFonte("Arial");
-
 
 }
 
