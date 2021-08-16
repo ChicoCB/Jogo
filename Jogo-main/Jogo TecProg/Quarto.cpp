@@ -22,7 +22,7 @@ void Quarto::inicializa()
 
 	Background.setGerenciadorGrafico(pGerenciadorGrafico);
 	pGerenciadorGrafico->criaCorpo(&Background, COMPRIMENTO_CENARIO, ALTURA_RESOLUCAO,
-		COMPRIMENTO_RESOLUCAO, ALTURA_RESOLUCAO / 2, "textures/Background_quarto.jpg");
+		COMPRIMENTO_RESOLUCAO, ALTURA_RESOLUCAO / 2, "textures/Quarto.png");
 	listaEntidades.inclua(static_cast <Entidade*> (&Background));
 
 	criaPlataformas();
@@ -130,7 +130,7 @@ void Quarto::recuperar()
 {
 	Background.setGerenciadorGrafico(pGerenciadorGrafico);
 	pGerenciadorGrafico->criaCorpo(&Background, COMPRIMENTO_CENARIO, ALTURA_RESOLUCAO,
-		COMPRIMENTO_RESOLUCAO, ALTURA_RESOLUCAO / 2, "textures/Background_quarto.jpg");
+		COMPRIMENTO_RESOLUCAO, ALTURA_RESOLUCAO / 2, "textures/Quarto.png");
 	listaEntidades.inclua(static_cast<Entidade*> (&Background));
 
 	criaPlataformas();
@@ -196,16 +196,19 @@ void Quarto::recuperarChefao()
 	if (!recuperadorChefao)
 		cout << "Erro Chefao." << endl;
 
-	if (recuperadorChefao.eof())
-		ChefaoMorreu = true;
+	int vida;
+	recuperadorChefao >> vida;
 
-	while (!recuperadorChefao.eof())
-	{
+	if (recuperadorChefao.eof()) {
+		ChefaoMorreu = true;
+	}
+	else {
 		Chefao* novo = NULL;
-		int vida;
 		float posx, posy, cooldown, estadochefao;
 
-		recuperadorChefao >> vida >> posx >> posy >> cooldown >> estadochefao;
+		recuperadorChefao >> posx >> posy >> cooldown >> estadochefao;
+
+		cout << "vida: " << vida << endl;
 
 		novo = new Chefao();
 		novo->setVida(vida);
@@ -213,8 +216,8 @@ void Quarto::recuperarChefao()
 		novo->setFaseAtual(this);
 		novo->setEstado(estadochefao);
 
-		criaInimigo(static_cast <Personagem*> (novo),  COMPRIMENTO_CHEFAO, ALTURA_CHEFAO ,
-			 posx, posy, "textures/Bicho_Papao.png") ;
+		criaInimigo(static_cast <Personagem*> (novo), COMPRIMENTO_CHEFAO, ALTURA_CHEFAO,
+			posx, posy, "textures/Bicho_Papao.png");
 
 		if (estadochefao == 0) {
 			novo->setDimensoes(COMPRIMENTO_CHEFAO / 10, ALTURA_CHEFAO / 10);

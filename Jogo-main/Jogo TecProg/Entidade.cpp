@@ -23,12 +23,12 @@ void Entidade::setDimensoes(float x, float y)
 }
 
 
-float Entidade::getDimensoesX()
+float Entidade::getDimensoesX() const 
 {
 	return pGerenciadorGrafico->getDimensoesX(IdCorpo);
 }
 
-float Entidade::getDimensoesY()
+float Entidade::getDimensoesY() const
 {
 	return pGerenciadorGrafico->getDimensoesY(IdCorpo);
 }
@@ -38,12 +38,12 @@ void Entidade::setPosicao(float x, float y)
 	pGerenciadorGrafico->setPosicao(IdCorpo, x, y);
 }
 
-float Entidade::getPosicaoX()
+float Entidade::getPosicaoX() const
 {
 	return pGerenciadorGrafico->getPosicaoX(IdCorpo);
 }
 
-float Entidade::getPosicaoY()
+float Entidade::getPosicaoY() const
 {
 	return pGerenciadorGrafico->getPosicaoY(IdCorpo);
 }
@@ -55,12 +55,12 @@ void Entidade::setMovimento(float x, float y)
 	MovimentoY = y;
 }
 
-float Entidade::getMovimentoX()
+float Entidade::getMovimentoX() const
 {
 	return MovimentoX;
 }
 
-float Entidade::getMovimentoY()
+float Entidade::getMovimentoY() const
 {
 	return MovimentoY;
 }
@@ -70,7 +70,7 @@ void Entidade::setDesalocavel(bool desalocavel)
 	Desalocavel = desalocavel;
 }
 
-bool Entidade::getDesalocavel()
+bool Entidade::getDesalocavel() const
 {
 	return Desalocavel;
 }
@@ -85,12 +85,12 @@ void Entidade::setId(int id)
 	IdCorpo = id;
 }
 
-int Entidade::getIdCorpoAtual()
+int Entidade::getIdCorpoAtual() const
 {
 	return IdCorpoAtual;
 }
-
-int Entidade::getId()
+ 
+int Entidade::getId() const
 {
 	return IdCorpo;
 }

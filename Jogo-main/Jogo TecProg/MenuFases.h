@@ -3,14 +3,19 @@
 
 class Jogo;
 
-class MenuFases : public Menu
+namespace Menus
 {
-private:
+	class MenuFases : public Menu
+	{
+	private:
 
-public:
-	MenuFases( int tamanho, Jogo* jg);
-	~MenuFases();
+	public:
+		MenuFases(Jogo* jg);
+		~MenuFases();
 
-	void LoopMenu(char tecla);
-};
+		void LoopMenu(char tecla);
+	};
+}
+
+
 

@@ -16,8 +16,6 @@ private:
 	map<string, sf::Font> Fontes;
 	map<string, sf::Color> Cores;
 
-	bool Carregou;
-
 	sf::RenderWindow Janela;
 	sf::View View;
 		
@@ -26,13 +24,12 @@ public:
 	~GerenciadorGrafico();
 
 	void LoopJogo(Jogo* jogo, int estado);
-	void CarregarJogo(bool carregou);
+	void CarregarJogo();
 
 	void resetaView();
 	void atualizaView(float x, float y);
 	void fechar();
 
-	//void criaTexto(int id, float dim, float posx, float posy, string texto, string cor, string fonte);
 	void desenhar(Texto texto);
 	void desenhar(sf::Text texto);
 
@@ -41,12 +38,12 @@ public:
 	void desenhar(int id, bool desalocavel);
 
 	void setDimensoes(int id, float x, float y);
-	float getDimensoesX(int id);
-	float getDimensoesY(int id);
+	float getDimensoesX(int id) const;
+	float getDimensoesY(int id) const;
 
 	void setPosicao(int id, float x, float y);
-	float getPosicaoX(int id);
-	float getPosicaoY(int id);
+	float getPosicaoX(int id) const;
+	float getPosicaoY(int id) const;
 
 	void setSubTextura(int id, string subtext);
 

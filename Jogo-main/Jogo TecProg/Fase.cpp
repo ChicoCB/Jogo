@@ -50,7 +50,7 @@ void Fase::setChefaoMorreu(bool chefaomorreu)
 {
 }
 
-Jogador* Fase::getJogador1()
+Jogador* Fase::getJogador1() const
 {
 	return pJogador1;
 }
@@ -65,7 +65,7 @@ void Fase::setJogador2(Jogador* Jogador2)
 	pJogador2 = Jogador2;
 }
 
-Jogador* Fase::getJogador2()
+Jogador* Fase::getJogador2() const
 {
 	return pJogador2;
 }
@@ -90,7 +90,7 @@ void Fase::setJogo(Jogo* jg)
 	pJogo = jg;
 }
 
-Jogo* Fase::getJogo()
+Jogo* Fase::getJogo() const
 {
 	return pJogo;
 }

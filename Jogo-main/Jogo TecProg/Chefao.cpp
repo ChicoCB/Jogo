@@ -3,8 +3,8 @@
 
 Chefao::Chefao(): Inimigo(), Atirador(), EstadoChefao(0)
 {
-	CooldownAtaqueMax = 1;
-	this->setVida(10);
+	CooldownAtaqueMax = 2.0f;
+	this->setVida(666);
 	this->setVelocidade(50.f);
 	this->setColidePlataforma(false);
 	this->setTexturaProjetil("Projeteis_8", "Projeteis_9");
@@ -21,7 +21,6 @@ void Chefao::colidir(Personagem* personagem)
 	{
 		cout << "Colidiu chefao" << endl;
 		personagem->setVida(personagem->getVida()-1);
-		//personagem->setDesalocavel(true);
 	}
 }
 
@@ -61,7 +60,7 @@ void Chefao::salvar()
 
 		gravadorChefao << this->getVida() << ' '
 			<< this->getPosicaoX() << ' '
-			<< this->getPosicaoY()  << ' '
+			<< this->getPosicaoY() << ' '
 			<< this->CooldownAtaque << ' '
 			<< EstadoChefao << endl;
 
@@ -76,13 +75,16 @@ void Chefao::setEstado(int estado)
 
 void Chefao::atualizaEstado0(float deltaTempo)
 {
-
-	if (faseAtual->getJogador1()->getPosicaoX() >= COMPRIMENTO_CENARIO * 7 / 8
-		|| faseAtual->getJogador1()->getPosicaoX() >= COMPRIMENTO_CENARIO * 7 / 8) {
+	float posJogador2 = 0;
+	if (faseAtual->getJogador2() != NULL)
+		posJogador2 = faseAtual->getJogador2()->getPosicaoX();
+	if (faseAtual->getJogador1()->getPosicaoX() >= COMPRIMENTO_CENARIO -550 
+		|| posJogador2 >= COMPRIMENTO_CENARIO - 550) {
 		EstadoChefao = 1;
 		this->setDimensoes(COMPRIMENTO_CHEFAO, ALTURA_CHEFAO);
 		this->setSubTextura("textures/Bicho_Papao.png");
-		this->setPosicao(COMPRIMENTO_CENARIO - 200.f, ALTURA_RESOLUCAO - ALTURA_CHEFAO/2 - ALTURA_PLATAFORMA);
+		this->setPosicao(COMPRIMENTO_CENARIO - 200.f, ALTURA_RESOLUCAO - ALTURA_CHEFAO/2 - ALTURA_PLATAFORMA);	
+		this->setVida(20);
 	}
 }
 
@@ -110,8 +112,6 @@ void Chefao::atualizaEstado1(float deltaTempo)
 		modulo = sqrt(deltax1 * deltax1);
 		deltax = deltax1;
 	}
-
-	
 	if (modulo != 0.f)
 		MovimentoX += Velocidade * deltax / modulo;
 	if (MovimentoX > 0) {
@@ -124,7 +124,6 @@ void Chefao::atualizaEstado1(float deltaTempo)
 		if (CooldownAtaque >= CooldownAtaqueMax / 2)
 			setSubTextura("textures/Bicho_Papao.png");
 	}
-
 	CooldownAtaque += deltaTempo;
 	if (this->podeAtacar())
 	{
@@ -137,9 +136,9 @@ void Chefao::atualizaEstado1(float deltaTempo)
 	}
 	this->movimenta(MovimentoX * deltaTempo, MovimentoY * deltaTempo);
 
-	if (getVida() <= 5) {
+	if (getVida() <= 10) {
 		EstadoChefao = 2;
-		CooldownAtaqueMax /= 2.f;
+		CooldownAtaqueMax /= 4.f;
 		setPosicao(COMPRIMENTO_CENARIO / 2, ALTURA_CHEFAO);
 	}
 }
@@ -150,7 +149,7 @@ void Chefao::atualizaEstado2(float deltaTempo)
 	
 	if (this->podeAtacar())
 	{
-		this->atiraProjetilDirecionado(this, LADO_PROJETIL * 4);
+		this->atiraProjetilDirecionado(this, LADO_PROJETIL * 3);
 
 		CooldownAtaque = 0;
 	}

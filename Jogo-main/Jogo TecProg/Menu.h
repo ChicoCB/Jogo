@@ -6,22 +6,29 @@
 
 class Jogo;
 
-class Menu : public Ente
+namespace Menus
 {
-protected:
-	int Indice, Tamanho;
+	class Menu : public Ente
+	{
+	protected:
+		int Indice, Tamanho, Id;
 
-	Texto* Textos;
-	Jogo* jogo;
-	Cenario PlanoFundo;
+		vector <Texto*> Textos;
+		Jogo* jogo;
+		Cenario PlanoFundo;
 
-public:
-	Menu(int tamanho, Jogo* jg);
-	~Menu();
+	public:
+		Menu(Jogo* jg);
+		~Menu();
 
-	void moverCima();
-	void moverBaixo();
-	void desenhar();
-};
+		void moverCima();
+		void moverBaixo();
+		void desenhar();
+
+		void criaTexto(Texto* t, string mens, string cor, string font, float dim, float posx, float posy);
+	};
+}
+
+
 
 

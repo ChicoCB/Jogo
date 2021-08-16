@@ -12,24 +12,21 @@ private:
 	string Textura;
 	bool Amigavel;
 	Fase* faseAtual;
-	//float Tamanho;
 
 public:
 	Projetil();
 	~Projetil();
 
 	void setAmigavel(bool amigavel);
-	bool getAmigavel();
+	bool getAmigavel() const;
 	void colidir(Personagem* personagem);
 	void atualiza(float deltaTempo);
 	void setVelocidade(float velx, float vely);
 
 	void setTextura(string textura);
-	//void setTamanho(float lado);
-	//float getTamanho
 
-	float getVelocidadeX();
-	float getVelocidadeY();
+	float getVelocidadeX() const;
+	float getVelocidadeY() const;
 
 	void setFaseAtual(Fase* faseatual);
 	void salvar();

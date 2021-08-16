@@ -6,7 +6,7 @@ Passaro::Passaro():
 	limiteXDir(0.0f),
 	limiteXEsq(0.0f)
 {
-	CooldownAtaqueMax = 2.f;
+	CooldownAtaqueMax = 3.5f;
 	this->setVida(3);
 	this->setVelocidade(200.f);
 	this->setTexturaProjetil("Projeteis_5", "Projeteis_6");

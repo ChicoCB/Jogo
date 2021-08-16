@@ -1,34 +1,43 @@
 #include "MenuFases.h"
 #include "Jogo.h"
 
-MenuFases::MenuFases(  int tamanho, Jogo* jg):
-	Menu( tamanho, jg)
+Menus::MenuFases::MenuFases(Jogo* jg):
+	Menu(jg)
 {
-	Textos = new Texto[Tamanho];
-	Textos[0].setCor("Vermelho");
-	Textos[0].setDimensao(24);
-	Textos[0].setMensagem("Fase 1");
-	Textos[0].setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 250);
-	Textos[0].setFonte("Arial");
+	Texto* novo = new Texto();
+	novo->setCor("Vermelho");
+	novo->setDimensao(24);
+	novo->setMensagem("Fase 1");
+	novo->setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 250);
+	novo->setFonte("KidsPlay");
+	Textos.push_back(novo);
+	Tamanho++;
 
-	Textos[1].setCor("Verde");
-	Textos[1].setDimensao(24);
-	Textos[1].setMensagem("Fase 2");
-	Textos[1].setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 350);
-	Textos[1].setFonte("Arial");
+	novo = new Texto();
+	novo = novo;
+	novo->setCor("Preto");
+	novo->setDimensao(24);
+	novo->setMensagem("Fase 2");
+	novo->setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 350);
+	novo->setFonte("KidsPlay");
+	Textos.push_back(novo);
+	Tamanho++;
 
-	Textos[2].setCor("Verde");
-	Textos[2].setDimensao(24);
-	Textos[2].setMensagem("Voltar");
-	Textos[2].setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 450);
-	Textos[2].setFonte("Arial");
+	novo = new Texto();
+	novo->setCor("Preto");
+	novo->setDimensao(24);
+	novo->setMensagem("Voltar");
+	novo->setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 450);
+	novo->setFonte("KidsPlay");
+	Textos.push_back(novo);
+	Tamanho++;
 }
 
-MenuFases::~MenuFases()
+Menus::MenuFases::~MenuFases()
 {
 }
 
-void MenuFases::LoopMenu(char tecla)
+void Menus::MenuFases::LoopMenu(char tecla)
 {
 
 		if (tecla == 'w' || tecla == 'W')
@@ -58,6 +67,7 @@ void MenuFases::LoopMenu(char tecla)
 				break;
 			case 2:
 			{
+				jogo->setMultiplayer(false);
 				jogo->setEstado(1);
 				moverCima();
 				moverCima();

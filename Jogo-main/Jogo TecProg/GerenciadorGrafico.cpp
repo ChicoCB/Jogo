@@ -3,9 +3,8 @@
 
 GerenciadorGrafico::GerenciadorGrafico() :
     Janela(sf::VideoMode(static_cast <unsigned int>(COMPRIMENTO_RESOLUCAO), static_cast <unsigned int>(ALTURA_RESOLUCAO)),
-        "Jogo"/*, sf::Style::Fullscreen*/),
-    View(sf::Vector2f(COMPRIMENTO_RESOLUCAO / 2, ALTURA_RESOLUCAO / 2), sf::Vector2f(COMPRIMENTO_RESOLUCAO, ALTURA_RESOLUCAO)),
-    Carregou(false)
+        "Jogo"),
+    View(sf::Vector2f(COMPRIMENTO_RESOLUCAO / 2, ALTURA_RESOLUCAO / 2), sf::Vector2f(COMPRIMENTO_RESOLUCAO, ALTURA_RESOLUCAO))
 {
     Janela.setView(View);
 
@@ -19,16 +18,18 @@ void GerenciadorGrafico::LoopJogo(Jogo* jogo, int estado)
 
     while (Janela.isOpen())
     {
-        CarregarJogo(Carregou);
         sf::Event evento;
         while (Janela.pollEvent(evento))
         {
             if (evento.type == sf::Event::TextEntered) {
                 if (evento.text.unicode == 27)
                 {
-                    jogo->setEstadoAtual(Estado);
-                    Estado = 6;
-                    jogo->setEstado(6);
+                    int estadoant = jogo->getEstado();
+                    if (estadoant == 4 || estadoant == 5) {
+                        jogo->setEstadoAtual(Estado);
+                        Estado = 6;
+                        jogo->setEstado(6);
+                    }
                 }
                 jogo->MenusJogo(Estado, evento.text.unicode);
             }
@@ -47,30 +48,31 @@ void GerenciadorGrafico::LoopJogo(Jogo* jogo, int estado)
         Janela.setView(View);
 
         Janela.display();
-        //display();
     }
 }
 
-void GerenciadorGrafico::CarregarJogo(bool carregou)
+void GerenciadorGrafico::CarregarJogo()
 {
-    if (!carregou) {
+    
         InicializaFontes();
-
+        sf::RectangleShape Fundo_Carregamento;
+        Fundo_Carregamento.setSize(sf::Vector2f(COMPRIMENTO_RESOLUCAO, ALTURA_RESOLUCAO));
+        CarregaTextura("textures/Menu2.png");
+        Fundo_Carregamento.setTexture(&Texturas["textures/Menu2.png"]);
         sf::Text Carregamento;
-        Carregamento.setFillColor(sf::Color::Blue);
-        Carregamento.setFont(Fontes["Arial"]);
+        Carregamento.setFillColor(sf::Color::Black);
+        Carregamento.setFont(Fontes["KidsPlay"]);
         Carregamento.setString("Carregando Jogo...");
-        Carregamento.setCharacterSize(24);
+        Carregamento.setCharacterSize(48);
         Carregamento.setPosition(sf::Vector2f(COMPRIMENTO_RESOLUCAO / 4, 350.f));
+        Janela.draw(Fundo_Carregamento);
         Janela.draw(Carregamento);
         Janela.display();
 
         InicializaTexturas();
         InicializaSubTexturas();
         InicializaCores();
-
-        Carregou = true;
-    }
+    
 }
 
 GerenciadorGrafico::~GerenciadorGrafico()
@@ -100,6 +102,7 @@ void GerenciadorGrafico::criaCorpo(Entidade* pentidade, float dimx, float dimy, 
 
     ListaCorpos.push_back(Corpo);
 
+    pentidade->setDesalocavel(false);
     if (pentidade != NULL)
         pentidade->setId(pentidade->getIdCorpoAtual());
 
@@ -131,7 +134,7 @@ void GerenciadorGrafico::setDimensoes(int id, float x, float y)
     ListaCorpos[id]->setOrigin( x / 2,  y / 2);
 }
 
-float GerenciadorGrafico::getDimensoesX(int id)
+float GerenciadorGrafico::getDimensoesX(int id) const
 {
     if (ListaCorpos[id] != NULL)
         return ListaCorpos[id]->getSize().x;
@@ -142,7 +145,7 @@ float GerenciadorGrafico::getDimensoesX(int id)
 
 }
 
-float GerenciadorGrafico::getDimensoesY(int id)
+float GerenciadorGrafico::getDimensoesY(int id) const
 {
     if (ListaCorpos[id] != NULL)
         return ListaCorpos[id]->getSize().y;
@@ -156,9 +159,9 @@ float GerenciadorGrafico::getDimensoesY(int id)
 void GerenciadorGrafico::setPosicao(int id, float x, float y)
 {
 
-    if (id == NULL)
-        cout << "Erro setPosicao" << endl;
-    else if (id < 0 || id >= ListaCorpos.size())
+   // if (id == NULL)
+   //     cout << "Erro setPosicao" << endl;
+    if (id < 0 || id >= ListaCorpos.size())
         cout << "Erro setPosicao" << endl;
     else {
         
@@ -167,12 +170,12 @@ void GerenciadorGrafico::setPosicao(int id, float x, float y)
 
 }
 
-float GerenciadorGrafico::getPosicaoX(int id)
+float GerenciadorGrafico::getPosicaoX(int id) const
 {
     return ListaCorpos[id]->getPosition().x;
 }
 
-float GerenciadorGrafico::getPosicaoY(int id)
+float GerenciadorGrafico::getPosicaoY(int id) const
 {
     return ListaCorpos[id]->getPosition().y;
 }
@@ -258,8 +261,6 @@ void GerenciadorGrafico::InicializaTexturas()
     //CarregaTextura("");
     CarregaTextura("textures/Fazendeira.png");
     CarregaTextura("textures/Bruxo.png");
-    CarregaTextura("textures/Background.png");
-    CarregaTextura("textures/Background_quarto.jpg");
     CarregaTextura("textures/Pseudo_Invisivel.png");
     CarregaTextura("textures/Plataforma_Quintal.png");
     CarregaTextura("textures/Plataforma_Quarto.png");
@@ -273,16 +274,23 @@ void GerenciadorGrafico::InicializaTexturas()
     CarregaTextura("textures/Bicho_Papao.png");
     CarregaTextura("textures/Projeteis.png");
     CarregaTextura("textures/Inicio_Fim.png");
-
+    CarregaTextura("textures/Quintal.png");
+    CarregaTextura("textures/Quarto.png");
+    CarregaTextura("textures/Menu1.png");
+    //CarregaTextura("textures/Menu2.png");
 }
 
 
 void GerenciadorGrafico::InicializaFontes()
 {
-    sf::Font Fonte;
-    if (!Fonte.loadFromFile("arial.ttf"))
+    sf::Font *Fonte = new sf::Font();
+    if (!Fonte->loadFromFile("arial.ttf"))
         cout << "Erro ao carregar fonte." << endl;
-    Fontes["Arial"] = Fonte;
+    Fontes["Arial"] = *Fonte;
+    Fonte = new sf::Font();
+    if (!Fonte->loadFromFile("KidsPlay.ttf"))
+        cout << "Erro ao carregar fonte." << endl;
+    Fontes["KidsPlay"] = *Fonte;
 
 }
 
@@ -292,6 +300,9 @@ void GerenciadorGrafico::InicializaCores()
     Cores["Verde"] = sf::Color::Green;
     Cores["Azul"] = sf::Color::Blue;
     Cores["Transparente"] = sf::Color::Transparent;
+    Cores["Preto"] = sf::Color::Black;
+    Cores["Ciano"] = sf::Color::Cyan;
+    Cores["Amarelo"] = sf::Color::Yellow;
 
 }
 
@@ -337,7 +348,11 @@ void GerenciadorGrafico::InicializaSubTexturas()
     SubTexturas["textures/Inicio_Fim.png"] = sf::IntRect(0, 500, 520, 580); SubTexturas["Inicio_Fim_2"] = sf::IntRect(820, 110, 835, 1360); SubTexturas["Inicio_Fim_3"] = sf::IntRect(1950, 135, 225, 1300);
     SubTexturas["Inicio_Fim_4"] = sf::IntRect(2475, 135, 225, 1300); SubTexturas["Inicio_Fim_5"] = sf::IntRect(3000, 0, 620, 1580);
 
-    
+    SubTexturas["textures/Quintal.png"] = sf::IntRect(0, 0, 3829, 1089);
+    SubTexturas["textures/Quarto.png"] = sf::IntRect(0, 0, 3959, 1093);
+
+    SubTexturas["textures/Menu1.png"] = sf::IntRect(0, 0, 1627, 1000);
+    SubTexturas["textures/Menu2.png"] = sf::IntRect(0, 0, 1627, 1000);
 }
 
 

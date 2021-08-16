@@ -16,7 +16,6 @@ public:
     void colidir(Personagem* personagem);
     void setTexturas(bool Quintal);
 
-    //void movimenta(sf::Vector2f movimento);
     void salvar();
 };
 

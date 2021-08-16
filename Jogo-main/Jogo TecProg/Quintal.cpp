@@ -25,7 +25,7 @@ void Quintal::inicializa()
 
 	Background.setGerenciadorGrafico(pGerenciadorGrafico);
 	pGerenciadorGrafico->criaCorpo(&Background, COMPRIMENTO_CENARIO, ALTURA_RESOLUCAO,
-		COMPRIMENTO_RESOLUCAO, ALTURA_RESOLUCAO / 2, "textures/Background.png");
+		COMPRIMENTO_RESOLUCAO, ALTURA_RESOLUCAO / 2, "textures/Quintal.png");
 	listaEntidades.inclua(static_cast <Entidade*> (&Background));
 
 	criaPlataformas();
@@ -71,8 +71,8 @@ void Quintal::inicializa()
 
 	
 	porta.setGerenciadorGrafico(pGerenciadorGrafico);
-	pGerenciadorGrafico->criaCorpo(&porta, 25.f, 150.f, COMPRIMENTO_CENARIO - 25.f/2,
-		ALTURA_RESOLUCAO - (ALTURA_PLATAFORMA + 50.f), "textures/Inicio_Fim.png");
+	pGerenciadorGrafico->criaCorpo(&porta, 37.5f, 225.f, COMPRIMENTO_CENARIO - 37.5f/2,
+		ALTURA_RESOLUCAO - (ALTURA_PLATAFORMA + 225.f/2), "textures/Inicio_Fim.png");
 	porta.setSubTextura("Inicio_Fim_3");
 	porta.setJogo(pJogo);
 	listaEntidades.inclua(static_cast<Entidade*> (&porta));
@@ -123,7 +123,6 @@ void Quintal::criaPlataforma(float posx, float posy, string subtextura)
 void Quintal::criaPlataformas()
 {
 	criaBordas();
-	//Plataformas específicas
 	for (int i = 0; i < 10; i++) {
 		criaPlataforma(900.f + COMPRIMENTO_PLATAFORMA * i, 337.5f, "Plataforma_Quintal_2");
 	}
@@ -145,7 +144,7 @@ void Quintal::recuperar()
 {	
 	Background.setGerenciadorGrafico(pGerenciadorGrafico);
 	pGerenciadorGrafico->criaCorpo(&Background, COMPRIMENTO_CENARIO, ALTURA_RESOLUCAO,
-		COMPRIMENTO_RESOLUCAO, ALTURA_RESOLUCAO / 2, "textures/Background.png");
+		COMPRIMENTO_RESOLUCAO, ALTURA_RESOLUCAO / 2, "textures/Quintal.png");
 	listaEntidades.inclua(static_cast <Entidade*> (&Background));
 
 	criaPlataformas();

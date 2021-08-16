@@ -29,9 +29,11 @@ public:
 	static int getPontuacao();
 
 	void setTexturas(bool fazendeira);
-	string getTextura();
+	string getTextura() const;
 
 	void atualiza(float deltaTempo);
 	void salvar();
+
+	Jogador& operator++();
 };
 

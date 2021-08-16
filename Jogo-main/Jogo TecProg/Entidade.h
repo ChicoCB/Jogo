@@ -20,24 +20,24 @@ public:
 	virtual ~Entidade();
 
 	void setDimensoes(float x, float y);
-	float getDimensoesX();
-	float getDimensoesY();
+	float getDimensoesX() const;
+	float getDimensoesY() const;
 		
 	void setPosicao(float x, float y);
-	float getPosicaoX();
-	float getPosicaoY();
+	float getPosicaoX() const;
+	float getPosicaoY() const;
 
 	void setMovimento(float x, float y);
-	float getMovimentoX();
-	float getMovimentoY();
+	float getMovimentoX() const;
+	float getMovimentoY() const;
 
 	void setDesalocavel(bool desalocavel);
-	bool getDesalocavel();
+	bool getDesalocavel() const;
 
 	void incrementaIdCorpoAtual();
 	void setId(int id);
-	int getIdCorpoAtual();
-	int getId();
+	int getIdCorpoAtual() const;
+	int getId() const;
 
 	void setSubTextura(string subtext);
 

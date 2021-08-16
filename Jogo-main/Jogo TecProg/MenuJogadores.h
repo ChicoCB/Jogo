@@ -3,17 +3,22 @@
 
 class Jogo;
 
-class MenuJogadores : public Menu
+namespace Menus
 {
-private:
+	class MenuJogadores : public Menu
+	{
+	private:
 
-	int LimiteBaixo, LimiteCima;
+		int LimiteBaixo, LimiteCima;
 
-public:
-	MenuJogadores( int tamanho, Jogo* jg);
-	~MenuJogadores();
+	public:
+		MenuJogadores(Jogo* jg);
+		~MenuJogadores();
 
-	void LoopMenu(char tecla);
-	void Inicializa();
-};
+		void LoopMenu(char tecla);
+		void Inicializa();
+	};
+}
+
+
 

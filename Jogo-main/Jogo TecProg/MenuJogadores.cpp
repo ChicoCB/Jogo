@@ -1,20 +1,19 @@
 #include "MenuJogadores.h"
 #include "Jogo.h"
 
-MenuJogadores::MenuJogadores(  int tamanho, Jogo* jg):
-	Menu(  tamanho, jg),
+Menus::MenuJogadores::MenuJogadores(Jogo* jg):
+	Menu(jg),
 	LimiteBaixo(2),
 	LimiteCima(0)
 {
 	Inicializa();
-	
 }
 
-MenuJogadores::~MenuJogadores()
+Menus::MenuJogadores::~MenuJogadores()
 {
 }
 
-void MenuJogadores::LoopMenu(char tecla)
+void Menus::MenuJogadores::LoopMenu(char tecla)
 {
 	
 		if (tecla == 'w' || tecla == 'W')
@@ -28,14 +27,13 @@ void MenuJogadores::LoopMenu(char tecla)
 			switch (Indice)
 			{
 			case 0:
-				//jogo->setEstado(2);
-				Textos[0].setCor("Transparente");
-				Textos[1].setCor("Transparente");
-				Textos[2].setCor("Transparente");
-				Textos[3].setCor("Verde");
-				Textos[4].setCor("Vermelho");
-				Textos[5].setCor("Verde");
-				Textos[6].setCor("Verde");
+				Textos[0]->setCor("Transparente");
+				Textos[1]->setCor("Transparente");
+				Textos[2]->setCor("Transparente");
+				Textos[3]->setCor("Preto");
+				Textos[4]->setCor("Vermelho");
+				Textos[5]->setCor("Preto");
+				Textos[6]->setCor("Preto");
 				LimiteCima = 4;
 				LimiteBaixo = 6;
 				Indice = 4;
@@ -60,13 +58,13 @@ void MenuJogadores::LoopMenu(char tecla)
 				jogo->setEstado(2);
 				break;
 			case 6:
-				Textos[0].setCor("Vermelho");
-				Textos[1].setCor("Verde");
-				Textos[2].setCor("Verde");
-				Textos[3].setCor("Transparente");
-				Textos[4].setCor("Transparente");
-				Textos[5].setCor("Transparente");
-				Textos[6].setCor("Transparente");
+				Textos[0]->setCor("Vermelho");
+				Textos[1]->setCor("Preto");
+				Textos[2]->setCor("Preto");
+				Textos[3]->setCor("Transparente");
+				Textos[4]->setCor("Transparente");
+				Textos[5]->setCor("Transparente");
+				Textos[6]->setCor("Transparente");
 				LimiteCima = 0;
 				LimiteBaixo = 2;
 				Indice = 0;
@@ -75,48 +73,69 @@ void MenuJogadores::LoopMenu(char tecla)
 		}
 }
 
-void MenuJogadores::Inicializa() {
-	Textos = new Texto[Tamanho];
-	Textos[0].setCor("Vermelho");
-	Textos[0].setDimensao(24);
-	Textos[0].setMensagem("1 Jogador");
-	Textos[0].setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 250);
-	Textos[0].setFonte("Arial");
+void Menus::MenuJogadores::Inicializa() {
 
-	Textos[1].setCor("Verde");
-	Textos[1].setDimensao(24);
-	Textos[1].setMensagem("2 Jogadores");
-	Textos[1].setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 350);
-	Textos[1].setFonte("Arial");
+	Texto* novo = new Texto();
+	novo->setCor("Vermelho");
+	novo->setDimensao(30);
+	novo->setMensagem("1 Jogador");
+	novo->setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 250);
+	novo->setFonte("KidsPlay");
+	Textos.push_back(novo);
+	Tamanho++;
 
-	Textos[2].setCor("Verde");
-	Textos[2].setDimensao(24);
-	Textos[2].setMensagem("Voltar");
-	Textos[2].setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 450);
-	Textos[2].setFonte("Arial");
+	novo = new Texto();
+	novo->setCor("Preto");
+	novo->setDimensao(30);
+	novo->setMensagem("2 Jogadores");
+	novo->setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 350);
+	novo->setFonte("KidsPlay");
+	Textos.push_back(novo);
+	Tamanho++;
 
-	Textos[3].setCor("Transparente");
-	Textos[3].setDimensao(24);
-	Textos[3].setMensagem("Escolha com qual jogador jogar:");
-	Textos[3].setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 250);
-	Textos[3].setFonte("Arial");
+	novo = new Texto();
+	novo->setCor("Preto");
+	novo->setDimensao(30);
+	novo->setMensagem("Voltar");
+	novo->setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 450);
+	novo->setFonte("KidsPlay");
+	Textos.push_back(novo);
+	Tamanho++;
 
-	Textos[4].setCor("Transparente");
-	Textos[4].setDimensao(24);
-	Textos[4].setMensagem("Fazendeira");
-	Textos[4].setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 350);
-	Textos[4].setFonte("Arial");
+	novo = new Texto();
+	novo->setCor("Transparente");
+	novo->setDimensao(30);
+	novo->setMensagem("Escolha com qual jogador jogar:");
+	novo->setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 250);
+	novo->setFonte("KidsPlay");
+	Textos.push_back(novo);
+	Tamanho++;
 
-	Textos[5].setCor("Transparente");
-	Textos[5].setDimensao(24);
-	Textos[5].setMensagem("Bruxo");
-	Textos[5].setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 400);
-	Textos[5].setFonte("Arial");
+	novo = new Texto();
+	novo->setCor("Transparente");
+	novo->setDimensao(30);
+	novo->setMensagem("Fazendeira");
+	novo->setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 350);
+	novo->setFonte("KidsPlay");
+	Textos.push_back(novo);
+	Tamanho++;
 
-	Textos[6].setCor("Transparente");
-	Textos[6].setDimensao(24);
-	Textos[6].setMensagem("Voltar");
-	Textos[6].setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 500);
-	Textos[6].setFonte("Arial");
+	novo = new Texto();
+	novo->setCor("Transparente");
+	novo->setDimensao(30);
+	novo->setMensagem("Bruxo");
+	novo->setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 400);
+	novo->setFonte("KidsPlay");
+	Textos.push_back(novo);
+	Tamanho++;
+
+	novo = new Texto();
+	novo->setCor("Transparente");
+	novo->setDimensao(30);
+	novo->setMensagem("Voltar");
+	novo->setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 500);
+	novo->setFonte("KidsPlay");
+	Textos.push_back(novo);
+	Tamanho++;
 
 }

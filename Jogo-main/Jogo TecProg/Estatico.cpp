@@ -30,15 +30,11 @@ void Estatico::atualiza(float deltaTempo)
 	setSubTextura(SubTextura[0]);
 	if (podeMorrer()) {
 		this->setDimensoes(COMPRIMENTO_ESTATICO + 20.f, ALTURA_ESTATICO + 2 * 6.3);
-		//this->setPosicao(this->getPosicaoX(), ALTURA_ESTATICO/2 + 6.3);
 		setSubTextura(SubTextura[2]);
 	}
 	else {
 		this->setDimensoes(COMPRIMENTO_ESTATICO, ALTURA_ESTATICO);
 		setPosicao(getPosicaoX(), getPosicaoY() + 3.f);
-
-		//MovimentoY += 100.f;
-		//setSubTextura(SubTextura[0]);
 	}
 
 	if (CooldownInvencibilidade >= CooldownInvencibilidadeMax*7/8)
@@ -55,7 +51,6 @@ void Estatico::colidir(Personagem* personagem)
 {
 	if (personagem->getAmigavel() && this->podeAtacar())
 	{
-		//cout << "Colidiu Estático!" << endl;
 		CooldownAtaque = 0;
 		personagem->setVida(personagem->getVida() - 1);
 		if (personagem->getVida() <= 0)

@@ -1,27 +1,27 @@
 #include "MenuPause.h"
 #include "Jogo.h"
 
-MenuPause::MenuPause( int tamanho, Jogo* jg):
-	Menu( tamanho, jg)
+Menus::MenuPause::MenuPause(Jogo* jg):
+	Menu(jg)
 {
 	Inicializa();
 }
 
-MenuPause::~MenuPause()
+Menus::MenuPause::~MenuPause()
 {
 }
 
-void MenuPause::setEstadoAtual(int estadoatual)
+void Menus::MenuPause::setEstadoAtual(int estadoatual)
 {
 	EstadoAtual = estadoatual;
 }
 
-int MenuPause::getEstadoAtual()
+int Menus::MenuPause::getEstadoAtual() const
 {
 	return EstadoAtual;
 }
 
-void MenuPause::LoopMenu(char tecla)
+void Menus::MenuPause::LoopMenu(char tecla)
 {
 		if (tecla == 'w' || tecla == 'W')
 			moverCima();
@@ -53,38 +53,51 @@ void MenuPause::LoopMenu(char tecla)
 	
 }
 
-void MenuPause::Inicializa()
+void Menus::MenuPause::Inicializa()
 {
-	Textos = new Texto[Tamanho];
-	Textos[0].setCor("Vermelho");
-	Textos[0].setDimensao(24);
-	Textos[0].setMensagem("Retomar");
-	Textos[0].setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 150);
-	Textos[0].setFonte("Arial");
+	Texto* novo = new Texto();
+	novo->setCor("Vermelho");
+	novo->setDimensao(24);
+	novo->setMensagem("Retomar");
+	novo->setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 150);
+	novo->setFonte("KidsPlay");
+	Textos.push_back(novo);
+	Tamanho++;
 
-	Textos[1].setCor("Verde");
-	Textos[1].setDimensao(24);
-	Textos[1 ].setMensagem("Salvar jogo");
-	Textos[1].setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 250);
-	Textos[1].setFonte("Arial");
+	novo = new Texto();
+	novo->setCor("Preto");
+	novo->setDimensao(24);
+	novo->setMensagem("Salvar jogo");
+	novo->setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 250);
+	novo->setFonte("KidsPlay");
+	Textos.push_back(novo);
+	Tamanho++;
 
-	Textos[2].setCor("Verde");
-	Textos[2].setDimensao(24);
-	Textos[2].setMensagem("Salvar pontuação");
-	Textos[2].setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 350);
-	Textos[2].setFonte("Arial");
+	novo = new Texto();
+	novo->setCor("Preto");
+	novo->setDimensao(24);
+	novo->setMensagem("Salvar pontuacao");
+	novo->setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 350);
+	novo->setFonte("KidsPlay");
+	Textos.push_back(novo);
+	Tamanho++;
 
-	Textos[3].setCor("Verde");
-	Textos[3].setDimensao(24);
-	Textos[3].setMensagem("Voltar ao Menu Principal");
-	Textos[3].setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 450);
-	Textos[3].setFonte("Arial");
+	novo = new Texto();
+	novo->setCor("Preto");
+	novo->setDimensao(24);
+	novo->setMensagem("Voltar ao Menu Principal");
+	novo->setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 450);
+	novo->setFonte("KidsPlay");
+	Textos.push_back(novo);
+	Tamanho++;
 
-	Textos[4].setCor("Verde");
-	Textos[4].setDimensao(24);
-	Textos[4].setMensagem("Sair do jogo");
-	Textos[4].setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 550);
-	Textos[4].setFonte("Arial");
+	novo = new Texto();
+	novo->setCor("Preto");
+	novo->setDimensao(24);
+	novo->setMensagem("Sair do jogo");
+	novo->setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 550);
+	novo->setFonte("KidsPlay");
+	Textos.push_back(novo);
+	Tamanho++;
 	
-
 }

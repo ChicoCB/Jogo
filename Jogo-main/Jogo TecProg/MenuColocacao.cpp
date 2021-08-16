@@ -1,28 +1,28 @@
 #include "MenuColocacao.h"
 #include "Jogo.h"
 
-MenuColocacao::MenuColocacao(  int tamanho, Jogo* jg):
-	Menu( tamanho, jg),
+Menus::MenuColocacao::MenuColocacao(Jogo* jg):
+	Menu(jg),
 	EstadoAnterior(0)
 {	
 	Inicializa();
 }
 
-MenuColocacao::~MenuColocacao()
+Menus::MenuColocacao::~MenuColocacao()
 {
 }
 
-void MenuColocacao::LoopMenu(char tecla)
+void Menus::MenuColocacao::LoopMenu(char tecla)
 {
 	cout << "Indice: " << Indice << endl;
-	Textos[Indice].setCor("Vermelho");
+	Textos[Indice]->setCor("Vermelho");
 
 	if (Digitando)
 	{
 			if (tecla == 13)
 			{
-				Textos[Indice].setCor("Verde");
-				Textos[5].setCor("Vermelho");
+				Textos[Indice]->setCor("Preto");
+				Textos[5]->setCor("Vermelho");
 				Indice = 5;
 				Digitando = false;
 				Nome.clear();
@@ -38,14 +38,13 @@ void MenuColocacao::LoopMenu(char tecla)
 				}
 				else if (tecla > 31 && tecla < 128) {
 					Nome = Nome + tecla;
-					//Nome.insert(Nome.size(), tecla);
 				}
 
 				ss << jogo->getJogador1()->getPontuacao();
 
 				saux = ss.str() + " - " + Nome;
 				cout << ss.str() << endl;
-				Textos[Indice].setMensagem(saux);
+				Textos[Indice]->setMensagem(saux);
 			}
 	}
 	 
@@ -60,7 +59,11 @@ void MenuColocacao::LoopMenu(char tecla)
 		{
 			if (Indice < 5) {
 				Digitando = true;
-				Textos[Indice].setMensagem("0 - ");
+				string saux;
+				stringstream ss;
+				ss << jogo->getJogador1()->getPontuacao();
+				saux = ss.str() + " - ";
+				Textos[Indice]->setMensagem(saux);
 			}
 			else
 				switch (Indice)
@@ -75,7 +78,7 @@ void MenuColocacao::LoopMenu(char tecla)
 						cout << "Erro Gravar Colocacao." << endl;
 
 					for (int i = 1; i <= 4; i++) {
-						string saux = Textos[i].getMensagem();
+						string saux = Textos[i]->getMensagem();
 						while (saux.back() == ' ')
 							saux.pop_back();
 
@@ -88,10 +91,10 @@ void MenuColocacao::LoopMenu(char tecla)
 				break;
 				case 6:
 					for (int i = 1; i <= 4; i++)
-						Textos[i].setMensagem("0 - Vazio");
+						Textos[i]->setMensagem("0 - Vazio");
 					break;
 				case 7:
-					Textos[Indice].setCor("Verde");
+					Textos[Indice]->setCor("Preto");
 					jogo->setEstado(EstadoAnterior);
 					break;
 				}
@@ -100,7 +103,7 @@ void MenuColocacao::LoopMenu(char tecla)
 	}
 }
 
-void MenuColocacao::Recupera() 
+void Menus::MenuColocacao::Recupera()
 {
 	ifstream recuperadorColocacao("saves/Colocacao.dat", ios::in);
 
@@ -115,7 +118,7 @@ void MenuColocacao::Recupera()
 		string += aux + " ";
 		aux = "";
 		if (recuperadorColocacao.get() == '\n') {
-			Textos[i].setMensagem(string);
+			Textos[i]->setMensagem(string);
 			i++;
 			string = "";
 		}
@@ -125,64 +128,84 @@ void MenuColocacao::Recupera()
 
 }
 
-void MenuColocacao::Inicializa() 
+void Menus::MenuColocacao::Inicializa()
 {
-	
 	Digitando = false;
+	Texto* novo = new Texto();
+	novo->setCor("Azul");
+	novo->setDimensao(24);
+	novo->setMensagem("Pontuacao:");
+	novo->setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 150);
+	novo->setFonte("KidsPlay");
+	Textos.push_back(novo);
+	Tamanho++;
 
-	Textos = new Texto[Tamanho];
-	Textos[0].setCor("Verde");
-	Textos[0].setDimensao(24);
-	Textos[0].setMensagem("Pontuacao:");
-	Textos[0].setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 150);
-	Textos[0].setFonte("Arial");
+	novo = new Texto();
+	novo->setCor("Preto");
+	novo->setDimensao(24);
+	novo->setMensagem("0 - Vazio");
+	novo->setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 200);
+	novo->setFonte("KidsPlay");
+	Textos.push_back(novo);
+	Tamanho++;
 
-	Textos[1].setCor("Verde");
-	Textos[1].setDimensao(24);
-	Textos[1].setMensagem("0 - Vazio");
-	Textos[1].setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 200);
-	Textos[1].setFonte("Arial");
+	novo = new Texto();
+	novo->setCor("Preto");
+	novo->setDimensao(24);
+	novo->setMensagem("0 - Vazio");
+	novo->setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 250);
+	novo->setFonte("KidsPlay");
+	Textos.push_back(novo);
+	Tamanho++;
 
-	Textos[2].setCor("Verde");
-	Textos[2].setDimensao(24);
-	Textos[2].setMensagem("0 - Vazio");
-	Textos[2].setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 250);
-	Textos[2].setFonte("Arial");
+	novo = new Texto();
+	novo->setCor("Preto");
+	novo->setDimensao(24);
+	novo->setMensagem("0 - Vazio");
+	novo->setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 300);
+	novo->setFonte("KidsPlay");
+	Textos.push_back(novo);
+	Tamanho++;
 
-	Textos[3].setCor("Verde");
-	Textos[3].setDimensao(24);
-	Textos[3].setMensagem("0 - Vazio");
-	Textos[3].setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 300);
-	Textos[3].setFonte("Arial");
+	novo = new Texto();
+	novo->setCor("Preto");
+	novo->setDimensao(24);
+	novo->setMensagem("0 - Vazio");
+	novo->setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 350);
+	novo->setFonte("KidsPlay");
+	Textos.push_back(novo);
+	Tamanho++;
 
-	Textos[4].setCor("Verde");
-	Textos[4].setDimensao(24);
-	Textos[4].setMensagem("0 - Vazio");
-	Textos[4].setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 350);
-	Textos[4].setFonte("Arial");
+	novo = new Texto();
+	novo->setCor("Preto");
+	novo->setDimensao(24);
+	novo->setMensagem("Salvar Scoreboard");
+	novo->setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 500);
+	novo->setFonte("KidsPlay");
+	Textos.push_back(novo);
+	Tamanho++;
 
-	Textos[5].setCor("Verde");
-	Textos[5].setDimensao(24);
-	Textos[5].setMensagem("Vermelho");
-	Textos[5].setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 500);
-	Textos[5].setFonte("Arial");
+	novo = new Texto();
+	novo->setCor("Preto");
+	novo->setDimensao(24);
+	novo->setMensagem("Apagar Tudo");
+	novo->setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 550);
+	novo->setFonte("KidsPlay");
+	Textos.push_back(novo);
+	Tamanho++;
 
-	Textos[6].setCor("Verde");
-	Textos[6 ].setDimensao(24);
-	Textos[6].setMensagem("Apagar Tudo");
-	Textos[6].setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 550);
-	Textos[6].setFonte("Arial");
-
-	Textos[7].setCor("Verde");
-	Textos[7 ].setDimensao(24);
-	Textos[7].setMensagem("Voltar");
-	Textos[7].setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 600);
-	Textos[7].setFonte("Arial");
-
-
+	novo = new Texto();
+	novo = novo;
+	novo->setCor("Preto");
+	novo->setDimensao(24);
+	novo->setMensagem("Voltar");
+	novo->setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 600);
+	novo->setFonte("KidsPlay");
+	Textos.push_back(novo);
+	Tamanho++;
 }
 
-void MenuColocacao::setEditavel(bool Editavel)
+void Menus::MenuColocacao::setEditavel(bool Editavel)
 {
 	if (Editavel) {
 		Indice = 1;
@@ -192,10 +215,9 @@ void MenuColocacao::setEditavel(bool Editavel)
 		Indice = 5;
 		Limite = 5;
 	}
-
 }
 
-void MenuColocacao::setEstadoAnterior(int estadoanterior)
+void Menus::MenuColocacao::setEstadoAnterior(int estadoanterior)
 {
 	EstadoAnterior = estadoanterior;
 }

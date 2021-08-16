@@ -1,41 +1,64 @@
 #include "MenuPrincipal.h"
 #include "Jogo.h"
 
-MenuPrincipal::MenuPrincipal( int tamanho, Jogo* jg):
-Menu(  tamanho, jg)
+Menus::MenuPrincipal::MenuPrincipal(Jogo* jg):
+Menu(jg)
 {
-	Textos = new Texto[Tamanho];
-	Textos[0].setCor("Vermelho");
-	Textos[0].setDimensao(24);
-	Textos[0].setMensagem("Novo Jogo");
-	Textos[0].setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 250);
-	Textos[0].setFonte("Arial");
+	Tamanho = 0;
+	Texto* novo = new Texto();
+	novo->setCor("Vermelho");
+	novo->setDimensao(30);
+	novo->setMensagem("Novo Jogo");
+	novo->setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 250);
+	novo->setFonte("KidsPlay");
+	Textos.push_back(novo);
+	Tamanho++;
 
-	Textos[1].setCor("Verde");
-	Textos[1].setDimensao(24);
-	Textos[1].setMensagem("Recuperar Jogo Salvo");
-	Textos[1].setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 350);
-	Textos[1].setFonte("Arial");
+	novo = new Texto();
+	novo->setCor("Preto");
+	novo->setDimensao(30);
+	novo->setMensagem("Recuperar Jogo Salvo");
+	novo->setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 350);
+	novo->setFonte("KidsPlay");
+	Textos.push_back(novo);
+	Tamanho++;
 
-	Textos[2].setCor("Verde");
-	Textos[2 ].setDimensao(24);
-	Textos[2].setMensagem("Verificar Pontuação");
-	Textos[2].setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 450);
-	Textos[2].setFonte("Arial");
+	novo = new Texto();
+	novo->setCor("Preto");
+	novo->setDimensao(30);
+	novo->setMensagem("Scoreboard");
+	novo->setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 450);
+	novo->setFonte("KidsPlay");
+	Textos.push_back(novo);
+	Tamanho++;
 
-	Textos[3].setCor("Verde");
-	Textos[3].setDimensao(24);
-	Textos[3].setMensagem("Sair");
-	Textos[3].setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 550);
-	Textos[3].setFonte("Arial");
+	novo = new Texto();
+	novo->setCor("Preto");
+	novo->setDimensao(30);
+	novo->setMensagem("Sair");
+	novo->setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 550);
+	novo->setFonte("KidsPlay");
+	Textos.push_back(novo);
+	Tamanho++;
 
+	
 }
 
-MenuPrincipal::~MenuPrincipal()
+Menus::MenuPrincipal::~MenuPrincipal()
 {
 }
 
-void MenuPrincipal::LoopMenu(char tecla)
+void Menus::MenuPrincipal::InicializaPlanoFundo(){
+	PlanoFundo.setGerenciadorGrafico(pGerenciadorGrafico);
+pGerenciadorGrafico->criaCorpo(static_cast<Entidade*>(&PlanoFundo), COMPRIMENTO_RESOLUCAO, ALTURA_RESOLUCAO,
+		COMPRIMENTO_RESOLUCAO / 2, ALTURA_RESOLUCAO / 2, "textures/Menu1.png");
+	Cenario* novo = new Cenario();
+	novo->setGerenciadorGrafico(pGerenciadorGrafico);
+	pGerenciadorGrafico->criaCorpo(static_cast<Entidade*>(novo), COMPRIMENTO_RESOLUCAO, ALTURA_RESOLUCAO,
+		COMPRIMENTO_RESOLUCAO / 2, ALTURA_RESOLUCAO / 2, "textures/Menu2.png");
+}
+
+void Menus::MenuPrincipal::LoopMenu(char tecla)
 {
 		if (tecla == 'w' || tecla == 'W')
 			moverCima();

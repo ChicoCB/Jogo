@@ -14,12 +14,12 @@ void Texto::setPosicoes(float x, float y)
 	PosicaoY = y;
 }
 
-float Texto::getPosicaoX()
+float Texto::getPosicaoX() const
 {
 	return PosicaoX;
 }
 
-float Texto::getPosicaoY()
+float Texto::getPosicaoY() const
 {
 	return PosicaoY;
 }
@@ -29,7 +29,7 @@ void Texto::setDimensao(float dim)
 	Dimensao = dim;
 }
 
-float Texto::getDimensao()
+float Texto::getDimensao() const
 {
 	return Dimensao;
 }
@@ -39,7 +39,7 @@ void Texto::setMensagem(string mens)
 	Mensagem = mens;
 }
 
-string Texto::getMensagem()
+string Texto::getMensagem() const
 {
 	return Mensagem ;
 }
@@ -49,7 +49,7 @@ void Texto::setCor(string cor)
 	Cor = cor;
 }
 
-string Texto::getCor()
+string Texto::getCor() const
 {
 	return Cor;
 }
@@ -59,7 +59,7 @@ void Texto::setFonte(string fon)
 	Fonte = fon;
 }
 
-string Texto::getFonte()
+string Texto::getFonte() const
 {
 	return Fonte;
 }

@@ -14,7 +14,7 @@ void Projetil::setAmigavel(bool amigavel)
 	this->Amigavel = amigavel;
 }
 
-bool Projetil::getAmigavel()
+bool Projetil::getAmigavel() const
 {
 	return Amigavel;
 }
@@ -69,12 +69,12 @@ void Projetil::setTextura(string textura)
 	Textura = textura;
 }
 
-float Projetil::getVelocidadeX()
+float Projetil::getVelocidadeX() const
 {
 	return VelocidadeX;
 }
 
-float Projetil::getVelocidadeY()
+float Projetil::getVelocidadeY() const
 {
 	return VelocidadeY;
 }

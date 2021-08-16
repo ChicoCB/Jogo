@@ -1,35 +1,54 @@
 #include "Creditos.h"
 #include "Jogo.h"
 
-Creditos::Creditos(  int tamanho, Jogo* jg) :
-	Menu( tamanho, jg)
+Menus::Creditos::Creditos(Jogo* jg) :
+	Menu(jg), Limite(2)
 {
-	Textos = new Texto[Tamanho];
-	Textos[0].setCor("Vermelho");
-	Textos[0].setDimensao(24);
-	Textos[0].setMensagem("Salvar Pontuação");
-	Textos[0].setPosicoes(COMPRIMENTO_RESOLUCAO * 3 / 4, 500);
-	Textos[0].setFonte("Arial");
+	MensagemFinal = "Voce Perdeu.";
 
-	Textos[1].setCor("Verde");
-	Textos[1].setDimensao(24);
-	Textos[1 ].setMensagem("Voltar ao Menu Principal");
-	Textos[1].setPosicoes(COMPRIMENTO_RESOLUCAO * 3 / 4, 550);
-	Textos[1].setFonte("Arial");
+	Texto* novo = new Texto();
+	novo->setCor("Vermelho");
+	novo->setDimensao(24);
+	novo->setMensagem("Salvar Pontuacao");
+	novo->setPosicoes(COMPRIMENTO_RESOLUCAO * 3 / 4, 500);
+	novo->setFonte("KidsPlay");
+	Textos.push_back(novo);
+	Tamanho++;
+
+	novo = new Texto();
+	novo->setCor("Preto");
+	novo->setDimensao(24);
+	novo->setMensagem("Voltar ao Menu Principal");
+	novo->setPosicoes(COMPRIMENTO_RESOLUCAO * 3 / 4, 550);
+	novo->setFonte("KidsPlay");
+	Textos.push_back(novo);
+	Tamanho++;
+
+	novo = new Texto();
+	criaTexto(novo, MensagemFinal, "Azul", "KidsPlay", 48, COMPRIMENTO_RESOLUCAO * 1/ 4, 200);
+	Textos.push_back(novo);
+	Tamanho++;
 
 }
 
-Creditos::~Creditos()
+Menus::Creditos::~Creditos()
 {
 }
 
+void Menus::Creditos::setMensagemFinal(string mensagemfinal){
+	MensagemFinal = mensagemfinal;
 
-void Creditos::LoopMenu(char tecla)
+	criaTexto(Textos[2], MensagemFinal, "Azul", "Arial", 48, COMPRIMENTO_RESOLUCAO * 1/ 4, 200);
+}
+
+
+void Menus::Creditos::LoopMenu(char tecla)
 {
 		if (tecla == 'w' || tecla == 'W')
 			moverCima();
 		if (tecla == 's' || tecla == 'S')
-			moverBaixo();
+			if(Indice < Limite)
+				moverBaixo();
 		if (tecla == 13)
 		{
 			switch (Indice)
@@ -41,6 +60,7 @@ void Creditos::LoopMenu(char tecla)
 				break;
 			case 1:
 				jogo->setEstado(0);
+				jogo->mensagemCreditos("Voce Perdeu.");
 				break;
 			}
 		}

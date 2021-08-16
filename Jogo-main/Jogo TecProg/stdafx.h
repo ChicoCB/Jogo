@@ -11,6 +11,8 @@
 #include <Windows.h>
 #include <fstream>
 
+using namespace std;
+
 #define COMPRIMENTO_RESOLUCAO 1280.f
 #define ALTURA_RESOLUCAO 720.f
 
@@ -25,14 +27,12 @@
 #define COMPRIMENTO_CHEFAO 300.f
 #define ALTURA_CHEFAO  300.f
 
-//1015x639
 #define COMPRIMENTO_ESTATICO 100.f
 #define ALTURA_ESTATICO  63.f
 
 #define COMPRIMENTO_FANTASMA 44.45f
 #define ALTURA_FANTASMA  35.14f
 
-//760x475
 #define COMPRIMENTO_ESPINHO 100.f
 #define ALTURA_ESPINHO 62.5f
 
@@ -43,6 +43,3 @@
 #define ALTURA_PLATAFORMA 45.f
 
 #define LADO_PROJETIL 20.f
-
-using namespace std;
-

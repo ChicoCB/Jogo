@@ -2,12 +2,12 @@
 
 Jogo::Jogo() :
     gerenciadorGrafico(),
-    menuPrincipal( 4, this),
-    menuJogadores(  7, this),
-    menuFases(  3, this),
-    menuPause(  5, this),
-    menuColocacao(  8, this),
-    creditos( 2, this),
+    menuPrincipal(this),
+    menuJogadores(this),
+    menuFases(this),
+    menuPause(this),
+    menuColocacao(this),
+    creditos(this),
     Estado(0),
     Jogador1(NULL),
     Jogador2(NULL),
@@ -35,6 +35,10 @@ void Jogo::Inicializa()
     menuPause.setGerenciadorGrafico(&gerenciadorGrafico);
     menuColocacao.setGerenciadorGrafico(&gerenciadorGrafico);
     creditos.setGerenciadorGrafico(&gerenciadorGrafico);
+    
+    gerenciadorGrafico.CarregarJogo();
+    menuPrincipal.InicializaPlanoFundo();
+
     menuColocacao.Recupera();
 
 }
@@ -75,7 +79,6 @@ void Jogo::MenusJogo(int estado, char tecla)
 
 void Jogo::Atualiza(float deltaTempo)
 {
-    //Estado = MenuPrincipal.getEstado();
     switch (Estado) {
     case 0: //Menu Principal
         gerenciadorGrafico.resetaView();
@@ -110,7 +113,11 @@ void Jogo::Atualiza(float deltaTempo)
     }
 }
 
-void Jogo::setEstado(int estado)
+void Jogo::mensagemCreditos(string mensagem){
+    creditos.setMensagemFinal(mensagem);
+}
+
+void Jogo::setEstado(const int estado)
 {
     Estado = estado;
 }
@@ -145,7 +152,7 @@ void Jogo::setMultiplayer(bool multiplayer)
     Multiplayer = multiplayer;
 }
 
-bool Jogo::getMultiplayer()
+bool Jogo::getMultiplayer() const
 {
     return Multiplayer;
 }
@@ -155,11 +162,10 @@ GerenciadorGrafico& Jogo::getGerenciadorGrafico()
     return gerenciadorGrafico;
 }
 
-MenuColocacao& Jogo::getMenuColocacao()
+Menus::MenuColocacao& Jogo::getMenuColocacao()
 {
     return menuColocacao;
 }
-
 
 void Jogo::InicializaFases()
 {
@@ -177,7 +183,6 @@ void Jogo::InicializaQuintal()
     Fase_Quintal.setGerenciadorGrafico(&gerenciadorGrafico);
     Fase_Quintal.setJogador1(Jogador1);
     Fase_Quintal.setJogador2(Jogador2);
-    //Fase_Quintal.setView(&gerenciadorGrafico.getView());
     Fase_Quintal.setJogo(this);
     Fase_Quintal.inicializa();
 }
@@ -216,9 +221,6 @@ void Jogo::InicializaJogadores()
         Jogador2->setTeclas('R', 'L','U', 'E');
     }
 }
-
-
-
 
 void Jogo::Salvar()
 {
@@ -284,7 +286,7 @@ void Jogo::setJogador1Fazendeira(bool fazendeira)
     Jogador1Fazendeira = fazendeira;
 }
 
-bool Jogo::getJogador1Fazendeira()
+bool Jogo::getJogador1Fazendeira() const
 {
     return Jogador1Fazendeira;
 }

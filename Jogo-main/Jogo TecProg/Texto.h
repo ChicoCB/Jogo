@@ -13,19 +13,19 @@ public:
 	~Texto();
 
 	void setPosicoes(float x, float y);
-	float getPosicaoX();
-	float getPosicaoY();
+	float getPosicaoX() const;
+	float getPosicaoY() const;
 
 	void setDimensao(float dim);
-	float getDimensao();
+	float getDimensao() const;
 
 	void setMensagem(string mens);
-	string getMensagem();
+	string getMensagem() const;
 
 	void setCor(string cor);
-	string getCor();
+	string getCor() const;
 
 	void setFonte(string fon);
-	string getFonte();
+	string getFonte() const;
 };
 

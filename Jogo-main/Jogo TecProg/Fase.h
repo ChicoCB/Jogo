@@ -31,11 +31,11 @@ public:
 	virtual ~Fase();
 
 	void setJogo(Jogo* pjogo);
-	Jogo* getJogo();
+	Jogo* getJogo() const;
 	void setJogador1(Jogador* pJogador1);
-	Jogador* getJogador1();
+	Jogador* getJogador1() const;
 	void setJogador2(Jogador* pJogador2);
-	Jogador* getJogador2();
+	Jogador* getJogador2() const;
 
 	void criaObstaculo(Entidade* pentidade, float dimx, float dimy, float posx, float posy, const string textura);
 	void criaInimigo(Personagem* ppersonagem, float dimx, float dimy, float posx, float posy, const string textura);

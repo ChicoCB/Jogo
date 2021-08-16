@@ -30,7 +30,6 @@ void Atirador::atiraProjetilHorizontal(Personagem* personagem, float altura)
 
 	float posicaoX;
 
-	//novo->setJanela(faseAtual->getJanela());
 	novo->setAmigavel(personagem->getAmigavel());
 	novo->setDesalocavel(false);
 	novo->setFaseAtual(faseAtual);
@@ -59,7 +58,7 @@ void Atirador::atiraProjetilHorizontal(Personagem* personagem, float altura)
 		novo->setTextura(ProjetilEsquerda);
 	}
 
-	faseAtual->incluaProjetil(novo); //Incluído na fase
+	faseAtual->incluaProjetil(novo);
 }
 
 void Atirador::atiraProjetilDirecionado(Personagem* personagem, float dimensao)
@@ -123,7 +122,7 @@ void Atirador::atiraProjetilDirecionado(Personagem* personagem, float dimensao)
 			novo->setDimensoes(dimensao, dimensao);
 			novo->setPosicao(personagem->getPosicaoX(), personagem->getPosicaoY());
 
-			faseAtual->incluaProjetil(novo); //Incluído na fase	
+			faseAtual->incluaProjetil(novo);
 		}
 	}
 	catch (int erro)

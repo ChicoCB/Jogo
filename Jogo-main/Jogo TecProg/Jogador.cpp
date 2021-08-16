@@ -10,7 +10,8 @@ Jogador::Jogador() :
 	alturaPulo(250.f)
 {
 	Amigavel = true;
-	Vida = 1000;
+	Pontuacao = 0;
+	Vida = 10;
 	CooldownAtaqueMax = 0.5f;
 	CooldownAtaque = CooldownAtaqueMax/2;
 	this->setVelocidade(400.f);
@@ -64,7 +65,7 @@ void Jogador::setTexturas(bool fazendeira)
 }
 
 
-string Jogador::getTextura()
+string Jogador::getTextura() const
 {
 	return Textura;
 }
@@ -179,6 +180,13 @@ void Jogador::salvar()
 		<< this->CooldownAtaque <<  endl;
 
 	gravadorJogador.close();
+}
+
+Jogador& Jogador::operator++()
+{
+	this->incrementaPontuacao();
+
+	return *this;
 }
 
 
