@@ -4,58 +4,35 @@
 Menus::MenuPrincipal::MenuPrincipal(Jogo* jg):
 Menu(jg)
 {
-	Tamanho = 0;
+	TamIds = 2;
+	Ids = new int[TamIds];
+	Ids[0] = 0;
+	Ids[1] = 3;
+
 	Texto* novo = new Texto();
-	novo->setCor("Vermelho");
-	novo->setDimensao(30);
-	novo->setMensagem("Novo Jogo");
-	novo->setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 250);
-	novo->setFonte("KidsPlay");
+	criaTexto(novo, "Novo Jogo", "Preto", "KidsPlay", 35, COMPRIMENTO_RESOLUCAO * 1 / 2, 325);
 	Textos.push_back(novo);
 	Tamanho++;
 
 	novo = new Texto();
-	novo->setCor("Preto");
-	novo->setDimensao(30);
-	novo->setMensagem("Recuperar Jogo Salvo");
-	novo->setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 350);
-	novo->setFonte("KidsPlay");
+	criaTexto(novo, "Recuperar Jogo Salvo", "Preto", "KidsPlay", 35, COMPRIMENTO_RESOLUCAO * 1 / 2, 400);
 	Textos.push_back(novo);
 	Tamanho++;
 
 	novo = new Texto();
-	novo->setCor("Preto");
-	novo->setDimensao(30);
-	novo->setMensagem("Scoreboard");
-	novo->setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 450);
-	novo->setFonte("KidsPlay");
+	criaTexto(novo, "Scoreboard", "Preto", "KidsPlay", 35, COMPRIMENTO_RESOLUCAO * 1 / 2, 475);
 	Textos.push_back(novo);
 	Tamanho++;
 
 	novo = new Texto();
-	novo->setCor("Preto");
-	novo->setDimensao(30);
-	novo->setMensagem("Sair");
-	novo->setPosicoes(COMPRIMENTO_RESOLUCAO / 4, 550);
-	novo->setFonte("KidsPlay");
+	criaTexto(novo, "Sair", "Preto", "KidsPlay", 35, COMPRIMENTO_RESOLUCAO * 1 / 2, 550);
 	Textos.push_back(novo);
 	Tamanho++;
 
-	
 }
 
 Menus::MenuPrincipal::~MenuPrincipal()
 {
-}
-
-void Menus::MenuPrincipal::InicializaPlanoFundo(){
-	PlanoFundo.setGerenciadorGrafico(pGerenciadorGrafico);
-pGerenciadorGrafico->criaCorpo(static_cast<Entidade*>(&PlanoFundo), COMPRIMENTO_RESOLUCAO, ALTURA_RESOLUCAO,
-		COMPRIMENTO_RESOLUCAO / 2, ALTURA_RESOLUCAO / 2, "textures/Menu1.png");
-	Cenario* novo = new Cenario();
-	novo->setGerenciadorGrafico(pGerenciadorGrafico);
-	pGerenciadorGrafico->criaCorpo(static_cast<Entidade*>(novo), COMPRIMENTO_RESOLUCAO, ALTURA_RESOLUCAO,
-		COMPRIMENTO_RESOLUCAO / 2, ALTURA_RESOLUCAO / 2, "textures/Menu2.png");
 }
 
 void Menus::MenuPrincipal::LoopMenu(char tecla)
@@ -76,11 +53,13 @@ void Menus::MenuPrincipal::LoopMenu(char tecla)
 			case 1:
 				jogo->getQuintal().limparTudo();
 				jogo->getQuarto().limparTudo();
+				Indice = 0;
 				jogo->Recuperar();
 				break;
 			case 2:
 				jogo->getMenuColocacao().setEstadoAnterior(jogo->getEstado());
 				jogo->getMenuColocacao().setEditavel(false);
+				Indice = 0;
 				jogo->setEstado(3);
 				break;
 			case 3:
