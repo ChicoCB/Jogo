@@ -14,15 +14,6 @@ Porta::~Porta()
 
 void Porta::salvar()
 {
-	ofstream gravadorPorta("saves/Porta.dat", ios::app);
-
-	if (!gravadorPorta)
-		cout << "Erro Gravar Porta." << endl;
-
-	gravadorPorta << this->getPosicaoX()  << ' '
-		<< this->getPosicaoY()  << ' ' << endl;
-
-	gravadorPorta.close();
 }
 
 void Porta::setJogo(Jogo* jg)
@@ -38,19 +29,20 @@ void Porta::colidir(Personagem* personagem)
 		{
 			
 			jogo->getJogador1()->setFaseAtual(&jogo->getQuarto());
-			jogo->getJogador1()->setPosicao(200.f, 200.f);
+			jogo->getJogador1()->setPosicao(100.f, ALTURA_RESOLUCAO - ALTURA_PLATAFORMA - ALTURA_JOGADOR/2);
 			if (jogo->getMultiplayer())
 			{
 				jogo->getJogador2()->setFaseAtual(&jogo->getQuarto());
-				jogo->getJogador2()->setPosicao(200.f, 200.f);
+				jogo->getJogador2()->setPosicao(100.f, ALTURA_RESOLUCAO - ALTURA_PLATAFORMA - ALTURA_JOGADOR / 2);
 			}
-
+			pGerenciadorGrafico->tocarMusica("Quarto");
 			jogo->setEstado(5);
 			jogo->getQuintal().limparTudo();
 		}
 		else 
 		{
-			jogo->mensagemCreditos("Venceu o jogo!");
+			pGerenciadorGrafico->tocarMusica("Creditos");
+			jogo->mensagemCreditos("Venceu o jogo! ");
 			jogo->setEstado(7);	
 			jogo->getQuarto().limparTudo();
 		}

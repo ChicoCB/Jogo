@@ -3,13 +3,11 @@
 
 GerenciadorGrafico::GerenciadorGrafico() :
     Janela(sf::VideoMode(static_cast <unsigned int>(COMPRIMENTO_RESOLUCAO), static_cast <unsigned int>(ALTURA_RESOLUCAO)),
-        "Jogo"//, sf::Style::Fullscreen
+        "Ludi", sf::Style::Fullscreen
     ),
     View(sf::Vector2f(COMPRIMENTO_RESOLUCAO / 2, ALTURA_RESOLUCAO / 2), sf::Vector2f(COMPRIMENTO_RESOLUCAO, ALTURA_RESOLUCAO))
 {
     Janela.setView(View);
-
-
 }
 
 void GerenciadorGrafico::LoopJogo(Jogo* jogo, int estado)
@@ -85,18 +83,28 @@ void GerenciadorGrafico::CarregarJogo()
         Creditos.setFillColor(sf::Color::Black);
         Creditos.setFont(Fontes["KidsPlay"]);
         Creditos.setCharacterSize(20);
-        Creditos.setString("Desenvolvido por Daniel Augusto Pires de Castro e Francisco Cardoso Becheli\n              Produzido artisticamente por Maira Pires de Castro");
+        Creditos.setString("Desenvolvido por Daniel Augusto Pires de Castro e Francisco Cardoso Becheli\n                 Arte feita por Martemis (Maira Pires de Castro)");
         Creditos.setOrigin(sf::Vector2f(Creditos.getLocalBounds().width / 2.f, Creditos.getLocalBounds().height / 2.f));
         Creditos.setPosition(sf::Vector2f(COMPRIMENTO_RESOLUCAO / 2, ALTURA_RESOLUCAO * 11 / 16+ 20.f));
+
+        sf::Text Beta;
+        Beta.setFillColor(sf::Color::Black);
+        Beta.setFont(Fontes["KidsPlay"]);
+        Beta.setCharacterSize(18);
+        Beta.setString("(beta)");
+        Beta.setOrigin(sf::Vector2f(Beta.getLocalBounds().width / 2.f, Beta.getLocalBounds().height / 2.f));
+        Beta.setPosition(sf::Vector2f(COMPRIMENTO_RESOLUCAO*11/16, ALTURA_RESOLUCAO * 10 / 16));
 
         for (int i = 0; i < 2; i++) {
             Janela.draw(Fundo_Carregamento);
             Janela.draw(Barra_Carregamento);
             Janela.draw(Ludi);
             Janela.draw(Creditos);
+            Janela.draw(Beta);
             Janela.display();
         }
         InicializaTexturas();
+        InicializaMusicas();
         InicializaSubTexturas();
         InicializaCores();
 }
@@ -225,6 +233,16 @@ void GerenciadorGrafico::fechar()
     Janela.close();
 }
 
+void GerenciadorGrafico::tocarMusica(string musica)
+{
+    std::map<string, sf::Music*>::iterator itr;
+    for (itr = Musicas.begin(); itr != Musicas.end(); itr++)
+        itr->second->stop();
+        
+    Musicas[musica]->play();
+    Musicas[musica]->setLoop(true);
+}
+
 void GerenciadorGrafico::movimenta(int id, float x, float y)
 {
 
@@ -311,20 +329,37 @@ void GerenciadorGrafico::InicializaTexturas()
     CarregaTextura("textures/Fazendeira.png");
     CarregaTextura("textures/Bruxo.png");
     CarregaTextura("textures/Selecao.png");
+    cout << endl;
 }
 
 
 void GerenciadorGrafico::InicializaFontes()
 {
     sf::Font *Fonte = new sf::Font();
-    if (!Fonte->loadFromFile("arial.ttf"))
+    if (!Fonte->loadFromFile("fonts/arial.ttf"))
         cout << "Erro ao carregar fonte." << endl;
     Fontes["Arial"] = *Fonte;
     Fonte = new sf::Font();
-    if (!Fonte->loadFromFile("KidsPlay.ttf"))
+    if (!Fonte->loadFromFile("fonts/KidsPlay.ttf"))
         cout << "Erro ao carregar fonte." << endl;
     Fontes["KidsPlay"] = *Fonte;
 
+}
+
+void GerenciadorGrafico::InicializaMusicas()
+{
+    sf::Music *Musica = new sf::Music();
+    if (!Musica->openFromFile("musics/Menu_e_Quintal.ogg"))
+        cout << "Erro ao carregar musica." << endl;
+    Musicas["Menu_e_Quintal"] = Musica;
+    Musica = new sf::Music();
+    if (!Musica->openFromFile("musics/Quarto.ogg"))
+        cout << "Erro ao carregar musica." << endl;
+    Musicas["Quarto"] = Musica;
+    Musica = new sf::Music();
+    if (!Musica->openFromFile("musics/Creditos.ogg"))
+        cout << "Erro ao carregar musica." << endl;
+    Musicas["Creditos"] = Musica;
 }
 
 void GerenciadorGrafico::InicializaCores()
@@ -351,8 +386,8 @@ void GerenciadorGrafico::InicializaSubTexturas()
 
     SubTexturas["textures/Bruxo.png"] = sf::IntRect(145, 0, 580, 820); SubTexturas["Bruxo_2"] = sf::IntRect(820, 0, 580, 820); SubTexturas["Bruxo_3"] = sf::IntRect(1495, 0, 530, 820);
     SubTexturas["Bruxo_4"] = sf::IntRect(2130, 0, 530, 820); SubTexturas["Bruxo_5"] = sf::IntRect(2765, 0, 530, 820); SubTexturas["Bruxo_6"] = sf::IntRect(3405, 0, 530, 820);
-    SubTexturas["Bruxo_7"] = sf::IntRect(0, 930, 530, 820); SubTexturas["Bruxo_8"] = sf::IntRect(630, 930, 530, 820); SubTexturas["Bruxo_9"] = sf::IntRect(1260, 930, 750, 820);
-    SubTexturas["Bruxo_10"] = sf::IntRect(2100, 930, 750, 820); SubTexturas["Bruxo_11"] = sf::IntRect(2855, 950, 570, 820); SubTexturas["Bruxo_12"] = sf::IntRect(3460, 950, 570, 820);
+    SubTexturas["Bruxo_7"] = sf::IntRect(0, 930, 530, 820); SubTexturas["Bruxo_8"] = sf::IntRect(630, 930, 530, 820); SubTexturas["Bruxo_9"] = sf::IntRect(1260, 930, 760, 820);
+    SubTexturas["Bruxo_10"] = sf::IntRect(2100, 930, 760, 820); SubTexturas["Bruxo_11"] = sf::IntRect(2855, 950, 570, 820); SubTexturas["Bruxo_12"] = sf::IntRect(3460, 950, 570, 820);
 
     SubTexturas["textures/Plataforma_Quintal.png"] = sf::IntRect(0, 0, 620, 630); SubTexturas["Plataforma_Quintal_2"] = sf::IntRect(660, 0, 620, 630); SubTexturas["Plataforma_Quintal_3"] = sf::IntRect(1320, 10, 620, 630);
     SubTexturas["Plataforma_Quintal_4"] = sf::IntRect(1995, 0, 620, 630); SubTexturas["Plataforma_Quintal_5"] = sf::IntRect(2675, 0, 620, 630);
@@ -366,7 +401,7 @@ void GerenciadorGrafico::InicializaSubTexturas()
     SubTexturas["textures/Teia.png"] = sf::IntRect(25, 15, 430, 450); SubTexturas["Teia_2"] = sf::IntRect(640, 15, 430, 450);
 
     SubTexturas["Espinhos_Galhos_2"] = sf::IntRect(0, 0, 760, 475); SubTexturas["textures/Espinhos_Galhos.png"] = sf::IntRect(870, 0, 760, 475);
-    SubTexturas["Espinhos_Materiais_2"] = sf::IntRect(0, 0, 760, 475); SubTexturas["textures/Espinhos_Materiais.png"] = sf::IntRect(770, 0, 760, 475);
+    SubTexturas["Espinhos_Materiais_2"] = sf::IntRect(0, 0, 760, 475); SubTexturas["textures/Espinhos_Materiais.png"] = sf::IntRect(890, 0, 760, 475);
 
     SubTexturas["textures/Passaro.png"] = sf::IntRect(0, 0, 630, 525); SubTexturas["Passaro_2"] = sf::IntRect(750,  0, 630, 525);
     SubTexturas["Passaro_3"] = sf::IntRect(1475, 0, 630, 525); SubTexturas["Passaro_4"] = sf::IntRect(2220,  0, 630, 525);
@@ -382,7 +417,7 @@ void GerenciadorGrafico::InicializaSubTexturas()
     SubTexturas["Projeteis_7"] = sf::IntRect(1101, 0, 100, 134); SubTexturas["Projeteis_8"] = sf::IntRect(1240, 0, 140, 134); SubTexturas["Projeteis_9"] = sf::IntRect(1390, 0, 140, 134);
 
     SubTexturas["textures/Inicio_Fim.png"] = sf::IntRect(0, 500, 520, 580); SubTexturas["Inicio_Fim_2"] = sf::IntRect(820, 110, 835, 1360); SubTexturas["Inicio_Fim_3"] = sf::IntRect(1950, 135, 225, 1300);
-    SubTexturas["Inicio_Fim_4"] = sf::IntRect(2475, 135, 225, 1300); SubTexturas["Inicio_Fim_5"] = sf::IntRect(3000, 0, 620, 1580);
+    SubTexturas["Inicio_Fim_4"] = sf::IntRect(2475, 135, 225, 1300); SubTexturas["Inicio_Fim_5"] = sf::IntRect(3000, 0, 620, 1580); 
 
     SubTexturas["textures/Quintal.png"] = sf::IntRect(0, 0, 3829, 1089); SubTexturas["Quintal_Menu"] = sf::IntRect(0, 0, 1914, 1089);
     SubTexturas["textures/Quarto.png"] = sf::IntRect(0, 0, 3959, 1093); SubTexturas["Quarto_Menu"] = sf::IntRect(0, 0, 1979, 1093);

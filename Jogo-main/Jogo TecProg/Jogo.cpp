@@ -39,7 +39,7 @@ void Jogo::Inicializa()
     gerenciadorGrafico.CarregarJogo();
     menuPrincipal.InicializaPlanoFundo();
     menuColocacao.Recupera();
-
+    gerenciadorGrafico.tocarMusica("Menu_e_Quintal");
 }
 
 void Jogo::LoopJogo()
@@ -193,7 +193,6 @@ void Jogo::InicializaQuarto()
         Jogador2 = NULL;
 
     Fase_Quarto.setGerenciadorGrafico(&gerenciadorGrafico);
-
     Fase_Quarto.setJogador1(Jogador1);
     Fase_Quarto.setJogador2(Jogador2);
     Fase_Quarto.setJogo(this);
@@ -205,7 +204,7 @@ void Jogo::InicializaJogadores()
     Jogador1 = new Jogador();
     Jogador1->setGerenciadorGrafico(&gerenciadorGrafico);
     Jogador1->setTexturas(Jogador1Fazendeira);
-    gerenciadorGrafico.criaCorpo(Jogador1, COMPRIMENTO_JOGADOR, ALTURA_JOGADOR, 640.f, 320.f, 
+    gerenciadorGrafico.criaCorpo(Jogador1, COMPRIMENTO_JOGADOR, ALTURA_JOGADOR, 100.f, ALTURA_RESOLUCAO - ALTURA_PLATAFORMA - ALTURA_JOGADOR / 2,
         Jogador1->getTextura());
     Jogador1->setTeclas('D', 'A', 'W', ' ');
 
@@ -214,7 +213,7 @@ void Jogo::InicializaJogadores()
         Jogador2 = new Jogador();
         Jogador2->setGerenciadorGrafico(&gerenciadorGrafico);
         Jogador2->setTexturas(!Jogador1Fazendeira);
-        gerenciadorGrafico.criaCorpo(Jogador2, COMPRIMENTO_JOGADOR, ALTURA_JOGADOR, 640.f, 320.f, 
+        gerenciadorGrafico.criaCorpo(Jogador2, COMPRIMENTO_JOGADOR, ALTURA_JOGADOR, 50.f, ALTURA_RESOLUCAO - ALTURA_PLATAFORMA - ALTURA_JOGADOR / 2,
             Jogador2->getTextura());
         Jogador2->setTeclas('R', 'L','U', 'E');
     }
@@ -269,6 +268,7 @@ void Jogo::Recuperar()
     {
         Fase_Quarto.setJogo(this);
         Fase_Quarto.recuperar();
+        gerenciadorGrafico.tocarMusica("Quarto");
         Estado = estado;
     }
     for (int i = 0; i < pontos / 10; i++) 
@@ -309,8 +309,8 @@ void Jogo::LimparArquivos()
     deletarTeias.close();
     ofstream deletarProjeteis("saves/Projeteis.dat", ios::out);
     deletarProjeteis.close();
-    ofstream deletarPorta("saves/Porta.dat", ios::out);
-    deletarPorta.close();
+    //ofstream deletarPorta("saves/Porta.dat", ios::out);
+    //deletarPorta.close();
 }
 
 void Jogo::setEstadoAtual(int estado)

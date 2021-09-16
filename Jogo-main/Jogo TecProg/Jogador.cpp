@@ -6,7 +6,7 @@ int Jogador::Pontuacao = 0;
 
 Jogador::Jogador() :
 	Personagem(),
-	podePular(true),
+	podePular(false),
 	alturaPulo(250.f)
 {
 	Amigavel = true;
@@ -76,6 +76,7 @@ void Jogador::atualiza(float deltaTempo)
 	{
 		Desalocavel = false;
 		faseAtual->getJogo()->setEstado(7);
+		pGerenciadorGrafico->tocarMusica("Creditos");
 	}
 
 	MovimentoX = 0.f;

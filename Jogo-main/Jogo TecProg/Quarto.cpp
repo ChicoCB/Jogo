@@ -25,18 +25,32 @@ void Quarto::inicializa()
 		COMPRIMENTO_RESOLUCAO, ALTURA_RESOLUCAO / 2, "textures/Quarto.png");
 	listaEntidades.inclua(static_cast <Entidade*> (&Background));
 
+	Cenario* entrada = new Cenario();
+	entrada->setGerenciadorGrafico(pGerenciadorGrafico);
+	pGerenciadorGrafico->criaCorpo(entrada, 37.5f, 225.f, 37.5f / 2 - 3.f, ALTURA_RESOLUCAO - (ALTURA_PLATAFORMA + 225.f / 2), "textures/Inicio_Fim.png");
+	entrada->setSubTextura("Inicio_Fim_4");
+	listaEntidades.inclua(static_cast <Entidade*> (entrada));
+
 	criaPlataformas();
 
-	for (int i = 0; i < rand() % 4 + 3; i++)
+	for (int i = 0; i < rand() % 6 + 3; i++)
 	{
-		Fantasma* fantasma = new Fantasma();
-		criaInimigo(static_cast<Personagem*>(fantasma),  COMPRIMENTO_FANTASMA, ALTURA_FANTASMA ,
-			 rand() % (static_cast<int>(COMPRIMENTO_CENARIO - 400)) + 200,
-				rand() % static_cast<int>(ALTURA_RESOLUCAO / 2) + ALTURA_FANTASMA / 2 ,
-			"textures/Fantasma.png");
-		fantasma->setLimitesX(fantasma->getPosicaoX() , fantasma->getPosicaoX() + 200.0f);
-		
+		Teia* teia = new Teia();
+		criaObstaculo(static_cast <Entidade*>(teia), COMPRIMENTO_TEIA, ALTURA_TEIA,
+			rand() % (static_cast<int>(COMPRIMENTO_CENARIO - 400)) + 200,
+			ALTURA_RESOLUCAO - (ALTURA_PLATAFORMA + ALTURA_TEIA / 2), "textures/Teia.png");
+		if (rand() % 2)
+			teia->setSubTextura("Teia_2");
 	}
+
+	for (int i = 0; i < rand() % 6 + 3; i++)
+	{
+		Espinho* espinho = new Espinho();
+		criaObstaculo(static_cast <Entidade*>(espinho), COMPRIMENTO_ESPINHO, ALTURA_ESPINHO,
+			rand() % (static_cast<int>(COMPRIMENTO_CENARIO - 400)) + 200,
+			ALTURA_RESOLUCAO - (ALTURA_PLATAFORMA + ALTURA_ESPINHO / 2), "textures/Espinhos_Materiais.png");
+	}
+
 	for (int i = 0; i < rand() % 4 + 3; i++)
 	{
 		Estatico* estatico = new Estatico();
@@ -47,22 +61,15 @@ void Quarto::inicializa()
 		estatico->setTexturas(false);
 	}
 
-	for (int i = 0; i < rand() % 6 + 3; i++)
+	for (int i = 0; i < rand() % 4 + 3; i++)
 	{
-		Teia* teia = new Teia();
-		criaObstaculo(static_cast <Entidade*>(teia), COMPRIMENTO_TEIA, ALTURA_TEIA ,
-			 rand() % (static_cast<int>(COMPRIMENTO_CENARIO - 400)) + 200,
-				ALTURA_RESOLUCAO - (ALTURA_PLATAFORMA + ALTURA_TEIA / 2) , "textures/Teia.png");
-		if (rand() % 2)
-			teia->setSubTextura("Teia_2");
-	}
-
-	for (int i = 0; i < rand() % 6 + 3; i++)
-	{
-		Espinho* espinho = new Espinho();
-		criaObstaculo(static_cast <Entidade*>(espinho),  COMPRIMENTO_ESPINHO, ALTURA_ESPINHO ,
-			 rand() % (static_cast<int>(COMPRIMENTO_CENARIO - 400)) + 200,
-				ALTURA_RESOLUCAO - (ALTURA_PLATAFORMA + ALTURA_ESPINHO / 2) , "textures/Espinhos_Materiais.png");
+		Fantasma* fantasma = new Fantasma();
+		criaInimigo(static_cast<Personagem*>(fantasma), COMPRIMENTO_FANTASMA, ALTURA_FANTASMA,
+			rand() % (static_cast<int>(COMPRIMENTO_CENARIO - 400)) + 200,
+			rand() % static_cast<int>(ALTURA_RESOLUCAO / 2) + ALTURA_FANTASMA / 2,
+			"textures/Fantasma.png");
+		fantasma->setLimitesX(fantasma->getPosicaoX(), fantasma->getPosicaoX() + 200.0f);
+		fantasma->setPosicao(fantasma->getPosicaoX(), fantasma->getPosicaoY());
 	}
 	
 	Chefao* chefao = NULL;
@@ -72,9 +79,6 @@ void Quarto::inicializa()
 				COMPRIMENTO_CENARIO - 200.f, ALTURA_RESOLUCAO - ALTURA_CHEFAO + ALTURA_CHEFAO/10 -ALTURA_PLATAFORMA, 
 		"textures/Bicho_Papao.png");
 	chefao->setSubTextura("Bicho_Papao_7");
-
-	if (pJogador1 == NULL)
-		cout << "Eh null" << endl;
 
 	listaEntidades.inclua(static_cast <Entidade*> (pJogador1));
 	listaPersonagens.inclua(static_cast <Personagem*> (pJogador1));
@@ -132,16 +136,22 @@ void Quarto::recuperar()
 		COMPRIMENTO_RESOLUCAO, ALTURA_RESOLUCAO / 2, "textures/Quarto.png");
 	listaEntidades.inclua(static_cast<Entidade*> (&Background));
 
+	Cenario* entrada = new Cenario();
+	entrada->setGerenciadorGrafico(pGerenciadorGrafico);
+	pGerenciadorGrafico->criaCorpo(entrada, 37.5f, 225.f, 37.5f / 2 - 3.f, ALTURA_RESOLUCAO - (ALTURA_PLATAFORMA + 225.f / 2), "textures/Inicio_Fim.png");
+	entrada->setSubTextura("Inicio_Fim_4");
+	listaEntidades.inclua(static_cast <Entidade*> (entrada));
+
 	criaPlataformas();
 
 	gerenciadorColisoes.setListaEntidades(&listaEntidades);
 	gerenciadorColisoes.setListaPersonagens(&listaPersonagens);
 
 	recuperarProjeteis(this);
-	recuperarEstaticos(false, "textures/Monstro_Roupas.png");
-	recuperarFantasmas();
 	recuperarTeias();
 	recuperarEspinhos("textures/Espinhos_Materiais.png");
+	recuperarEstaticos(false, "textures/Monstro_Roupas.png");
+	recuperarFantasmas();
 	recuperarChefao();
 
 	pJogador1->setFaseAtual(this);
@@ -167,13 +177,14 @@ void Quarto::recuperarFantasmas()
 	if (!recuperadorFantasmas)
 		cout << "Erro Fantasmas." << endl;
 
+	int vida;
+	float posx, posy, limxdir, limxesq, cooldown;
+
+	recuperadorFantasmas >> vida >> posx >> posy >> limxdir >> limxesq >> cooldown;
+
 	while (!recuperadorFantasmas.eof())
 	{
 		Fantasma* novo = NULL;
-		int vida;
-		float posx, posy, limxdir, limxesq, cooldown;
-
-		recuperadorFantasmas >> vida >> posx >> posy >> limxdir >> limxesq >> cooldown;
 
 		novo = new Fantasma();
 		novo->setVida(vida);
@@ -183,6 +194,7 @@ void Quarto::recuperarFantasmas()
 		criaInimigo(static_cast <Personagem*> (novo),  COMPRIMENTO_FANTASMA, ALTURA_FANTASMA ,
 			 posx, posy , "textures/Fantasma.png");
 
+		recuperadorFantasmas >> vida >> posx >> posy >> limxdir >> limxesq >> cooldown;
 	}
 
 	recuperadorFantasmas.close();
@@ -206,8 +218,6 @@ void Quarto::recuperarChefao()
 		float posx, posy, cooldown, estadochefao;
 
 		recuperadorChefao >> posx >> posy >> cooldown >> estadochefao;
-
-		cout << "vida: " << vida << endl;
 
 		novo = new Chefao();
 		novo->setVida(vida);
@@ -245,21 +255,29 @@ void Quarto::criaPlataforma(float posx, float posy, string subtextura)
 void Quarto::criaPlataformas()
 {
 	criaBordas();
-	for (int i = 0; i < 10; i++) {
-		criaPlataforma(900.f + COMPRIMENTO_PLATAFORMA * i, 337.5f , "Plataforma_Quarto_2");
-	}
-	for (int i = 0; i < 10; i++) {
-		criaPlataforma(1500.f + COMPRIMENTO_PLATAFORMA * i, 337.5f, "Plataforma_Quarto_5");
-	}
-	for (int i = 0; i < 10; i++) {
-		criaPlataforma(500.f + COMPRIMENTO_PLATAFORMA * i, 517.5f , "Plataforma_Quarto_4");
-	}
-	for (int i = 0; i < 10; i++) {
-		criaPlataforma(1800.f + COMPRIMENTO_PLATAFORMA * i, 157.5f, "Plataforma_Quarto_3");
-	}
+	criaPlataforma(900.f + COMPRIMENTO_PLATAFORMA * 0, 337.5f, "Plataforma_Quarto_4");
+	for (int i = 1; i < 9; i++)
+		criaPlataforma(900.f + COMPRIMENTO_PLATAFORMA * i, 337.5f, "Plataforma_Quarto_2");
+	criaPlataforma(900.f + COMPRIMENTO_PLATAFORMA * 9, 337.5f, "Plataforma_Quarto_3");
 
-	for (int i = 0; i < 5; i++) {
-		criaPlataforma(2000.f + COMPRIMENTO_PLATAFORMA * i, 517.5f, "textures/Plataforma_Quarto.png");
-	}
+	criaPlataforma(1500.f + COMPRIMENTO_PLATAFORMA * 0, 337.5f, "textures/Plataforma_Quarto.png");
+	for (int i = 1; i < 9; i++)
+		criaPlataforma(1500.f + COMPRIMENTO_PLATAFORMA * i, 337.5f, "Plataforma_Quarto_2");
+	criaPlataforma(1500.f + COMPRIMENTO_PLATAFORMA * 9, 337.5f, "Plataforma_Quarto_5");
+
+	criaPlataforma(500.f + COMPRIMENTO_PLATAFORMA * 0, 517.5f, "textures/Plataforma_Quarto.png");
+	for (int i = 1; i < 9; i++)
+		criaPlataforma(500.f + COMPRIMENTO_PLATAFORMA * i, 517.5f, "Plataforma_Quarto_2");
+	criaPlataforma(500.f + COMPRIMENTO_PLATAFORMA * 9, 517.5f, "Plataforma_Quarto_5");
+
+	criaPlataforma(1800.f + COMPRIMENTO_PLATAFORMA * 0, 157.5f, "Plataforma_Quarto_4");
+	for (int i = 1; i < 9; i++)
+		criaPlataforma(1800.f + COMPRIMENTO_PLATAFORMA * i, 157.5f, "Plataforma_Quarto_2");
+	criaPlataforma(1800.f + COMPRIMENTO_PLATAFORMA * 9, 157.5f, "Plataforma_Quarto_3");
+
+	criaPlataforma(2000.f + COMPRIMENTO_PLATAFORMA * 0, 517.5f, "textures/Plataforma_Quarto.png");
+	for (int i = 1; i < 4; i++)
+		criaPlataforma(2000.f + COMPRIMENTO_PLATAFORMA * i, 517.5f, "Plataforma_Quarto_2");
+	criaPlataforma(2000.f + COMPRIMENTO_PLATAFORMA * 4, 517.5f, "Plataforma_Quarto_5");
 }
 
